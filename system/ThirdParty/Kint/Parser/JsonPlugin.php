@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,22 +25,22 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\Representation;
 
-class JsonPlugin extends AbstractPlugin
+class JsonPlugin extends Plugin
 {
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['string'];
+        return array('string');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!isset($var[0]) || ('{' !== $var[0] && '[' !== $var[0])) {
             return;
@@ -56,7 +54,7 @@ class JsonPlugin extends AbstractPlugin
 
         $json = (array) $json;
 
-        $base_obj = new Value();
+        $base_obj = new BasicObject();
         $base_obj->depth = $o->depth;
 
         if ($o->access_path) {

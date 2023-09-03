@@ -1,429 +1,504 @@
 <?php
-
 /**
- * This file is part of CodeIgniter 4 framework.
+ * CodeIgniter
  *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ * An open source application development framework for PHP
  *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
  */
 
 namespace CodeIgniter\Database;
 
 /**
  * Query builder
+ *
+ * @package CodeIgniter\Database
  */
 class Query implements QueryInterface
 {
-    /**
-     * The query string, as provided by the user.
-     *
-     * @var string
-     */
-    protected $originalQueryString;
 
-    /**
-     * The query string if table prefix has been swapped.
-     *
-     * @var string|null
-     */
-    protected $swappedQueryString;
+	/**
+	 * The query string, as provided by the user.
+	 *
+	 * @var string
+	 */
+	protected $originalQueryString;
 
-    /**
-     * The final query string after binding, etc.
-     *
-     * @var string|null
-     */
-    protected $finalQueryString;
+	/**
+	 * The final query string after binding, etc.
+	 *
+	 * @var string
+	 */
+	protected $finalQueryString;
 
-    /**
-     * The binds and their values used for binding.
-     *
-     * @var array
-     */
-    protected $binds = [];
+	/**
+	 * The binds and their values used for binding.
+	 *
+	 * @var array
+	 */
+	protected $binds = [];
 
-    /**
-     * Bind marker
-     *
-     * Character used to identify values in a prepared statement.
-     *
-     * @var string
-     */
-    protected $bindMarker = '?';
+	/**
+	 * Bind marker
+	 *
+	 * Character used to identify values in a prepared statement.
+	 *
+	 * @var string
+	 */
+	protected $bindMarker = '?';
 
-    /**
-     * The start time in seconds with microseconds
-     * for when this query was executed.
-     *
-     * @var float|string
-     */
-    protected $startTime;
+	/**
+	 * The start time in seconds with microseconds
+	 * for when this query was executed.
+	 *
+	 * @var float
+	 */
+	protected $startTime;
 
-    /**
-     * The end time in seconds with microseconds
-     * for when this query was executed.
-     *
-     * @var float
-     */
-    protected $endTime;
+	/**
+	 * The end time in seconds with microseconds
+	 * for when this query was executed.
+	 *
+	 * @var float
+	 */
+	protected $endTime;
 
-    /**
-     * The error code, if any.
-     *
-     * @var int
-     */
-    protected $errorCode;
+	/**
+	 * The error code, if any.
+	 *
+	 * @var integer
+	 */
+	protected $errorCode;
 
-    /**
-     * The error message, if any.
-     *
-     * @var string
-     */
-    protected $errorString;
+	/**
+	 * The error message, if any.
+	 *
+	 * @var string
+	 */
+	protected $errorString;
 
-    /**
-     * Pointer to database connection.
-     * Mainly for escaping features.
-     *
-     * @var ConnectionInterface
-     */
-    public $db;
+	/**
+	 * Pointer to database connection.
+	 * Mainly for escaping features.
+	 *
+	 * @var BaseConnection
+	 */
+	public $db;
 
-    public function __construct(ConnectionInterface $db)
-    {
-        $this->db = $db;
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * Sets the raw query string to use for this statement.
-     *
-     * @param mixed $binds
-     *
-     * @return $this
-     */
-    public function setQuery(string $sql, $binds = null, bool $setEscape = true)
-    {
-        $this->originalQueryString = $sql;
-        unset($this->swappedQueryString);
+	/**
+	 * BaseQuery constructor.
+	 *
+	 * @param $db ConnectionInterface
+	 */
+	public function __construct(&$db)
+	{
+		$this->db = $db;
+	}
 
-        if ($binds !== null) {
-            if (! is_array($binds)) {
-                $binds = [$binds];
-            }
+	//--------------------------------------------------------------------
 
-            if ($setEscape) {
-                array_walk($binds, static function (&$item) {
-                    $item = [
-                        $item,
-                        true,
-                    ];
-                });
-            }
-            $this->binds = $binds;
-        }
+	/**
+	 * Sets the raw query string to use for this statement.
+	 *
+	 * @param string  $sql
+	 * @param mixed   $binds
+	 * @param boolean $setEscape
+	 *
+	 * @return $this
+	 */
+	public function setQuery(string $sql, $binds = null, bool $setEscape = true)
+	{
+		$this->originalQueryString = $sql;
 
-        unset($this->finalQueryString);
+		if (! is_null($binds))
+		{
+			if (! is_array($binds))
+			{
+				$binds = [$binds];
+			}
 
-        return $this;
-    }
+			if ($setEscape)
+			{
+				array_walk($binds, function (&$item) {
+					$item = [
+						$item,
+						true,
+					];
+				});
+			}
+			$this->binds = $binds;
+		}
 
-    /**
-     * Will store the variables to bind into the query later.
-     *
-     * @return $this
-     */
-    public function setBinds(array $binds, bool $setEscape = true)
-    {
-        if ($setEscape) {
-            array_walk($binds, static function (&$item) {
-                $item = [$item, true];
-            });
-        }
+		return $this;
+	}
 
-        $this->binds = $binds;
+	//--------------------------------------------------------------------
 
-        unset($this->finalQueryString);
+	/**
+	 * Will store the variables to bind into the query later.
+	 *
+	 * @param array $binds
+	 *
+	 * @return $this
+	 */
+	public function setBinds(array $binds)
+	{
+		$this->binds = $binds;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Returns the final, processed query string after binding, etal
-     * has been performed.
-     */
-    public function getQuery(): string
-    {
-        if (empty($this->finalQueryString)) {
-            $this->compileBinds();
-        }
+	//--------------------------------------------------------------------
 
-        return $this->finalQueryString;
-    }
+	/**
+	 * Returns the final, processed query string after binding, etal
+	 * has been performed.
+	 *
+	 * @return string
+	 */
+	public function getQuery(): string
+	{
+		if (empty($this->finalQueryString))
+		{
+			$this->finalQueryString = $this->originalQueryString;
+		}
 
-    /**
-     * Records the execution time of the statement using microtime(true)
-     * for it's start and end values. If no end value is present, will
-     * use the current time to determine total duration.
-     *
-     * @param float $end
-     *
-     * @return $this
-     */
-    public function setDuration(float $start, ?float $end = null)
-    {
-        $this->startTime = $start;
+		$this->compileBinds();
 
-        if ($end === null) {
-            $end = microtime(true);
-        }
+		return $this->finalQueryString;
+	}
 
-        $this->endTime = $end;
+	//--------------------------------------------------------------------
 
-        return $this;
-    }
+	/**
+	 * Records the execution time of the statement using microtime(true)
+	 * for it's start and end values. If no end value is present, will
+	 * use the current time to determine total duration.
+	 *
+	 * @param float $start
+	 * @param float $end
+	 *
+	 * @return $this
+	 */
+	public function setDuration(float $start, float $end = null)
+	{
+		$this->startTime = $start;
 
-    /**
-     * Returns the start time in seconds with microseconds.
-     *
-     * @return float|string
-     */
-    public function getStartTime(bool $returnRaw = false, int $decimals = 6)
-    {
-        if ($returnRaw) {
-            return $this->startTime;
-        }
+		if (is_null($end))
+		{
+			$end = microtime(true);
+		}
 
-        return number_format($this->startTime, $decimals);
-    }
+		$this->endTime = $end;
 
-    /**
-     * Returns the duration of this query during execution, or null if
-     * the query has not been executed yet.
-     *
-     * @param int $decimals The accuracy of the returned time.
-     */
-    public function getDuration(int $decimals = 6): string
-    {
-        return number_format(($this->endTime - $this->startTime), $decimals);
-    }
+		return $this;
+	}
 
-    /**
-     * Stores the error description that happened for this query.
-     *
-     * @return $this
-     */
-    public function setError(int $code, string $error)
-    {
-        $this->errorCode   = $code;
-        $this->errorString = $error;
+	//--------------------------------------------------------------------
 
-        return $this;
-    }
+	/**
+	 * Returns the start time in seconds with microseconds.
+	 *
+	 * @param boolean $returnRaw
+	 * @param integer $decimals
+	 *
+	 * @return string
+	 */
+	public function getStartTime(bool $returnRaw = false, int $decimals = 6): string
+	{
+		if ($returnRaw)
+		{
+			return $this->startTime;
+		}
 
-    /**
-     * Reports whether this statement created an error not.
-     */
-    public function hasError(): bool
-    {
-        return ! empty($this->errorString);
-    }
+		return number_format($this->startTime, $decimals);
+	}
 
-    /**
-     * Returns the error code created while executing this statement.
-     */
-    public function getErrorCode(): int
-    {
-        return $this->errorCode;
-    }
+	//--------------------------------------------------------------------
+	/**
+	 * Returns the duration of this query during execution, or null if
+	 * the query has not been executed yet.
+	 *
+	 * @param integer $decimals The accuracy of the returned time.
+	 *
+	 * @return string
+	 */
+	public function getDuration(int $decimals = 6): string
+	{
+		return number_format(($this->endTime - $this->startTime), $decimals);
+	}
 
-    /**
-     * Returns the error message created while executing this statement.
-     */
-    public function getErrorMessage(): string
-    {
-        return $this->errorString;
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * Determines if the statement is a write-type query or not.
-     */
-    public function isWriteType(): bool
-    {
-        return $this->db->isWriteType($this->originalQueryString);
-    }
+	/**
+	 * Stores the error description that happened for this query.
+	 *
+	 * @param integer $code
+	 * @param string  $error
+	 *
+	 * @return $this
+	 */
+	public function setError(int $code, string $error)
+	{
+		$this->errorCode   = $code;
+		$this->errorString = $error;
 
-    /**
-     * Swaps out one table prefix for a new one.
-     *
-     * @return $this
-     */
-    public function swapPrefix(string $orig, string $swap)
-    {
-        $sql = $this->swappedQueryString ?? $this->originalQueryString;
+		return $this;
+	}
 
-        $from = '/(\W)' . $orig . '(\S)/';
-        $to   = '\\1' . $swap . '\\2';
+	//--------------------------------------------------------------------
 
-        $this->swappedQueryString = preg_replace($from, $to, $sql);
+	/**
+	 * Reports whether this statement created an error not.
+	 *
+	 * @return boolean
+	 */
+	public function hasError(): bool
+	{
+		return ! empty($this->errorString);
+	}
 
-        unset($this->finalQueryString);
+	//--------------------------------------------------------------------
 
-        return $this;
-    }
+	/**
+	 * Returns the error code created while executing this statement.
+	 *
+	 * @return integer
+	 */
+	public function getErrorCode(): int
+	{
+		return $this->errorCode;
+	}
 
-    /**
-     * Returns the original SQL that was passed into the system.
-     */
-    public function getOriginalQuery(): string
-    {
-        return $this->originalQueryString;
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * Escapes and inserts any binds into the finalQueryString property.
-     *
-     * @see https://regex101.com/r/EUEhay/5
-     */
-    protected function compileBinds()
-    {
-        $sql   = $this->swappedQueryString ?? $this->originalQueryString;
-        $binds = $this->binds;
+	/**
+	 * Returns the error message created while executing this statement.
+	 *
+	 * @return string
+	 */
+	public function getErrorMessage(): string
+	{
+		return $this->errorString;
+	}
 
-        if (empty($binds)) {
-            $this->finalQueryString = $sql;
+	//--------------------------------------------------------------------
 
-            return;
-        }
+	/**
+	 * Determines if the statement is a write-type query or not.
+	 *
+	 * @return boolean
+	 */
+	public function isWriteType(): bool
+	{
+		return (bool) preg_match(
+						'/^\s*"?(SET|INSERT|UPDATE|DELETE|REPLACE|CREATE|DROP|TRUNCATE|LOAD|COPY|ALTER|RENAME|GRANT|REVOKE|LOCK|UNLOCK|REINDEX)\s/i', $this->originalQueryString);
+	}
 
-        if (is_int(array_key_first($binds))) {
-            $bindCount = count($binds);
-            $ml        = strlen($this->bindMarker);
+	//--------------------------------------------------------------------
 
-            $this->finalQueryString = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
-        } else {
-            // Reverse the binds so that duplicate named binds
-            // will be processed prior to the original binds.
-            $binds = array_reverse($binds);
+	/**
+	 * Swaps out one table prefix for a new one.
+	 *
+	 * @param string $orig
+	 * @param string $swap
+	 *
+	 * @return $this
+	 */
+	public function swapPrefix(string $orig, string $swap)
+	{
+		$sql = empty($this->finalQueryString) ? $this->originalQueryString : $this->finalQueryString;
 
-            $this->finalQueryString = $this->matchNamedBinds($sql, $binds);
-        }
-    }
+		$this->finalQueryString = preg_replace('/(\W)' . $orig . '(\S+?)/', '\\1' . $swap . '\\2', $sql);
 
-    /**
-     * Match bindings
-     */
-    protected function matchNamedBinds(string $sql, array $binds): string
-    {
-        $replacers = [];
+		return $this;
+	}
 
-        foreach ($binds as $placeholder => $value) {
-            // $value[1] contains the boolean whether should be escaped or not
-            $escapedValue = $value[1] ? $this->db->escape($value[0]) : $value[0];
+	//--------------------------------------------------------------------
 
-            // In order to correctly handle backlashes in saved strings
-            // we will need to preg_quote, so remove the wrapping escape characters
-            // otherwise it will get escaped.
-            if (is_array($value[0])) {
-                $escapedValue = '(' . implode(',', $escapedValue) . ')';
-            }
+	/**
+	 * Returns the original SQL that was passed into the system.
+	 *
+	 * @return string
+	 */
+	public function getOriginalQuery(): string
+	{
+		return $this->originalQueryString;
+	}
 
-            $replacers[":{$placeholder}:"] = $escapedValue;
-        }
+	//--------------------------------------------------------------------
 
-        return strtr($sql, $replacers);
-    }
+	/**
+	 * Escapes and inserts any binds into the finalQueryString object.
+	 *
+	 * @return null|void
+	 */
+	protected function compileBinds()
+	{
+		$sql = $this->finalQueryString;
 
-    /**
-     * Match bindings
-     */
-    protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
-    {
-        if ($c = preg_match_all("/'[^']*'/", $sql, $matches)) {
-            $c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
+		$hasNamedBinds = strpos($sql, ':') !== false && strpos($sql, ':=') === false;
 
-            // Bind values' count must match the count of markers in the query
-            if ($bindCount !== $c) {
-                return $sql;
-            }
-        } elseif (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount) {
-            return $sql;
-        }
+		if (empty($this->binds) || empty($this->bindMarker) ||
+				(strpos($sql, $this->bindMarker) === false &&
+				$hasNamedBinds === false)
+		)
+		{
+			return;
+		}
 
-        do {
-            $c--;
-            $escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
+		if (! is_array($this->binds))
+		{
+			$binds     = [$this->binds];
+			$bindCount = 1;
+		}
+		else
+		{
+			$binds     = $this->binds;
+			$bindCount = count($binds);
+		}
 
-            if (is_array($escapedValue)) {
-                $escapedValue = '(' . implode(',', $escapedValue) . ')';
-            }
+		// Reverse the binds so that duplicate named binds
+		// will be processed prior to the original binds.
+		if (! is_numeric(key(array_slice($binds, 0, 1))))
+		{
+			$binds = array_reverse($binds);
+		}
 
-            $sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
-        } while ($c !== 0);
+		// We'll need marker length later
+		$ml = strlen($this->bindMarker);
 
-        return $sql;
-    }
+		if ($hasNamedBinds)
+		{
+			$sql = $this->matchNamedBinds($sql, $binds);
+		}
+		else
+		{
+			$sql = $this->matchSimpleBinds($sql, $binds, $bindCount, $ml);
+		}
 
-    /**
-     * Returns string to display in debug toolbar
-     */
-    public function debugToolbarDisplay(): string
-    {
-        // Key words we want bolded
-        static $highlight = [
-            'AND',
-            'AS',
-            'ASC',
-            'AVG',
-            'BY',
-            'COUNT',
-            'DESC',
-            'DISTINCT',
-            'FROM',
-            'GROUP',
-            'HAVING',
-            'IN',
-            'INNER',
-            'INSERT',
-            'INTO',
-            'IS',
-            'JOIN',
-            'LEFT',
-            'LIKE',
-            'LIMIT',
-            'MAX',
-            'MIN',
-            'NOT',
-            'NULL',
-            'OFFSET',
-            'ON',
-            'OR',
-            'ORDER',
-            'RIGHT',
-            'SELECT',
-            'SUM',
-            'UPDATE',
-            'VALUES',
-            'WHERE',
-        ];
+		$this->finalQueryString = $sql;
+	}
 
-        $sql = esc($this->getQuery());
+	//--------------------------------------------------------------------
 
-        /**
-         * @see https://stackoverflow.com/a/20767160
-         * @see https://regex101.com/r/hUlrGN/4
-         */
-        $search = '/\b(?:' . implode('|', $highlight) . ')\b(?![^(&#039;)]*&#039;(?:(?:[^(&#039;)]*&#039;){2})*[^(&#039;)]*$)/';
+	/**
+	 * Match bindings
+	 *
+	 * @param  string $sql
+	 * @param  array  $binds
+	 * @return string
+	 */
+	protected function matchNamedBinds(string $sql, array $binds): string
+	{
+		$replacers = [];
 
-        return preg_replace_callback($search, static fn ($matches) => '<strong>' . str_replace(' ', '&nbsp;', $matches[0]) . '</strong>', $sql);
-    }
+		foreach ($binds as $placeholder => $value)
+		{
+			// $value[1] contains the boolean whether should be escaped or not
+			$escapedValue = $value[1] ? $this->db->escape($value[0]) : $value[0];
 
-    /**
-     * Return text representation of the query
-     */
-    public function __toString(): string
-    {
-        return $this->getQuery();
-    }
+			// In order to correctly handle backlashes in saved strings
+			// we will need to preg_quote, so remove the wrapping escape characters
+			// otherwise it will get escaped.
+			if (is_array($value[0]))
+			{
+				$escapedValue = '(' . implode(',', $escapedValue) . ')';
+			}
+
+			$replacers[":{$placeholder}:"] = $escapedValue;
+		}
+
+		return strtr($sql, $replacers);
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Match bindings
+	 *
+	 * @param  string  $sql
+	 * @param  array   $binds
+	 * @param  integer $bindCount
+	 * @param  integer $ml
+	 * @return string
+	 */
+	protected function matchSimpleBinds(string $sql, array $binds, int $bindCount, int $ml): string
+	{
+		// Make sure not to replace a chunk inside a string that happens to match the bind marker
+		if ($c = preg_match_all("/'[^']*'/i", $sql, $matches))
+		{
+			$c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', str_replace($matches[0], str_replace($this->bindMarker, str_repeat(' ', $ml), $matches[0]), $sql, $c), $matches, PREG_OFFSET_CAPTURE);
+
+			// Bind values' count must match the count of markers in the query
+			if ($bindCount !== $c)
+			{
+				return $sql;
+			}
+		}
+		// Number of binds must match bindMarkers in the string.
+		else if (($c = preg_match_all('/' . preg_quote($this->bindMarker, '/') . '/i', $sql, $matches, PREG_OFFSET_CAPTURE)) !== $bindCount)
+		{
+			return $sql;
+		}
+
+		do
+		{
+			$c--;
+			$escapedValue = $binds[$c][1] ? $this->db->escape($binds[$c][0]) : $binds[$c][0];
+			if (is_array($escapedValue))
+			{
+				$escapedValue = '(' . implode(',', $escapedValue) . ')';
+			}
+			$sql = substr_replace($sql, $escapedValue, $matches[0][$c][1], $ml);
+		}
+		while ($c !== 0);
+
+		return $sql;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Return text representation of the query
+	 *
+	 * @return string
+	 */
+	public function __toString(): string
+	{
+		return $this->getQuery();
+	}
+
+	//--------------------------------------------------------------------
 }

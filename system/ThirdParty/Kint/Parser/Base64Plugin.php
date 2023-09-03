@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,10 +25,10 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\Representation;
 
-class Base64Plugin extends AbstractPlugin
+class Base64Plugin extends Plugin
 {
     /**
      * The minimum length before a string will be considered for base64 decoding.
@@ -46,17 +44,17 @@ class Base64Plugin extends AbstractPlugin
      */
     public static $min_length_soft = 50;
 
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['string'];
+        return array('string');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (\strlen($var) < self::$min_length_hard || \strlen($var) % 4) {
             return;
@@ -70,13 +68,14 @@ class Base64Plugin extends AbstractPlugin
             return;
         }
 
+        /** @var false|string */
         $data = \base64_decode($var, true);
 
         if (false === $data) {
             return;
         }
 
-        $base_obj = new Value();
+        $base_obj = new BasicObject();
         $base_obj->depth = $o->depth + 1;
         $base_obj->name = 'base64_decode('.$o->name.')';
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,27 +25,26 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
+use Kint\Object\BasicObject;
+use Kint\Object\TraceFrameObject;
+use Kint\Object\TraceObject;
 use Kint\Utils;
-use Kint\Zval\TraceFrameValue;
-use Kint\Zval\TraceValue;
-use Kint\Zval\Value;
 
-class TracePlugin extends AbstractPlugin
+class TracePlugin extends Plugin
 {
-    public static $blacklist = ['spl_autoload_call'];
-    public static $path_blacklist = [];
+    public static $blacklist = array('spl_autoload_call');
 
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['array'];
+        return array('array');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!$o->value) {
             return;
@@ -59,16 +56,15 @@ class TracePlugin extends AbstractPlugin
             return;
         }
 
-        $traceobj = new TraceValue();
+        $traceobj = new TraceObject();
         $traceobj->transplant($o);
         $rep = $traceobj->value;
 
         $old_trace = $rep->contents;
 
         Utils::normalizeAliases(self::$blacklist);
-        $path_blacklist = self::normalizePaths(self::$path_blacklist);
 
-        $rep->contents = [];
+        $rep->contents = array();
 
         foreach ($old_trace as $frame) {
             $index = $frame->name;
@@ -82,15 +78,7 @@ class TracePlugin extends AbstractPlugin
                 continue;
             }
 
-            if (isset($trace[$index]['file']) && ($realfile = \realpath($trace[$index]['file']))) {
-                foreach ($path_blacklist as $path) {
-                    if (0 === \strpos($realfile, $path)) {
-                        continue 2;
-                    }
-                }
-            }
-
-            $rep->contents[$index] = new TraceFrameValue($frame, $trace[$index]);
+            $rep->contents[$index] = new TraceFrameObject($frame, $trace[$index]);
         }
 
         \ksort($rep->contents);
@@ -100,21 +88,5 @@ class TracePlugin extends AbstractPlugin
         $traceobj->addRepresentation($rep);
         $traceobj->size = \count($rep->contents);
         $o = $traceobj;
-    }
-
-    protected static function normalizePaths(array $paths): array
-    {
-        $normalized = [];
-
-        foreach ($paths as $path) {
-            $realpath = \realpath($path);
-            if (\is_dir($realpath)) {
-                $realpath .= DIRECTORY_SEPARATOR;
-            }
-
-            $normalized[] = $realpath;
-        }
-
-        return $normalized;
     }
 }

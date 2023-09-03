@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -28,34 +26,31 @@ declare(strict_types=1);
 namespace Kint\Renderer\Rich;
 
 use Kint\Kint;
-use Kint\Zval\ClosureValue;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\ClosureObject;
 
-class ClosurePlugin extends AbstractPlugin implements ValuePluginInterface
+class ClosurePlugin extends Plugin implements ObjectPluginInterface
 {
-    public function renderValue(Value $o): ?string
+    public function renderObject(BasicObject $o)
     {
-        if (!$o instanceof ClosureValue) {
-            return null;
-        }
-
         $children = $this->renderer->renderChildren($o);
 
-        $header = '';
+        if (!($o instanceof ClosureObject)) {
+            $header = $this->renderer->renderHeader($o);
+        } else {
+            $header = '';
 
-        if (null !== ($s = $o->getModifiers())) {
-            $header .= '<var>'.$s.'</var> ';
-        }
+            if (null !== ($s = $o->getModifiers())) {
+                $header .= '<var>'.$s.'</var> ';
+            }
 
-        if (null !== ($s = $o->getName())) {
-            $header .= '<dfn>'.$this->renderer->escape($s).'('.$this->renderer->escape($o->getParams()).')</dfn> ';
-        }
+            if (null !== ($s = $o->getName())) {
+                $header .= '<dfn>'.$this->renderer->escape($s).'('.$this->renderer->escape($o->getParams()).')</dfn> ';
+            }
 
-        $header .= '<var>Closure</var>';
-        if (isset($o->spl_object_id)) {
-            $header .= '#'.((int) $o->spl_object_id);
+            $header .= '<var>Closure</var> ';
+            $header .= $this->renderer->escape(Kint::shortenPath($o->filename)).':'.(int) $o->startline;
         }
-        $header .= ' '.$this->renderer->escape(Kint::shortenPath($o->filename)).':'.(int) $o->startline;
 
         $header = $this->renderer->renderHeaderWrapper($o, (bool) \strlen($children), $header);
 

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -28,20 +26,20 @@ declare(strict_types=1);
 namespace Kint\Parser;
 
 use InvalidArgumentException;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
 
-class ProxyPlugin implements PluginInterface
+class ProxyPlugin extends Plugin
 {
-    protected $parser;
     protected $types;
     protected $triggers;
     protected $callback;
 
-    /**
-     * @param callable $callback
-     */
-    public function __construct(array $types, int $triggers, $callback)
+    public function __construct(array $types, $triggers, $callback)
     {
+        if (!\is_int($triggers)) {
+            throw new InvalidArgumentException('ProxyPlugin triggers must be an int bitmask');
+        }
+
         if (!\is_callable($callback)) {
             throw new InvalidArgumentException('ProxyPlugin callback must be callable');
         }
@@ -51,23 +49,18 @@ class ProxyPlugin implements PluginInterface
         $this->callback = $callback;
     }
 
-    public function setParser(Parser $p): void
-    {
-        $this->parser = $p;
-    }
-
-    public function getTypes(): array
+    public function getTypes()
     {
         return $this->types;
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return $this->triggers;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
-        \call_user_func_array($this->callback, [&$var, &$o, $trigger, $this->parser]);
+        return \call_user_func_array($this->callback, array(&$var, &$o, $trigger, $this->parser));
     }
 }

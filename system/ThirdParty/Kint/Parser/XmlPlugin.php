@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -29,10 +27,10 @@ namespace Kint\Parser;
 
 use DOMDocument;
 use Exception;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\Representation;
 
-class XmlPlugin extends AbstractPlugin
+class XmlPlugin extends Plugin
 {
     /**
      * Which method to parse the variable with.
@@ -45,17 +43,17 @@ class XmlPlugin extends AbstractPlugin
      */
     public static $parse_method = 'SimpleXML';
 
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['string'];
+        return array('string');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if ('<?xml' !== \substr($var, 0, 5)) {
             return;
@@ -65,15 +63,15 @@ class XmlPlugin extends AbstractPlugin
             return;
         }
 
-        $xml = \call_user_func([\get_class($this), 'xmlTo'.self::$parse_method], $var, $o->access_path);
+        $xml = \call_user_func(array(\get_class($this), 'xmlTo'.self::$parse_method), $var, $o->access_path);
 
         if (empty($xml)) {
             return;
         }
 
-        [$xml, $access_path, $name] = $xml;
+        list($xml, $access_path, $name) = $xml;
 
-        $base_obj = new Value();
+        $base_obj = new BasicObject();
         $base_obj->depth = $o->depth + 1;
         $base_obj->name = $name;
         $base_obj->access_path = $access_path;
@@ -84,19 +82,22 @@ class XmlPlugin extends AbstractPlugin
         $o->addRepresentation($r, 0);
     }
 
-    protected static function xmlToSimpleXML(string $var, ?string $parent_path): ?array
+    protected static function xmlToSimpleXML($var, $parent_path)
     {
-        $errors = \libxml_use_internal_errors(true);
         try {
+            $errors = \libxml_use_internal_errors(true);
             $xml = \simplexml_load_string($var);
-        } catch (Exception $e) {
-            return null;
-        } finally {
             \libxml_use_internal_errors($errors);
+        } catch (Exception $e) {
+            if (isset($errors)) {
+                \libxml_use_internal_errors($errors);
+            }
+
+            return;
         }
 
-        if (false === $xml) {
-            return null;
+        if (!$xml) {
+            return;
         }
 
         if (null === $parent_path) {
@@ -107,21 +108,25 @@ class XmlPlugin extends AbstractPlugin
 
         $name = $xml->getName();
 
-        return [$xml, $access_path, $name];
+        return array($xml, $access_path, $name);
     }
 
     /**
      * Get the DOMDocument info.
      *
+     * The documentation of DOMDocument::loadXML() states that while you can
+     * call it statically, it will give an E_STRICT warning. On my system it
+     * actually gives an E_DEPRECATED warning, but it works so we'll just add
+     * an error-silencing '@' to the access path.
+     *
      * If it errors loading then we wouldn't have gotten this far in the first place.
      *
-     * @psalm-param non-empty-string $var         The XML string
+     * @param string      $var         The XML string
+     * @param null|string $parent_path The path to the parent, in this case the XML string
      *
-     * @param ?string $parent_path The path to the parent, in this case the XML string
-     *
-     * @return ?array The root element DOMNode, the access path, and the root element name
+     * @return null|array The root element DOMNode, the access path, and the root element name
      */
-    protected static function xmlToDOMDocument(string $var, ?string $parent_path): ?array
+    protected static function xmlToDOMDocument($var, $parent_path)
     {
         // There's no way to check validity in DOMDocument without making errors. For shame!
         if (!self::xmlToSimpleXML($var, $parent_path)) {
@@ -130,23 +135,16 @@ class XmlPlugin extends AbstractPlugin
 
         $xml = new DOMDocument();
         $xml->loadXML($var);
-
-        if ($xml->childNodes->count() > 1) {
-            $xml = $xml->childNodes;
-            $access_path = 'childNodes';
-        } else {
-            $xml = $xml->firstChild;
-            $access_path = 'firstChild';
-        }
+        $xml = $xml->firstChild;
 
         if (null === $parent_path) {
             $access_path = null;
         } else {
-            $access_path = '(function($s){$x = new \\DomDocument(); $x->loadXML($s); return $x;})('.$parent_path.')->'.$access_path;
+            $access_path = '@\\DOMDocument::loadXML('.$parent_path.')->firstChild';
         }
 
-        $name = $xml->nodeName ?? null;
+        $name = $xml->nodeName;
 
-        return [$xml, $access_path, $name];
+        return array($xml, $access_path, $name);
     }
 }

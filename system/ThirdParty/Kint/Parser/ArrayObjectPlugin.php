@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -28,21 +26,21 @@ declare(strict_types=1);
 namespace Kint\Parser;
 
 use ArrayObject;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
 
-class ArrayObjectPlugin extends AbstractPlugin
+class ArrayObjectPlugin extends Plugin
 {
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['object'];
+        return array('object');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_BEGIN;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!$var instanceof ArrayObject) {
             return;

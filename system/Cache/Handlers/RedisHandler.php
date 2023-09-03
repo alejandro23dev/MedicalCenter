@@ -1,262 +1,352 @@
 <?php
 
 /**
- * This file is part of CodeIgniter 4 framework.
+ * CodeIgniter
  *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ * An open source application development framework for PHP
  *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
+ * @license    https://opensource.org/licenses/MIT	MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
  */
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Cache\CacheInterface;
 use CodeIgniter\Exceptions\CriticalError;
-use CodeIgniter\I18n\Time;
-use Config\Cache;
-use Redis;
-use RedisException;
 
 /**
  * Redis cache handler
  */
-class RedisHandler extends BaseHandler
+class RedisHandler implements CacheInterface
 {
-    /**
-     * Default config
-     *
-     * @var array
-     */
-    protected $config = [
-        'host'     => '127.0.0.1',
-        'password' => null,
-        'port'     => 6379,
-        'timeout'  => 0,
-        'database' => 0,
-    ];
 
-    /**
-     * Redis connection
-     *
-     * @var Redis|null
-     */
-    protected $redis;
+	/**
+	 * Prefixed to all cache names.
+	 *
+	 * @var string
+	 */
+	protected $prefix;
 
-    /**
-     * Note: Use `CacheFactory::getHandler()` to instantiate.
-     */
-    public function __construct(Cache $config)
-    {
-        $this->prefix = $config->prefix;
+	/**
+	 * Default config
+	 *
+	 * @var array
+	 */
+	protected $config = [
+		'host'     => '127.0.0.1',
+		'password' => null,
+		'port'     => 6379,
+		'timeout'  => 0,
+		'database' => 0,
+	];
 
-        $this->config = array_merge($this->config, $config->redis);
-    }
+	/**
+	 * Redis connection
+	 *
+	 * @var \Redis
+	 */
+	protected $redis;
 
-    /**
-     * Closes the connection to Redis if present.
-     */
-    public function __destruct()
-    {
-        if (isset($this->redis)) {
-            $this->redis->close();
-        }
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
-    {
-        $config = $this->config;
+	/**
+	 * Constructor.
+	 *
+	 * @param \Config\Cache $config
+	 */
+	public function __construct($config)
+	{
+		$this->prefix = $config->prefix ?: '';
 
-        $this->redis = new Redis();
+		if (! empty($config))
+		{
+			$this->config = array_merge($this->config, $config->redis);
+		}
+	}
 
-        try {
-            // Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
-            // I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
+	/**
+	 * Class destructor
+	 *
+	 * Closes the connection to Redis if present.
+	 */
+	public function __destruct()
+	{
+		if ($this->redis)
+		{
+			$this->redis->close();
+		}
+	}
 
-            if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout'])) {
-                // Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
-                log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+	//--------------------------------------------------------------------
 
-                throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
-            }
+	/**
+	 * Takes care of any handler-specific setup that must be done.
+	 */
+	public function initialize()
+	{
+		$config = $this->config;
 
-            if (isset($config['password']) && ! $this->redis->auth($config['password'])) {
-                log_message('error', 'Cache: Redis authentication failed.');
+		$this->redis = new \Redis();
 
-                throw new CriticalError('Cache: Redis authentication failed.');
-            }
+		// Try to connect to Redis, if an issue occurs throw a CriticalError exception,
+		// so that the CacheFactory can attempt to initiate the next cache handler.
+		try
+		{
+			// Note:: If Redis is your primary cache choice, and it is "offline", every page load will end up been delayed by the timeout duration.
+			// I feel like some sort of temporary flag should be set, to indicate that we think Redis is "offline", allowing us to bypass the timeout for a set period of time.
 
-            if (isset($config['database']) && ! $this->redis->select($config['database'])) {
-                log_message('error', 'Cache: Redis select database failed.');
+			if (! $this->redis->connect($config['host'], ($config['host'][0] === '/' ? 0 : $config['port']), $config['timeout']))
+			{
+				// Note:: I'm unsure if log_message() is necessary, however I'm not 100% comfortable removing it.
+				log_message('error', 'Cache: Redis connection failed. Check your configuration.');
+				throw new CriticalError('Cache: Redis connection failed. Check your configuration.');
+			}
 
-                throw new CriticalError('Cache: Redis select database failed.');
-            }
-        } catch (RedisException $e) {
-            throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
-        }
-    }
+			if (isset($config['password']) && ! $this->redis->auth($config['password']))
+			{
+				log_message('error', 'Cache: Redis authentication failed.');
+				throw new CriticalError('Cache: Redis authentication failed.');
+			}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get(string $key)
-    {
-        $key  = static::validateKey($key, $this->prefix);
-        $data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
+			if (isset($config['database']) && ! $this->redis->select($config['database']))
+			{
+				log_message('error', 'Cache: Redis select database failed.');
+				throw new CriticalError('Cache: Redis select database failed.');
+			}
+		}
+		catch (\RedisException $e)
+		{
+			// $this->redis->connect() can sometimes throw a RedisException.
+			// We need to convert the exception into a CriticalError exception and throw it.
+			throw new CriticalError('Cache: RedisException occurred with message (' . $e->getMessage() . ').');
+		}
+	}
 
-        if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false) {
-            return null;
-        }
+	//--------------------------------------------------------------------
 
-        switch ($data['__ci_type']) {
-            case 'array':
-            case 'object':
-                return unserialize($data['__ci_value']);
+	/**
+	 * Attempts to fetch an item from the cache store.
+	 *
+	 * @param string $key Cache item name
+	 *
+	 * @return mixed
+	 */
+	public function get(string $key)
+	{
+		$key = $this->prefix . $key;
 
-            case 'boolean':
-            case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
-            case 'string':
-            case 'NULL':
-                return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
+		$data = $this->redis->hMGet($key, ['__ci_type', '__ci_value']);
 
-            case 'resource':
-            default:
-                return null;
-        }
-    }
+		if (! isset($data['__ci_type'], $data['__ci_value']) || $data['__ci_value'] === false)
+		{
+			return null;
+		}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function save(string $key, $value, int $ttl = 60)
-    {
-        $key = static::validateKey($key, $this->prefix);
+		switch ($data['__ci_type'])
+		{
+			case 'array':
+			case 'object':
+				return unserialize($data['__ci_value']);
+			case 'boolean':
+			case 'integer':
+			case 'double': // Yes, 'double' is returned and NOT 'float'
+			case 'string':
+			case 'NULL':
+				return settype($data['__ci_value'], $data['__ci_type']) ? $data['__ci_value'] : null;
+			case 'resource':
+			default:
+				return null;
+		}
+	}
 
-        switch ($dataType = gettype($value)) {
-            case 'array':
-            case 'object':
-                $value = serialize($value);
-                break;
+	//--------------------------------------------------------------------
 
-            case 'boolean':
-            case 'integer':
-            case 'double': // Yes, 'double' is returned and NOT 'float'
-            case 'string':
-            case 'NULL':
-                break;
+	/**
+	 * Saves an item to the cache store.
+	 *
+	 * @param string  $key   Cache item name
+	 * @param mixed   $value The data to save
+	 * @param integer $ttl   Time To Live, in seconds (default 60)
+	 *
+	 * @return mixed
+	 */
+	public function save(string $key, $value, int $ttl = 60)
+	{
+		$key = $this->prefix . $key;
 
-            case 'resource':
-            default:
-                return false;
-        }
+		switch ($data_type = gettype($value))
+		{
+			case 'array':
+			case 'object':
+				$value = serialize($value);
+				break;
+			case 'boolean':
+			case 'integer':
+			case 'double': // Yes, 'double' is returned and NOT 'float'
+			case 'string':
+			case 'NULL':
+				break;
+			case 'resource':
+			default:
+				return false;
+		}
 
-        if (! $this->redis->hMSet($key, ['__ci_type' => $dataType, '__ci_value' => $value])) {
-            return false;
-        }
+		if (! $this->redis->hMSet($key, ['__ci_type' => $data_type, '__ci_value' => $value]))
+		{
+			return false;
+		}
+		elseif ($ttl)
+		{
+			$this->redis->expireAt($key, time() + $ttl);
+		}
 
-        if ($ttl) {
-            $this->redis->expireAt($key, Time::now()->getTimestamp() + $ttl);
-        }
+		return true;
+	}
 
-        return true;
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public function delete(string $key)
-    {
-        $key = static::validateKey($key, $this->prefix);
+	/**
+	 * Deletes a specific item from the cache store.
+	 *
+	 * @param string $key Cache item name
+	 *
+	 * @return boolean
+	 */
+	public function delete(string $key)
+	{
+		$key = $this->prefix . $key;
 
-        return $this->redis->del($key) === 1;
-    }
+		return ($this->redis->del($key) === 1);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function deleteMatching(string $pattern)
-    {
-        $matchedKeys = [];
-        $iterator    = null;
+	//--------------------------------------------------------------------
 
-        do {
-            // Scan for some keys
-            $keys = $this->redis->scan($iterator, $pattern);
+	/**
+	 * Performs atomic incrementation of a raw stored value.
+	 *
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
+	 *
+	 * @return mixed
+	 */
+	public function increment(string $key, int $offset = 1)
+	{
+		$key = $this->prefix . $key;
 
-            // Redis may return empty results, so protect against that
-            if ($keys !== false) {
-                foreach ($keys as $key) {
-                    $matchedKeys[] = $key;
-                }
-            }
-        } while ($iterator > 0);
+		return $this->redis->hIncrBy($key, 'data', $offset);
+	}
 
-        return $this->redis->del($matchedKeys);
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public function increment(string $key, int $offset = 1)
-    {
-        $key = static::validateKey($key, $this->prefix);
+	/**
+	 * Performs atomic decrementation of a raw stored value.
+	 *
+	 * @param string  $key    Cache ID
+	 * @param integer $offset Step/value to increase by
+	 *
+	 * @return mixed
+	 */
+	public function decrement(string $key, int $offset = 1)
+	{
+		$key = $this->prefix . $key;
 
-        return $this->redis->hIncrBy($key, '__ci_value', $offset);
-    }
+		return $this->redis->hIncrBy($key, 'data', -$offset);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function decrement(string $key, int $offset = 1)
-    {
-        return $this->increment($key, -$offset);
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public function clean()
-    {
-        return $this->redis->flushDB();
-    }
+	/**
+	 * Will delete all items in the entire cache.
+	 *
+	 * @return boolean
+	 */
+	public function clean()
+	{
+		return $this->redis->flushDB();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getCacheInfo()
-    {
-        return $this->redis->info();
-    }
+	//--------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(string $key)
-    {
-        $value = $this->get($key);
+	/**
+	 * Returns information on the entire cache.
+	 *
+	 * The information returned and the structure of the data
+	 * varies depending on the handler.
+	 *
+	 * @return mixed
+	 */
+	public function getCacheInfo()
+	{
+		return $this->redis->info();
+	}
 
-        if ($value !== null) {
-            $time = Time::now()->getTimestamp();
-            $ttl  = $this->redis->ttl(static::validateKey($key, $this->prefix));
+	//--------------------------------------------------------------------
 
-            return [
-                'expire' => $ttl > 0 ? $time + $ttl : null,
-                'mtime'  => $time,
-                'data'   => $value,
-            ];
-        }
+	/**
+	 * Returns detailed information about the specific item in the cache.
+	 *
+	 * @param string $key Cache item name.
+	 *
+	 * @return mixed
+	 */
+	public function getMetaData(string $key)
+	{
+		$key = $this->prefix . $key;
 
-        return null;
-    }
+		$value = $this->get($key);
 
-    /**
-     * {@inheritDoc}
-     */
-    public function isSupported(): bool
-    {
-        return extension_loaded('redis');
-    }
+		if ($value !== null)
+		{
+			$time = time();
+			return [
+				'expire' => $time + $this->redis->ttl($key),
+				'mtime'  => $time,
+				'data'   => $value,
+			];
+		}
+
+		return null;
+	}
+
+	//--------------------------------------------------------------------
+
+	/**
+	 * Determines if the driver is supported on this system.
+	 *
+	 * @return boolean
+	 */
+	public function isSupported(): bool
+	{
+		return extension_loaded('redis');
+	}
+
+	//--------------------------------------------------------------------
 }

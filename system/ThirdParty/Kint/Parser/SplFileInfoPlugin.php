@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,24 +25,24 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\SplFileInfoRepresentation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\SplFileInfoRepresentation;
 use SplFileInfo;
 use SplFileObject;
 
-class SplFileInfoPlugin extends AbstractPlugin
+class SplFileInfoPlugin extends Plugin
 {
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['object'];
+        return array('object');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_COMPLETE;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!$var instanceof SplFileInfo || $var instanceof SplFileObject) {
             return;

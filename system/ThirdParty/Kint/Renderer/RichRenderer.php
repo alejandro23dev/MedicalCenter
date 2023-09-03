@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -28,62 +26,51 @@ declare(strict_types=1);
 namespace Kint\Renderer;
 
 use Kint\Kint;
-use Kint\Renderer\Rich\PluginInterface;
-use Kint\Renderer\Rich\TabPluginInterface;
-use Kint\Renderer\Rich\ValuePluginInterface;
+use Kint\Object\BasicObject;
+use Kint\Object\BlobObject;
+use Kint\Object\InstanceObject;
+use Kint\Object\Representation\Representation;
 use Kint\Utils;
-use Kint\Zval\BlobValue;
-use Kint\Zval\InstanceValue;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
 
-/**
- * @psalm-import-type Encoding from BlobValue
- * @psalm-import-type PluginMap from AbstractRenderer
- */
-class RichRenderer extends AbstractRenderer
+class RichRenderer extends Renderer
 {
     /**
-     * RichRenderer value plugins should implement ValuePluginInterface.
-     *
-     * @psalm-var PluginMap
+     * RichRenderer object plugins should implement Kint\Renderer\Rich\ObjectPluginInterface.
      */
-    public static $value_plugins = [
-        'array_limit' => Rich\ArrayLimitPlugin::class,
-        'blacklist' => Rich\BlacklistPlugin::class,
-        'callable' => Rich\CallablePlugin::class,
-        'color' => Rich\ColorPlugin::class,
-        'depth_limit' => Rich\DepthLimitPlugin::class,
-        'recursion' => Rich\RecursionPlugin::class,
-        'simplexml_element' => Rich\SimpleXMLElementPlugin::class,
-        'trace_frame' => Rich\TraceFramePlugin::class,
-    ];
+    public static $object_plugins = array(
+        'blacklist' => 'Kint\\Renderer\\Rich\\BlacklistPlugin',
+        'callable' => 'Kint\\Renderer\\Rich\\CallablePlugin',
+        'closure' => 'Kint\\Renderer\\Rich\\ClosurePlugin',
+        'color' => 'Kint\\Renderer\\Rich\\ColorPlugin',
+        'depth_limit' => 'Kint\\Renderer\\Rich\\DepthLimitPlugin',
+        'recursion' => 'Kint\\Renderer\\Rich\\RecursionPlugin',
+        'simplexml_element' => 'Kint\\Renderer\\Rich\\SimpleXMLElementPlugin',
+        'trace_frame' => 'Kint\\Renderer\\Rich\\TraceFramePlugin',
+    );
 
     /**
-     * RichRenderer tab plugins should implement TabPluginInterface.
-     *
-     * @psalm-var PluginMap
+     * RichRenderer tab plugins should implement Kint\Renderer\Rich\TabPluginInterface.
      */
-    public static $tab_plugins = [
-        'binary' => Rich\BinaryPlugin::class,
-        'color' => Rich\ColorPlugin::class,
-        'method_definition' => Rich\MethodDefinitionPlugin::class,
-        'microtime' => Rich\MicrotimePlugin::class,
-        'source' => Rich\SourcePlugin::class,
-        'table' => Rich\TablePlugin::class,
-        'timestamp' => Rich\TimestampPlugin::class,
-    ];
+    public static $tab_plugins = array(
+        'binary' => 'Kint\\Renderer\\Rich\\BinaryPlugin',
+        'color' => 'Kint\\Renderer\\Rich\\ColorPlugin',
+        'docstring' => 'Kint\\Renderer\\Rich\\DocstringPlugin',
+        'microtime' => 'Kint\\Renderer\\Rich\\MicrotimePlugin',
+        'source' => 'Kint\\Renderer\\Rich\\SourcePlugin',
+        'table' => 'Kint\\Renderer\\Rich\\TablePlugin',
+        'timestamp' => 'Kint\\Renderer\\Rich\\TimestampPlugin',
+    );
 
-    public static $pre_render_sources = [
-        'script' => [
-            [self::class, 'renderJs'],
-            [Rich\MicrotimePlugin::class, 'renderJs'],
-        ],
-        'style' => [
-            [self::class, 'renderCss'],
-        ],
-        'raw' => [],
-    ];
+    public static $pre_render_sources = array(
+        'script' => array(
+            array('Kint\\Renderer\\RichRenderer', 'renderJs'),
+            array('Kint\\Renderer\\Rich\\MicrotimePlugin', 'renderJs'),
+        ),
+        'style' => array(
+            array('Kint\\Renderer\\RichRenderer', 'renderCss'),
+        ),
+        'raw' => array(),
+    );
 
     /**
      * Whether or not to render access paths.
@@ -131,7 +118,7 @@ class RichRenderer extends AbstractRenderer
      *
      * @var bool
      */
-    public static $folder = false;
+    public static $folder = true;
 
     /**
      * Sort mode for object properties.
@@ -145,35 +132,37 @@ class RichRenderer extends AbstractRenderer
 
     public static $always_pre_render = false;
 
-    public static $js_nonce = null;
-    public static $css_nonce = null;
-
-    protected $plugin_objs = [];
+    protected $plugin_objs = array();
     protected $expand = false;
     protected $force_pre_render = false;
-    protected $use_folder = false;
+    protected $pre_render;
+    protected $use_folder;
 
     public function __construct()
     {
-        $this->setUseFolder(self::$folder);
-        $this->setForcePreRender(self::$always_pre_render);
+        $this->pre_render = self::$needs_pre_render;
+        $this->use_folder = self::$folder;
+
+        if (self::$always_pre_render) {
+            $this->setForcePreRender();
+        }
     }
 
-    public function setCallInfo(array $info): void
+    public function setCallInfo(array $info)
     {
         parent::setCallInfo($info);
 
         if (\in_array('!', $this->call_info['modifiers'], true)) {
             $this->setExpand(true);
-            $this->setUseFolder(false);
+            $this->use_folder = false;
         }
 
         if (\in_array('@', $this->call_info['modifiers'], true)) {
-            $this->setForcePreRender(true);
+            $this->setForcePreRender();
         }
     }
 
-    public function setStatics(array $statics): void
+    public function setStatics(array $statics)
     {
         parent::setStatics($statics);
 
@@ -182,55 +171,51 @@ class RichRenderer extends AbstractRenderer
         }
 
         if (!empty($statics['return'])) {
-            $this->setForcePreRender(true);
+            $this->setForcePreRender();
         }
     }
 
-    public function setExpand(bool $expand): void
+    public function setExpand($expand)
     {
         $this->expand = $expand;
     }
 
-    public function getExpand(): bool
+    public function getExpand()
     {
         return $this->expand;
     }
 
-    public function setForcePreRender(bool $force_pre_render): void
+    public function setForcePreRender()
     {
-        $this->force_pre_render = $force_pre_render;
+        $this->force_pre_render = true;
+        $this->pre_render = true;
     }
 
-    public function getForcePreRender(): bool
+    public function setPreRender($pre_render)
     {
-        return $this->force_pre_render;
+        $this->setForcePreRender(); // TODO: Remove line in next major version
+        $this->pre_render = $pre_render;
     }
 
-    public function setUseFolder(bool $use_folder): void
+    public function getPreRender()
+    {
+        return $this->pre_render;
+    }
+
+    public function setUseFolder($use_folder)
     {
         $this->use_folder = $use_folder;
     }
 
-    public function getUseFolder(): bool
+    public function getUseFolder()
     {
         return $this->use_folder;
     }
 
-    public function shouldPreRender(): bool
+    public function render(BasicObject $o)
     {
-        return $this->getForcePreRender() || self::$needs_pre_render;
-    }
-
-    public function shouldFolderRender(): bool
-    {
-        return $this->getUseFolder() && ($this->getForcePreRender() || self::$needs_folder_render);
-    }
-
-    public function render(Value $o): string
-    {
-        if (($plugin = $this->getPlugin(self::$value_plugins, $o->hints)) && $plugin instanceof ValuePluginInterface) {
-            $output = $plugin->renderValue($o);
-            if (null !== $output && \strlen($output)) {
+        if ($plugin = $this->getPlugin(self::$object_plugins, $o->hints)) {
+            if (\strlen($output = $plugin->renderObject($o))) {
                 return $output;
             }
         }
@@ -241,19 +226,19 @@ class RichRenderer extends AbstractRenderer
         return '<dl>'.$header.$children.'</dl>';
     }
 
-    public function renderNothing(): string
+    public function renderNothing()
     {
         return '<dl><dt><var>No argument</var></dt></dl>';
     }
 
-    public function renderHeaderWrapper(Value $o, bool $has_children, string $contents): string
+    public function renderHeaderWrapper(BasicObject $o, $has_children, $contents)
     {
         $out = '<dt';
 
         if ($has_children) {
             $out .= ' class="kint-parent';
 
-            if ($this->getExpand()) {
+            if ($this->expand) {
                 $out .= ' kint-show';
             }
 
@@ -262,7 +247,7 @@ class RichRenderer extends AbstractRenderer
 
         $out .= '>';
 
-        if (self::$access_paths && $o->depth > 0 && ($ap = $o->getAccessPath())) {
+        if (self::$access_paths && $o->depth > 0 && $ap = $o->getAccessPath()) {
             $out .= '<span class="kint-access-path-trigger" title="Show access path">&rlarr;</span>';
         }
 
@@ -286,7 +271,7 @@ class RichRenderer extends AbstractRenderer
         return $out.'</dt>';
     }
 
-    public function renderHeader(Value $o): string
+    public function renderHeader(BasicObject $o)
     {
         $output = '';
 
@@ -311,13 +296,7 @@ class RichRenderer extends AbstractRenderer
                 $s = '&amp;'.$s;
             }
 
-            $output .= '<var>'.$s.'</var>';
-
-            if ($o instanceof InstanceValue && isset($o->spl_object_id)) {
-                $output .= '#'.((int) $o->spl_object_id);
-            }
-
-            $output .= ' ';
+            $output .= '<var>'.$s.'</var> ';
         }
 
         if (null !== ($s = $o->getSize())) {
@@ -340,10 +319,10 @@ class RichRenderer extends AbstractRenderer
         return \trim($output);
     }
 
-    public function renderChildren(Value $o): string
+    public function renderChildren(BasicObject $o)
     {
-        $contents = [];
-        $tabs = [];
+        $contents = array();
+        $tabs = array();
 
         foreach ($o->getRepresentations() as $rep) {
             $result = $this->renderTab($o, $rep);
@@ -374,16 +353,10 @@ class RichRenderer extends AbstractRenderer
                 $output .= $this->escape($tab->getLabel()).'</li>';
             }
 
-            $output .= '</ul><ul class="kint-tab-contents">';
+            $output .= '</ul><ul>';
 
-            foreach ($contents as $i => $tab) {
-                if (0 === $i) {
-                    $output .= '<li class="kint-show">';
-                } else {
-                    $output .= '<li>';
-                }
-
-                $output .= $tab.'</li>';
+            foreach ($contents as $tab) {
+                $output .= '<li>'.$tab.'</li>';
             }
 
             $output .= '</ul>';
@@ -392,11 +365,11 @@ class RichRenderer extends AbstractRenderer
         return $output.'</dd>';
     }
 
-    public function preRender(): string
+    public function preRender()
     {
         $output = '';
 
-        if ($this->shouldPreRender()) {
+        if ($this->pre_render) {
             foreach (self::$pre_render_sources as $type => $values) {
                 $contents = '';
                 foreach ($values as $v) {
@@ -409,18 +382,10 @@ class RichRenderer extends AbstractRenderer
 
                 switch ($type) {
                     case 'script':
-                        $output .= '<script class="kint-rich-script"';
-                        if (null !== self::$js_nonce) {
-                            $output .= ' nonce="'.\htmlspecialchars(self::$js_nonce).'"';
-                        }
-                        $output .= '>'.$contents.'</script>';
+                        $output .= '<script class="kint-rich-script">'.$contents.'</script>';
                         break;
                     case 'style':
-                        $output .= '<style class="kint-rich-style"';
-                        if (null !== self::$css_nonce) {
-                            $output .= ' nonce="'.\htmlspecialchars(self::$css_nonce).'"';
-                        }
-                        $output .= '>'.$contents.'</style>';
+                        $output .= '<style class="kint-rich-style">'.$contents.'</style>';
                         break;
                     default:
                         $output .= $contents;
@@ -428,23 +393,23 @@ class RichRenderer extends AbstractRenderer
             }
 
             // Don't pre-render on every dump
-            if (!$this->getForcePreRender()) {
+            if (!$this->force_pre_render) {
                 self::$needs_pre_render = false;
-            }
-        }
-
-        if ($this->shouldFolderRender()) {
-            $output .= $this->renderFolder();
-
-            if (!$this->getForcePreRender()) {
-                self::$needs_folder_render = false;
             }
         }
 
         $output .= '<div class="kint-rich';
 
-        if ($this->getUseFolder()) {
+        if ($this->use_folder) {
             $output .= ' kint-file';
+
+            if (self::$needs_folder_render || $this->force_pre_render) {
+                $output = $this->renderFolder().$output;
+
+                if (!$this->force_pre_render) {
+                    self::$needs_folder_render = false;
+                }
+            }
         }
 
         $output .= '">';
@@ -452,7 +417,7 @@ class RichRenderer extends AbstractRenderer
         return $output;
     }
 
-    public function postRender(): string
+    public function postRender()
     {
         if (!$this->show_trace) {
             return '</div>';
@@ -472,20 +437,22 @@ class RichRenderer extends AbstractRenderer
             );
         }
 
-        if (
-            isset($this->call_info['callee']['function']) &&
-            (
+        if (isset($this->call_info['callee']['function']) && (
                 !empty($this->call_info['callee']['class']) ||
                 !\in_array(
                     $this->call_info['callee']['function'],
-                    ['include', 'include_once', 'require', 'require_once'],
+                    array('include', 'include_once', 'require', 'require_once'),
                     true
                 )
             )
         ) {
             $output .= ' [';
-            $output .= $this->call_info['callee']['class'] ?? '';
-            $output .= $this->call_info['callee']['type'] ?? '';
+            if (isset($this->call_info['callee']['class'])) {
+                $output .= $this->call_info['callee']['class'];
+            }
+            if (isset($this->call_info['callee']['type'])) {
+                $output .= $this->call_info['callee']['type'];
+            }
             $output .= $this->call_info['callee']['function'].'()]';
         }
 
@@ -498,11 +465,15 @@ class RichRenderer extends AbstractRenderer
 
                 $output .= '<li>'.$this->ideLink($step['file'], $step['line']); // closing tag not required
                 if (isset($step['function'])
-                    && !\in_array($step['function'], ['include', 'include_once', 'require', 'require_once'], true)
+                    && !\in_array($step['function'], array('include', 'include_once', 'require', 'require_once'), true)
                 ) {
                     $output .= ' [';
-                    $output .= $step['class'] ?? '';
-                    $output .= $step['type'] ?? '';
+                    if (isset($step['class'])) {
+                        $output .= $step['class'];
+                    }
+                    if (isset($step['type'])) {
+                        $output .= $step['type'];
+                    }
                     $output .= $step['function'].'()]';
                 }
             }
@@ -514,15 +485,10 @@ class RichRenderer extends AbstractRenderer
         return $output;
     }
 
-    /**
-     * @psalm-param Encoding $encoding
-     *
-     * @param mixed $encoding
-     */
-    public function escape(string $string, $encoding = false): string
+    public function escape($string, $encoding = false)
     {
         if (false === $encoding) {
-            $encoding = BlobValue::detectEncoding($string);
+            $encoding = BlobObject::detectEncoding($string);
         }
 
         $original_encoding = $encoding;
@@ -535,13 +501,13 @@ class RichRenderer extends AbstractRenderer
 
         // this call converts all non-ASCII characters into numeirc htmlentities
         if (\function_exists('mb_encode_numericentity') && 'ASCII' !== $original_encoding) {
-            $string = \mb_encode_numericentity($string, [0x80, 0xFFFF, 0, 0xFFFF], $encoding);
+            $string = \mb_encode_numericentity($string, array(0x80, 0xffff, 0, 0xffff), $encoding);
         }
 
         return $string;
     }
 
-    public function ideLink(string $file, int $line): string
+    public function ideLink($file, $line)
     {
         $path = $this->escape(Kint::shortenPath($file)).':'.$line;
         $ideLink = Kint::getIdeLink($file, $line);
@@ -559,11 +525,10 @@ class RichRenderer extends AbstractRenderer
         return '<a '.$class.'href="'.$this->escape($ideLink).'">'.$path.'</a>';
     }
 
-    protected function renderTab(Value $o, Representation $rep): string
+    protected function renderTab(BasicObject $o, Representation $rep)
     {
-        if (($plugin = $this->getPlugin(self::$tab_plugins, $rep->hints)) && $plugin instanceof TabPluginInterface) {
-            $output = $plugin->renderTab($rep);
-            if (null !== $output && \strlen($output)) {
+        if ($plugin = $this->getPlugin(self::$tab_plugins, $rep->hints)) {
+            if (\strlen($output = $plugin->renderTab($rep))) {
                 return $output;
             }
         }
@@ -571,7 +536,7 @@ class RichRenderer extends AbstractRenderer
         if (\is_array($rep->contents)) {
             $output = '';
 
-            if ($o instanceof InstanceValue && 'properties' === $rep->getName()) {
+            if ($o instanceof InstanceObject && 'properties' === $rep->getName()) {
                 foreach (self::sortProperties($rep->contents, self::$sort) as $obj) {
                     $output .= $this->render($obj);
                 }
@@ -594,7 +559,7 @@ class RichRenderer extends AbstractRenderer
             } else {
                 if (\preg_match('/(:?[\\r\\n\\t\\f\\v]| {2})/', $rep->contents)) {
                     $show_contents = true;
-                } elseif (self::$strlen_max && null !== ($vs = $o->getValueShort()) && BlobValue::strlen($vs) > self::$strlen_max) {
+                } elseif (self::$strlen_max && BlobObject::strlen($o->getValueShort()) > self::$strlen_max) {
                     $show_contents = true;
                 }
 
@@ -608,38 +573,30 @@ class RichRenderer extends AbstractRenderer
             }
         }
 
-        if ($rep->contents instanceof Value) {
+        if ($rep->contents instanceof BasicObject) {
             return $this->render($rep->contents);
         }
-
-        return '';
     }
 
-    /**
-     * @psalm-param PluginMap $plugins
-     * @psalm-param string[] $hints
-     */
-    protected function getPlugin(array $plugins, array $hints): ?PluginInterface
+    protected function getPlugin(array $plugins, array $hints)
     {
         if ($plugins = $this->matchPlugins($plugins, $hints)) {
             $plugin = \end($plugins);
 
-            if (!isset($this->plugin_objs[$plugin]) && \is_subclass_of($plugin, PluginInterface::class)) {
+            if (!isset($this->plugin_objs[$plugin])) {
                 $this->plugin_objs[$plugin] = new $plugin($this);
             }
 
             return $this->plugin_objs[$plugin];
         }
-
-        return null;
     }
 
-    protected static function renderJs(): string
+    protected static function renderJs()
     {
         return \file_get_contents(KINT_DIR.'/resources/compiled/shared.js').\file_get_contents(KINT_DIR.'/resources/compiled/rich.js');
     }
 
-    protected static function renderCss(): string
+    protected static function renderCss()
     {
         if (\file_exists(KINT_DIR.'/resources/compiled/'.self::$theme)) {
             return \file_get_contents(KINT_DIR.'/resources/compiled/'.self::$theme);
@@ -648,8 +605,8 @@ class RichRenderer extends AbstractRenderer
         return \file_get_contents(self::$theme);
     }
 
-    protected static function renderFolder(): string
+    protected static function renderFolder()
     {
-        return '<div class="kint-rich kint-folder"><dl><dt class="kint-parent"><nav></nav>Kint</dt><dd class="kint-foldout"></dd></dl></div>';
+        return '<div class="kint-rich kint-folder"><dl><dt class="kint-parent"><nav></nav>Kint</dt><dd class="kint-folder"></dd></dl></div>';
     }
 }

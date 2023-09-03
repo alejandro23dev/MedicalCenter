@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -28,31 +26,31 @@ declare(strict_types=1);
 namespace Kint\Parser;
 
 use Closure;
-use Kint\Zval\ClosureValue;
-use Kint\Zval\ParameterValue;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\ClosureObject;
+use Kint\Object\ParameterObject;
+use Kint\Object\Representation\Representation;
 use ReflectionFunction;
 
-class ClosurePlugin extends AbstractPlugin
+class ClosurePlugin extends Plugin
 {
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['object'];
+        return array('object');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!$var instanceof Closure) {
             return;
         }
 
-        $object = new ClosureValue();
+        $object = new ClosureObject();
         $object->transplant($o);
         $o = $object;
         $object->removeRepresentation('properties');
@@ -63,24 +61,24 @@ class ClosurePlugin extends AbstractPlugin
         $o->startline = $closure->getStartLine();
 
         foreach ($closure->getParameters() as $param) {
-            $o->parameters[] = new ParameterValue($param);
+            $o->parameters[] = new ParameterObject($param);
         }
 
         $p = new Representation('Parameters');
         $p->contents = &$o->parameters;
         $o->addRepresentation($p, 0);
 
-        $statics = [];
+        $statics = array();
 
-        if ($v = $closure->getClosureThis()) {
-            $statics = ['this' => $v];
+        if (\method_exists($closure, 'getClosureThis') && $v = $closure->getClosureThis()) {
+            $statics = array('this' => $v);
         }
 
         if (\count($statics = $statics + $closure->getStaticVariables())) {
-            $statics_parsed = [];
+            $statics_parsed = array();
 
             foreach ($statics as $name => &$static) {
-                $obj = Value::blank('$'.$name);
+                $obj = BasicObject::blank('$'.$name);
                 $obj->depth = $o->depth + 1;
                 $statics_parsed[$name] = $this->parser->parse($static, $obj);
                 if (null === $statics_parsed[$name]->value) {

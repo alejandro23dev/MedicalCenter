@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,41 +25,41 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\InstanceValue;
-use Kint\Zval\MethodValue;
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\InstanceObject;
+use Kint\Object\MethodObject;
+use Kint\Object\Representation\Representation;
 use ReflectionClass;
 
-class ClassMethodsPlugin extends AbstractPlugin
+class ClassMethodsPlugin extends Plugin
 {
-    private static $cache = [];
+    private static $cache = array();
 
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['object'];
+        return array('object');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         $class = \get_class($var);
 
         // assuming class definition will not change inside one request
         if (!isset(self::$cache[$class])) {
-            $methods = [];
+            $methods = array();
 
             $reflection = new ReflectionClass($class);
 
             foreach ($reflection->getMethods() as $method) {
-                $methods[] = new MethodValue($method);
+                $methods[] = new MethodObject($method);
             }
 
-            \usort($methods, ['Kint\\Parser\\ClassMethodsPlugin', 'sort']);
+            \usort($methods, array('Kint\\Parser\\ClassMethodsPlugin', 'sort'));
 
             self::$cache[$class] = $methods;
         }
@@ -80,10 +78,10 @@ class ClassMethodsPlugin extends AbstractPlugin
                     $method->setAccessPathFrom($o);
                 }
 
-                if ($method->owner_class !== $class && $d = $method->getRepresentation('method_definition')) {
-                    $d = clone $d;
-                    $d->inherited = true;
-                    $method->replaceRepresentation($d);
+                if ($method->owner_class !== $class && $ds = $method->getRepresentation('docstring')) {
+                    $ds = clone $ds;
+                    $ds->class = $method->owner_class;
+                    $method->replaceRepresentation($ds);
                 }
 
                 $rep->contents[] = $method;
@@ -93,19 +91,19 @@ class ClassMethodsPlugin extends AbstractPlugin
         }
     }
 
-    private static function sort(MethodValue $a, MethodValue $b): int
+    private static function sort(MethodObject $a, MethodObject $b)
     {
         $sort = ((int) $a->static) - ((int) $b->static);
         if ($sort) {
             return $sort;
         }
 
-        $sort = Value::sortByAccess($a, $b);
+        $sort = BasicObject::sortByAccess($a, $b);
         if ($sort) {
             return $sort;
         }
 
-        $sort = InstanceValue::sortByHierarchy($a->owner_class, $b->owner_class);
+        $sort = InstanceObject::sortByHierarchy($a->owner_class, $b->owner_class);
         if ($sort) {
             return $sort;
         }

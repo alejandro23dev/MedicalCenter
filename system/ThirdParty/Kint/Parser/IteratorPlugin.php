@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,11 +25,11 @@ declare(strict_types=1);
 
 namespace Kint\Parser;
 
-use Kint\Zval\Representation\Representation;
-use Kint\Zval\Value;
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\Representation;
 use Traversable;
 
-class IteratorPlugin extends AbstractPlugin
+class IteratorPlugin extends Plugin
 {
     /**
      * List of classes and interfaces to blacklist.
@@ -42,25 +40,25 @@ class IteratorPlugin extends AbstractPlugin
      *
      * @var array
      */
-    public static $blacklist = [
+    public static $blacklist = array(
         'DOMNamedNodeMap',
         'DOMNodeList',
         'mysqli_result',
         'PDOStatement',
         'SplFileObject',
-    ];
+    );
 
-    public function getTypes(): array
+    public function getTypes()
     {
-        return ['object'];
+        return array('object');
     }
 
-    public function getTriggers(): int
+    public function getTriggers()
     {
         return Parser::TRIGGER_SUCCESS;
     }
 
-    public function parse(&$var, Value &$o, int $trigger): void
+    public function parse(&$var, BasicObject &$o, $trigger)
     {
         if (!$var instanceof Traversable) {
             return;
@@ -68,14 +66,14 @@ class IteratorPlugin extends AbstractPlugin
 
         foreach (self::$blacklist as $class) {
             if ($var instanceof $class) {
-                $b = new Value();
+                $b = new BasicObject();
                 $b->name = $class.' Iterator Contents';
                 $b->access_path = 'iterator_to_array('.$o->access_path.', true)';
                 $b->depth = $o->depth + 1;
                 $b->hints[] = 'blacklist';
 
                 $r = new Representation('Iterator');
-                $r->contents = [$b];
+                $r->contents = array($b);
 
                 $o->addRepresentation($r);
 
@@ -83,9 +81,14 @@ class IteratorPlugin extends AbstractPlugin
             }
         }
 
+        /** @var array|false */
         $data = \iterator_to_array($var);
 
-        $base_obj = new Value();
+        if (false === $data) {
+            return;
+        }
+
+        $base_obj = new BasicObject();
         $base_obj->depth = $o->depth;
 
         if ($o->access_path) {
@@ -98,7 +101,7 @@ class IteratorPlugin extends AbstractPlugin
 
         $primary = $o->getRepresentations();
         $primary = \reset($primary);
-        if ($primary && $primary === $o->value && [] === $primary->contents) {
+        if ($primary && $primary === $o->value && $primary->contents === array()) {
             $o->addRepresentation($r, 0);
         } else {
             $o->addRepresentation($r);

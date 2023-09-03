@@ -1,12 +1,40 @@
 <?php
 
 /**
- * This file is part of CodeIgniter 4 framework.
+ * CodeIgniter
  *
- * (c) CodeIgniter Foundation <admin@codeigniter.com>
+ * An open source application development framework for PHP
  *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
+ * This content is released under the MIT License (MIT)
+ *
+ * Copyright (c) 2014-2019 British Columbia Institute of Technology
+ * Copyright (c) 2019-2020 CodeIgniter Foundation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @package    CodeIgniter
+ * @author     CodeIgniter Dev Team
+ * @copyright  2019-2020 CodeIgniter Foundation
+ * @license    https://opensource.org/licenses/MIT    MIT License
+ * @link       https://codeigniter.com
+ * @since      Version 4.0.0
+ * @filesource
  */
 
 namespace CodeIgniter\Images;
@@ -19,115 +47,129 @@ use CodeIgniter\Images\Exceptions\ImageException;
  */
 class Image extends File
 {
-    /**
-     * The original image width in pixels.
-     *
-     * @var float|int
-     */
-    public $origWidth;
 
-    /**
-     * The original image height in pixels.
-     *
-     * @var float|int
-     */
-    public $origHeight;
+	/**
+	 * The original image width in pixels.
+	 *
+	 * @var integer|float
+	 */
+	public $origWidth;
 
-    /**
-     * The image type constant.
-     *
-     * @see http://php.net/manual/en/image.constants.php
-     *
-     * @var int
-     */
-    public $imageType;
+	/**
+	 * The original image height in pixels.
+	 *
+	 * @var integer|float
+	 */
+	public $origHeight;
 
-    /**
-     * attributes string with size info:
-     * 'height="100" width="200"'
-     *
-     * @var string
-     */
-    public $sizeStr;
+	/**
+	 * The image type constant.
+	 *
+	 * @see http://php.net/manual/en/image.constants.php
+	 *
+	 * @var integer
+	 */
+	public $imageType;
 
-    /**
-     * The image's mime type, i.e. image/jpeg
-     *
-     * @var string
-     */
-    public $mime;
+	/**
+	 * attributes string with size info:
+	 * 'height="100" width="200"'
+	 *
+	 * @var string
+	 */
+	public $sizeStr;
 
-    /**
-     * Makes a copy of itself to the new location. If no filename is provided
-     * it will use the existing filename.
-     *
-     * @param string      $targetPath The directory to store the file in
-     * @param string|null $targetName The new name of the copied file.
-     * @param int         $perms      File permissions to be applied after copy.
-     */
-    public function copy(string $targetPath, ?string $targetName = null, int $perms = 0644): bool
-    {
-        $targetPath = rtrim($targetPath, '/ ') . '/';
+	/**
+	 * The image's mime type, i.e. image/jpeg
+	 *
+	 * @var string
+	 */
+	public $mime;
 
-        $targetName ??= $this->getFilename();
+	/**
+	 * Makes a copy of itself to the new location. If no filename is provided
+	 * it will use the existing filename.
+	 *
+	 * @param string      $targetPath The directory to store the file in
+	 * @param string|null $targetName The new name of the copied file.
+	 * @param integer     $perms      File permissions to be applied after copy.
+	 *
+	 * @return boolean
+	 */
+	public function copy(string $targetPath, string $targetName = null, int $perms = 0644): bool
+	{
+		$targetPath = rtrim($targetPath, '/ ') . '/';
 
-        if (empty($targetName)) {
-            throw ImageException::forInvalidFile($targetName);
-        }
+		$targetName = is_null($targetName) ? $this->getFilename() : $targetName;
 
-        if (! is_dir($targetPath)) {
-            mkdir($targetPath, 0755, true);
-        }
+		if (empty($targetName))
+		{
+			throw ImageException::forInvalidFile($targetName);
+		}
 
-        if (! copy($this->getPathname(), "{$targetPath}{$targetName}")) {
-            throw ImageException::forCopyError($targetPath);
-        }
+		if (! is_dir($targetPath))
+		{
+			mkdir($targetName, 0755, true);
+		}
 
-        chmod("{$targetPath}/{$targetName}", $perms);
+		if (! copy($this->getPathname(), "{$targetPath}{$targetName}"))
+		{
+			throw ImageException::forCopyError($targetPath);
+		}
 
-        return true;
-    }
+		chmod("{$targetPath}/{$targetName}", $perms);
 
-    /**
-     * Get image properties
-     *
-     * A helper function that gets info about the file
-     *
-     * @return array|bool
-     */
-    public function getProperties(bool $return = false)
-    {
-        $path = $this->getPathname();
+		return true;
+	}
 
-        if (! $vals = getimagesize($path)) {
-            throw ImageException::forFileNotSupported();
-        }
+	//--------------------------------------------------------------------
 
-        $types = [
-            IMAGETYPE_GIF  => 'gif',
-            IMAGETYPE_JPEG => 'jpeg',
-            IMAGETYPE_PNG  => 'png',
-            IMAGETYPE_WEBP => 'webp',
-        ];
+	/**
+	 * Get image properties
+	 *
+	 * A helper function that gets info about the file
+	 *
+	 * @param boolean $return
+	 *
+	 * @return array|boolean
+	 */
+	public function getProperties(bool $return = false)
+	{
+		$path = $this->getPathname();
 
-        $mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
+		if (! $vals = getimagesize($path))
+		{
+			throw ImageException::forFileNotSupported();
+		}
 
-        if ($return === true) {
-            return [
-                'width'      => $vals[0],
-                'height'     => $vals[1],
-                'image_type' => $vals[2],
-                'size_str'   => $vals[3],
-                'mime_type'  => $mime,
-            ];
-        }
+		$types = [
+			IMAGETYPE_GIF  => 'gif',
+			IMAGETYPE_JPEG => 'jpeg',
+			IMAGETYPE_PNG  => 'png',
+			IMAGETYPE_WEBP => 'webp',
+		];
 
-        $this->origWidth  = $vals[0];
-        $this->origHeight = $vals[1];
-        $this->imageType  = $vals[2];
-        $this->sizeStr    = $vals[3];
-        $this->mime       = $mime;
+		$mime = 'image/' . ($types[$vals[2]] ?? 'jpg');
 
-        return true;
-    }
+		if ($return === true)
+		{
+			return [
+				'width'      => $vals[0],
+				'height'     => $vals[1],
+				'image_type' => $vals[2],
+				'size_str'   => $vals[3],
+				'mime_type'  => $mime,
+			];
+		}
+
+		$this->origWidth  = $vals[0];
+		$this->origHeight = $vals[1];
+		$this->imageType  = $vals[2];
+		$this->sizeStr    = $vals[3];
+		$this->mime       = $mime;
+
+		return true;
+	}
+
+	//--------------------------------------------------------------------
 }

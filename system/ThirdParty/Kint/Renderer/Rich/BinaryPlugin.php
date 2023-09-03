@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,32 +25,23 @@ declare(strict_types=1);
 
 namespace Kint\Renderer\Rich;
 
-use Kint\Zval\Representation\Representation;
+use Kint\Object\Representation\Representation;
 
-class BinaryPlugin extends AbstractPlugin implements TabPluginInterface
+class BinaryPlugin extends Plugin implements TabPluginInterface
 {
-    /** @psalm-var positive-int */
     public static $line_length = 0x10;
-    /** @psalm-var positive-int */
     public static $chunk_length = 0x4;
 
-    public function renderTab(Representation $r): ?string
+    public function renderTab(Representation $r)
     {
-        if (!\is_string($r->contents)) {
-            return null;
-        }
-
         $out = '<pre>';
 
-        $lines = \str_split($r->contents, self::$line_length);
+        $chunks = \str_split($r->contents, self::$line_length);
 
-        foreach ($lines as $index => $line) {
+        foreach ($chunks as $index => $chunk) {
             $out .= \sprintf('%08X', $index * self::$line_length).":\t";
-
-            $chunks = \str_split(\str_pad(\bin2hex($line), 2 * self::$line_length, ' '), self::$chunk_length);
-
-            $out .= \implode(' ', $chunks);
-            $out .= "\t".\preg_replace('/[^\\x20-\\x7E]/', '.', $line)."\n";
+            $out .= \implode(' ', \str_split(\str_pad(\bin2hex($chunk), 2 * self::$line_length, ' '), self::$chunk_length));
+            $out .= "\t".\preg_replace('/[^\\x20-\\x7E]/', '.', $chunk)."\n";
         }
 
         $out .= '</pre>';

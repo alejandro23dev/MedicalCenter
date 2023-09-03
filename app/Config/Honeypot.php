@@ -1,42 +1,42 @@
-<?php
-
-namespace Config;
+<?php namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
 class Honeypot extends BaseConfig
 {
-    /**
-     * Makes Honeypot visible or not to human
-     */
-    public bool $hidden = true;
 
-    /**
-     * Honeypot Label Content
-     */
-    public string $label = 'Fill This Field';
+	/**
+	 * Makes Honeypot visible or not to human
+	 *
+	 * @var boolean
+	 */
+	public $hidden = true;
 
-    /**
-     * Honeypot Field Name
-     */
-    public string $name = 'honeypot';
+	/**
+	 * Honeypot Label Content
+	 *
+	 * @var string
+	 */
+	public $label = 'Fill This Field';
 
-    /**
-     * Honeypot HTML Template
-     */
-    public string $template = '<label>{label}</label><input type="text" name="{name}" value="">';
+	/**
+	 * Honeypot Field Name
+	 *
+	 * @var string
+	 */
+	public $name = 'honeypot';
 
-    /**
-     * Honeypot container
-     *
-     * If you enabled CSP, you can remove `style="display:none"`.
-     */
-    public string $container = '<div style="display:none">{template}</div>';
+	/**
+	 * Honeypot HTML Template
+	 *
+	 * @var string
+	 */
+	public $template = '<label>{label}</label><input type="text" name="{name}" value=""/>';
 
-    /**
-     * The id attribute for Honeypot container tag
-     *
-     * Used when CSP is enabled.
-     */
-    public string $containerId = 'hpc';
+	/**
+	 * Honeypot container
+	 *
+	 * @var string
+	 */
+	public $container = '<div style="display:none">{template}</div>';
 }

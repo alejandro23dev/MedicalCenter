@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,15 +25,13 @@ declare(strict_types=1);
 
 namespace Kint;
 
-use Kint\Zval\BlobValue;
+use InvalidArgumentException;
+use Kint\Object\BlobObject;
 use ReflectionNamedType;
 use ReflectionType;
-use UnexpectedValueException;
 
 /**
  * A collection of utility methods. Should all be static methods with no dependencies.
- *
- * @psalm-import-type Encoding from BlobValue
  */
 final class Utils
 {
@@ -53,58 +49,32 @@ final class Utils
      *
      * @return array Human readable value and unit
      */
-    public static function getHumanReadableBytes(int $value): array
+    public static function getHumanReadableBytes($value)
     {
-        static $unit = ['B', 'KB', 'MB', 'GB', 'TB'];
+        static $unit = array('B', 'KB', 'MB', 'GB', 'TB');
 
-        $negative = $value < 0;
-        $value = \abs($value);
+        $i = \floor(\log($value, 1024));
+        $i = \min($i, 4); // Only go up to TB
 
-        if ($value < 1024) {
-            $i = 0;
-            $value = \floor($value);
-        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 40) {
-            $i = 1;
-        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 30) {
-            $i = 2;
-        } elseif ($value < 0xFFFCCCCCCCCCCCC >> 20) {
-            $i = 3;
-        } else {
-            $i = 4;
-        }
-
-        if ($i) {
-            $value = $value / \pow(1024, $i);
-        }
-
-        if ($negative) {
-            $value *= -1;
-        }
-
-        return [
-            'value' => \round($value, 1),
+        return array(
+            'value' => (float) ($value / \pow(1024, $i)),
             'unit' => $unit[$i],
-        ];
+        );
     }
 
-    public static function isSequential(array $array): bool
+    public static function isSequential(array $array)
     {
         return \array_keys($array) === \range(0, \count($array) - 1);
     }
 
-    public static function isAssoc(array $array): bool
+    public static function composerGetExtras($key = 'kint')
     {
-        return (bool) \count(\array_filter(\array_keys($array), 'is_string'));
-    }
+        $extras = array();
 
-    public static function composerGetExtras(string $key = 'kint'): array
-    {
         if (0 === \strpos(KINT_DIR, 'phar://')) {
             // Only run inside phar file, so skip for code coverage
-            return []; // @codeCoverageIgnore
+            return $extras; // @codeCoverageIgnore
         }
-
-        $extras = [];
 
         $folder = KINT_DIR.'/vendor';
 
@@ -114,13 +84,7 @@ final class Utils
             if (\file_exists($installed) && \is_readable($installed)) {
                 $packages = \json_decode(\file_get_contents($installed), true);
 
-                if (!\is_array($packages)) {
-                    continue;
-                }
-
-                // Composer 2.0 Compatibility: packages are now wrapped into a "packages" top level key instead of the whole file being the package array
-                // @see https://getcomposer.org/upgrade/UPGRADE-2.0.md
-                foreach ($packages['packages'] ?? $packages as $package) {
+                foreach ($packages as $package) {
                     if (isset($package['extra'][$key]) && \is_array($package['extra'][$key])) {
                         $extras = \array_replace($extras, $package['extra'][$key]);
                     }
@@ -148,12 +112,8 @@ final class Utils
     /**
      * @codeCoverageIgnore
      */
-    public static function composerSkipFlags(): void
+    public static function composerSkipFlags()
     {
-        if (\defined('KINT_SKIP_FACADE') && \defined('KINT_SKIP_HELPERS')) {
-            return;
-        }
-
         $extras = self::composerGetExtras();
 
         if (!empty($extras['disable-facade']) && !\defined('KINT_SKIP_FACADE')) {
@@ -165,13 +125,13 @@ final class Utils
         }
     }
 
-    public static function isTrace(array $trace): bool
+    public static function isTrace(array $trace)
     {
         if (!self::isSequential($trace)) {
             return false;
         }
 
-        static $bt_structure = [
+        static $bt_structure = array(
             'function' => 'string',
             'line' => 'integer',
             'file' => 'string',
@@ -179,7 +139,7 @@ final class Utils
             'object' => 'object',
             'type' => 'string',
             'args' => 'array',
-        ];
+        );
 
         $file_found = false;
 
@@ -206,10 +166,10 @@ final class Utils
         return $file_found;
     }
 
-    public static function traceFrameIsListed(array $frame, array $matches): bool
+    public static function traceFrameIsListed(array $frame, array $matches)
     {
         if (isset($frame['class'])) {
-            $called = [\strtolower($frame['class']), \strtolower($frame['function'])];
+            $called = array(\strtolower($frame['class']), \strtolower($frame['function']));
         } else {
             $called = \strtolower($frame['function']);
         }
@@ -217,7 +177,7 @@ final class Utils
         return \in_array($called, $matches, true);
     }
 
-    public static function normalizeAliases(array &$aliases): void
+    public static function normalizeAliases(array &$aliases)
     {
         static $name_regex = '[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*';
 
@@ -229,10 +189,10 @@ final class Utils
                     \preg_match('/^'.$name_regex.'$/', $alias[1]) &&
                     \preg_match('/^\\\\?('.$name_regex.'\\\\)*'.$name_regex.'$/', $alias[0])
                 ) {
-                    $alias = [
+                    $alias = array(
                         \strtolower(\ltrim($alias[0], '\\')),
                         \strtolower($alias[1]),
-                    ];
+                    );
                 } else {
                     unset($aliases[$index]);
                     continue;
@@ -253,46 +213,28 @@ final class Utils
         $aliases = \array_values($aliases);
     }
 
-    /**
-     * @psalm-param Encoding $encoding
-     *
-     * @param mixed $encoding
-     */
-    public static function truncateString(string $input, int $length = PHP_INT_MAX, string $end = '...', $encoding = false): string
+    public static function truncateString($input, $length = PHP_INT_MAX, $end = '...', $encoding = false)
     {
-        $endlength = BlobValue::strlen($end);
+        $length = (int) $length;
+        $endlength = BlobObject::strlen($end);
 
         if ($endlength >= $length) {
-            $endlength = 0;
-            $end = '';
+            throw new InvalidArgumentException('Can\'t truncate a string to '.$length.' characters if ending with string '.$endlength.' characters long');
         }
 
-        if (BlobValue::strlen($input, $encoding) > $length) {
-            return BlobValue::substr($input, 0, $length - $endlength, $encoding).$end;
+        if (BlobObject::strlen($input, $encoding) > $length) {
+            return BlobObject::substr($input, 0, $length - $endlength, $encoding).$end;
         }
 
         return $input;
     }
 
-    public static function getTypeString(ReflectionType $type): string
+    public static function getTypeString(ReflectionType $type)
     {
-        // @codeCoverageIgnoreStart
-        // ReflectionType::__toString was deprecated in 7.4 and undeprecated in 8
-        // and toString doesn't correctly show the nullable ? in the type before 8
-        if (!KINT_PHP80) {
-            if (!$type instanceof ReflectionNamedType) {
-                throw new UnexpectedValueException('ReflectionType on PHP 7 must be ReflectionNamedType');
-            }
-
-            $name = $type->getName();
-            if ($type->allowsNull() && 'mixed' !== $name && false === \strpos($name, '|')) {
-                $name = '?'.$name;
-            }
-
-            return $name;
+        if ($type instanceof ReflectionNamedType) {
+            return $type->getName();
         }
-        // @codeCoverageIgnoreEnd
 
-        return (string) $type;
+        return (string) $type; // @codeCoverageIgnore
     }
 }

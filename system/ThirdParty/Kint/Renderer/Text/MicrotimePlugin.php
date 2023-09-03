@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * The MIT License (MIT)
  *
@@ -27,14 +25,14 @@ declare(strict_types=1);
 
 namespace Kint\Renderer\Text;
 
+use Kint\Object\BasicObject;
+use Kint\Object\Representation\MicrotimeRepresentation;
 use Kint\Renderer\PlainRenderer;
 use Kint\Renderer\Rich\MicrotimePlugin as RichPlugin;
 use Kint\Renderer\TextRenderer;
 use Kint\Utils;
-use Kint\Zval\Representation\MicrotimeRepresentation;
-use Kint\Zval\Value;
 
-class MicrotimePlugin extends AbstractPlugin
+class MicrotimePlugin extends Plugin
 {
     protected $useJs = false;
 
@@ -47,12 +45,12 @@ class MicrotimePlugin extends AbstractPlugin
         }
     }
 
-    public function render(Value $o): ?string
+    public function render(BasicObject $o)
     {
         $r = $o->getRepresentation('microtime');
 
-        if (!$r instanceof MicrotimeRepresentation || !($dt = $r->getDateTime())) {
-            return null;
+        if (!$r instanceof MicrotimeRepresentation) {
+            return false;
         }
 
         $out = '';
@@ -71,7 +69,7 @@ class MicrotimePlugin extends AbstractPlugin
         }
 
         $out .= $indent.$this->renderer->colorType('TIME:').' ';
-        $out .= $this->renderer->colorValue($dt->format('Y-m-d H:i:s.u')).PHP_EOL;
+        $out .= $this->renderer->colorValue($r->getDateTime()->format('Y-m-d H:i:s.u')).PHP_EOL;
 
         if (null !== $r->lap) {
             $out .= $indent.$this->renderer->colorType('SINCE LAST CALL:').' ';
@@ -123,7 +121,7 @@ class MicrotimePlugin extends AbstractPlugin
         return $out;
     }
 
-    public static function renderJs(): string
+    public static function renderJs()
     {
         return RichPlugin::renderJs();
     }
