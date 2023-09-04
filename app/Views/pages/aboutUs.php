@@ -39,8 +39,11 @@
         if (currentUrl.includes('msgSuccessVerify')) {
             var toast = showToast('success', 'Your email has been verified');
         }
-        else if (currentUrl.includes('msgEmptyToken')) {
+        else if (currentUrl.includes('msgExpiredToken')) {
             var toast = showToast('success', 'Your token has expired');
+        }
+        else if (currentUrl.includes('msgEmptyToken')) {
+            var toast = showToast('success', 'Your token is empty');
         }
 
         $('#Home').addClass('active');

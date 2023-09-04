@@ -24,7 +24,6 @@ class AdminActions extends BaseController
 
         $data = array();
         $data['page'] = 'admin/requests';
-        $data['adminData']  = $this->objSessionAdmin->get('admin');
         $requests = $objMainModel->objData('requests');
 
 
@@ -37,6 +36,7 @@ class AdminActions extends BaseController
             $col['phone'] = $requests[$i]->phone;
             $col['patientDOB'] = $requests[$i]->patientDOB;
             $col['patientHeight'] = $requests[$i]->patientHeight;
+            $col['patientWeight'] = $requests[$i]->patientWeight;
             $col['diagnosis'] = $requests[$i]->diagnosis;
             $col['referralName'] = $requests[$i]->referralName;
             $col['referralPhone'] = $requests[$i]->referralPhone;

@@ -17,3 +17,20 @@ function showToast(icon, title) {
         title: title
     });
 }
+
+function showToastCenter(icon, title) {
+
+    const Toast = Swal.mixin({
+        positionClass: 'toast-center',
+        preventDuplicates: true,
+        showDuration: 1000,
+        hideDuration: 1000,
+        timeOut: 5000,
+        extendedTimeOut: 1000,
+    })
+
+    Toast.fire({
+        icon: icon,
+        title: title
+    });
+}

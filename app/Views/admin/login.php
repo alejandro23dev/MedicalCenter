@@ -48,15 +48,6 @@
       </div>
     </div>
   </div>
-  <form>
-    <div class="form-floating mb-3">
-
-    </div>
-    <div class="d-grid">
-
-    </div>
-  </form>
-
   </div>
 </body>
 

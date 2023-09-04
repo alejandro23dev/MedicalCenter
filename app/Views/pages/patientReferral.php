@@ -23,7 +23,7 @@
         </div>
         <div class=" mb-3 text-start">
             <label for="phone" class="form-label fw-bold">Phone</label>
-            <input type="text" class="form-control modal-required focus" id="phone" placeholder="+1 (123) 4678-1234">
+            <input type="text" class="form-control modal-required focus" id="phone" placeholder="+1 (123) 4678-1234" value="+1">
         </div>
         <div class="mb-3 text-start">
             <label for="patientDOB" class="form-label fw-bold">Patient DOB</label>
@@ -47,7 +47,7 @@
         </div>
         <div class=" mb-3 text-start">
             <label for="referralPhone" class="form-label fw-bold">Ordering Referral Phone</label>
-            <input type="text" class="form-control modal-required focus" id="referralPhone" placeholder="+1 (123) 4678-1234">
+            <input type="text" class="form-control modal-required focus" id="referralPhone" placeholder="(123) 4678-1234">
         </div>
         <div class="mb-3 text-start">
             <label for="orderNotes" class="form-label fw-bold">Order Notes</label>
@@ -59,8 +59,10 @@
                 <input type="file" class="form-control modal-required focus" id="file">
             </div>
         </div>
+        <div id="resendEmail">
+        </div>
         <div class="mb-5">
-            <button id="btn-send" class="btn col-8 text-white" style="height: 50px; background-color: #4fc3f7;">SEND</button>
+            <button id="btn-send" class="btn col-12 mt-2 text-white" style="background-color: #4fc3f7;">Send Information</button>
         </div>
     </div>
 </div>
@@ -83,6 +85,11 @@
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
+        $("#phone").on("change", function() {
+            var userInput = $("#phone").val();
+            $("#phone").val('+1' + userInput);
+        });
+
         $('#diagnosis,#referralName, #name').on('keypress', function(event) {
             var valor = $(this).val();
             var letras = /^[A-Za-z]+$/;
@@ -100,7 +107,7 @@
 
             if (resultCheckRequiredValues == 0) {
 
-                let url = "<?php echo base_url('Home/sendInfo'); ?>";
+                let url = "<?php echo base_url('Home/verifyEmail'); ?>";
 
                 $.ajax({
                     type: "post",
@@ -119,15 +126,36 @@
                     },
                     dataType: "json",
                     success: function(jsonResponse) {
-                        if (jsonResponse.error == 0) { // SUCCESS
-                            showToast('success', 'Verification email has been sent');
-                        } else if (jsonResponse.error == 1) { // ERROR
+                        if (jsonResponse.error == 0) // SUCCESS
+                            showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
+
+                        else if (jsonResponse.error == 1) { // ERROR
                             showToast('error', 'Verification email could not be sent');
-                        } else if (jsonResponse.error == 2) { // ERROR EMPTY FIELDS
+                            $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
+                            $('#btn-resendEmail').click(function(e) {
+                                e.preventDefault();
+                                $.ajax({
+                                    type: "post",
+                                    url: "<?php echo base_url('Home/resendVerifyEmail'); ?>",
+                                    data: {
+                                        email: $('#email').val(),
+                                    },
+                                    dataType: "json",
+                                    success: function(response) {
+                                        if (jsonResponse.error == 0) // SUCCESS
+                                            showToast('info', 'We have resent a verification email to your email address');
+                                        else if (jsonResponse.error == 1) // ERROR
+                                            showToast('error', 'Reverification email could not be sent');
+                                    }
+                                });
+                            });
+                        } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
                             showToast('error', 'Please enter the information correctly');
-                        } else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+
+                        else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
                             showToast('error', 'Invalid Email');
                             $('#email').addClass('is-invalid');
+
                         } else if (jsonResponse.error == 4) { // ERROR INVALID EMAIL FORMAT
                             showToast('error', 'The email is already registered');
                             $('#email').addClass('is-invalid');
@@ -148,7 +176,7 @@
                             processData: false,
 
                             success: function(jsonResponse) {
-                                if (jsonResponse.error == 1){
+                                if (jsonResponse.error == 1) {
                                     showToast('error', 'You must upload a file')
                                     $('#file').addClass('is-invalid');
                                 }

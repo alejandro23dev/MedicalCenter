@@ -27,9 +27,7 @@
 
     <div id="layout-wrapper">
         <div id="main-modal"></div>
-        <div class="container">
             <?php echo view($page); ?>
-        </div>
     </div>
 </body>
 

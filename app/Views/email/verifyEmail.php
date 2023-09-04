@@ -41,13 +41,47 @@
                         <tr>
                             <td>
                                 <p>
-                                    <?php echo $name; ?>
+                                    Verify Your Email!
                                 </p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                   By verifying your email automatically the information you provided in the form will be sent to the administrator
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a class="btn" href="<?php echo $url; ?>">Verify My Email</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+
+                                    If you have not been the one who has carried out this action, ignore this email. Thank you!
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
             </div>
+
             <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
                 <p>©MakingMemoriesHomeHealth</p>
             </div>

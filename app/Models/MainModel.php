@@ -39,6 +39,32 @@ class MainModel extends Model
         return $result;
     }
 
+    public function objCreateByEmail($table, $data, $email)
+    {
+       $this->db->table($table)
+        ->where('email',$email)
+        ->where('emailVerified', '0')
+        ->update($data);
+        
+        $result = array();
+        if ($this->db->resultID !== null) {
+            $result['error'] = 0; // Éxito en la inserción
+            $result['id'] = $this->db->id;
+        } else {
+            $result['error'] = 1; // Error en la inserción
+        }
+        
+        return $result;
+    }
+
+    public function objDataByID($table, $id)
+    {
+        $query = $this->db->table($table)
+            ->where('id', $id);
+
+        return $query->get()->getResult();
+    }
+
     public function checkEmailExist($email, $id = '')
     {
         $query = $this->db->table('requests')

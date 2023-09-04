@@ -40,7 +40,7 @@ class Home extends BaseController
         return view('header/index', $data);
     }
 
-    public function sendInfo()
+    public function verifyEmail()
     {
 
         $objMainModel = new MainModel();
@@ -99,14 +99,12 @@ class Home extends BaseController
                         $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
                         $objEmail->setTo($email);
                         $objEmail->setSubject('Verify your Email');
-                        $objEmail->setMessage(view('email/sendInfo', $emailData));
+                        $objEmail->setMessage(view('email/verifyEmail', $emailData));
 
-                        if ($objEmail->send(false)) { 
+                        if ($objEmail->send(false)) {
                             $response['error'] = 0;
-                            
                             $response['msg'] = 'success send mail.';
                         } else {
-                            $error = $objEmail->printDebugger(); print_r($error); exit();
                             $response['error'] = 1;
                             $response['msg'] = 'error send email';
                         }
@@ -115,10 +113,62 @@ class Home extends BaseController
                     $response['error'] = 3;
                     $response['msg'] = 'email invalid format.';
                 }
-            }else {
+            } else {
                 $response['error'] = 4;
                 $response['msg'] = 'email exist.';
             }
+        }
+        return json_encode($response);
+    }
+
+    public function resendVerifyEmail()
+    {
+
+        $objMainModel = new MainModel();
+
+        $email = $this->request->getPost('email');
+
+
+        if (empty($email)) {
+            $response['error'] = 2;
+            $response['msg'] = 'Por favor introduzca el email';
+        } else {
+                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $token = md5(uniqid());
+
+                    //INSERTAR EN LA TABLA (REQUESTS) LOS DATOS DE LA COMPRA PARA MOSTRARLOS EN LA TABLA PEDIDOS
+                    $insertData = [
+                        'token' => $token,
+                    ];
+
+                    $result = $objMainModel->objCreateByEmail('requests', $insertData, $email);
+
+                    if ($result['error'] == 0) {
+                        $response['id'] = $result['id'];
+                        $emailData = array();
+                        $emailData['title'] = 'Verify your Email';
+                        $emailData['token'] = $token;
+                        $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
+
+                        $objEmail = \Config\Services::email();
+                        $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
+                        $objEmail->setTo($email);
+                        $objEmail->setSubject('Verify your Email');
+                        $objEmail->setMessage(view('email/verifyEmail', $emailData));
+
+                        if ($objEmail->send(false)) {
+                            $response['error'] = 0;
+                            $response['msg'] = 'success send mail.';
+                        } else {
+                            $response['error'] = 1;
+                            $response['msg'] = 'error send email';
+                        }
+                    }
+                } else {
+                    $response['error'] = 3;
+                    $response['msg'] = 'email invalid format.';
+                }
+           
         }
         return json_encode($response);
     }
@@ -133,31 +183,30 @@ class Home extends BaseController
 
             $response['error'] = 1;
             $response['msg'] = 'Empty File';
-
         } else {
 
-        $result = $objMainModel->uploadFile('requests', $id, 'image', $_FILES['file']);
+            $result = $objMainModel->uploadFile('requests', $id, 'image', $_FILES['file']);
 
 
-        if ($result['error'] == 0) {
-            $response['error'] = 0;
-        } else {
-            $response['error'] = 1;
-            $response['msg'] = 'Failed to upload image to server';
+            if ($result['error'] == 0) {
+                $response['error'] = 0;
+            } else {
+                $response['error'] = 1;
+                $response['msg'] = 'Failed to upload image to server';
+            }
         }
-    }
 
         return json_encode($response);
     }
 
     public function confirmEmail()
     {
-        
+
         $token = $this->request->uri->getSegment(3);
-       
+
 
         if (empty($token))
-            return view('errorPage/emptyToken');
+            return view('emptyToken');
 
         $result = $this->objMainModel->objDataByField('requests', 'token', $token);
 
@@ -172,5 +221,30 @@ class Home extends BaseController
             return view('successVerify');
         } else
             return view('tokenExpired');
+    }
+
+    public function sendInfo()
+    {
+        $id = $this->request->getPost('id');
+        $result = $this->objMainModel->objDataByID('requests', $id);
+
+        $emailData = array();
+        $emailData['title'] = 'Patient Referral';
+        $emailData['name'] = $result[0]->name;
+
+        $objEmail = \Config\Services::email();
+        $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
+        $objEmail->setTo('alejandro23dev@gmail.com');
+        $objEmail->setSubject('Patient Referral');
+        $objEmail->setMessage(view('email/sendInfo', $emailData));
+
+        if ($objEmail->send(false)) {
+            $response['error'] = 0;
+            $response['msg'] = 'success send mail.';
+        } else {
+            $response['error'] = 1;
+            $response['msg'] = 'error send email';
+        }
+        return json_encode($response);
     }
 }
