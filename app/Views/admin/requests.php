@@ -17,7 +17,7 @@
         <th>Referral Name</th>
         <th>Referral Phone</th>
         <th>Order Notes</th>
-        <th>Image</th>
+        <th>Document</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
           <td id="referralName"><?php echo $request['referralName']; ?></td>
           <td id="referralPhone"><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
           <td id="orderNotes"><?php echo $request['orderNotes']; ?></td>
-          <td><img src="data:file/pdf;base64, <?php echo base64_encode($request['image']); ?>" alt="Image" class="w-100"></td>
+          <td id="document"><img src="data:file/pdf;base64, <?php echo base64_encode($request['document']); ?>" alt="Document" class="w-100"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>
@@ -68,13 +68,13 @@
 
     });
 
-    dtRequests.on('click', '#image', function() {
+    dtRequests.on('click', '#document', function() {
       var imageUrl = $(this).attr('src');
 
       // Crear un elemento <img> para mostrar la imagen en grande
       var largeImage = $('<img>').attr('src', imageUrl);
 
-      // Agregar estilos CSS para mostrar la imagen en grande
+      // Agregar estilos CSS para mostrar la documento en grande
       largeImage.css({
         'position': 'fixed',
         'top': '50%',

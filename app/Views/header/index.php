@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg" style="background-color: #005081;">
+  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #005081;">
     <div class="container-fluid">
       <i class="navbar-toggler bi bi-list align-items-end text-white" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"></i>
       </button>
@@ -50,9 +50,6 @@
             <a id="Home" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home'); ?>">ABOUT US</a>
           <li class="nav-item">
             <a id="missionAndPhilosophy" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home/missionAndPhilosophy'); ?>">Mission and Philosophy</a>
-          </li>
-          <li class="nav-item">
-            <a id="chatOnline" class="nav-link text-white fs-3 modern-title " href="#"><i class="mdi mdi-chat"></i> Chat</a>
           </li>
           <li class="nav-item">
             <a id="services" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home/services'); ?>">Services</a>
@@ -66,11 +63,20 @@
   </nav>
 
   <?php echo view($page); ?>
+  <div class="d-block text-center btn-rounded m-5 bg-white shadow-lg aFloat">
+    <a id="chatOnline" class="nav-link fs-3 modern-title p-3 ms-2 me-2 " style="color: #005081;" href="#"><i class="mdi mdi-chat fs-1"></i></a>
+  </div>
 
 </body>
 <style>
   .cursorPointer {
     cursor: pointer;
+  }
+
+  .aFloat {
+    position: fixed;
+    bottom: 0;
+    right: 0;
   }
 
   .footer i {
@@ -106,7 +112,7 @@
   }
 
   $('#chatOnline').on('click', function() {
-    
+
 
     $.ajax({
 

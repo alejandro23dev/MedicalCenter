@@ -11,6 +11,12 @@
 <script src="<?php echo base_url('assets/libs/feather-icons/feather.min.js'); ?>"></script>
 <script src="<?php echo base_url('assets/libs/sweetalert/sweetalert2.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/customApp.js'); ?>"></script>
+
+<div class="row m-0 vh-100 justify-content-center">
+<div class="spinner-border text-primary" role="status">
+</div> 
+<span class="text-muted fst-italic">Sending Patient Referral</span>
+</div>
 <script>
   var id = "<?php echo $id; ?>";
 

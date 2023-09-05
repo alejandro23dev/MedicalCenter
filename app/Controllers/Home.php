@@ -101,7 +101,7 @@ class Home extends BaseController
                                 $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
                                 $objEmail = \Config\Services::email();
-                                $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
+                                $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
                                 $objEmail->setTo($email);
                                 $objEmail->setSubject('Verify your Email');
                                 $objEmail->setMessage(view('email/verifyEmail', $emailData));
@@ -171,7 +171,7 @@ class Home extends BaseController
                     $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
                     $objEmail = \Config\Services::email();
-                    $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
+                    $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
                     $objEmail->setTo($email);
                     $objEmail->setSubject('Verify your Email');
                     $objEmail->setMessage(view('email/verifyEmail', $emailData));
@@ -204,14 +204,14 @@ class Home extends BaseController
             $response['msg'] = 'Empty File';
         } else {
 
-            $result = $objMainModel->uploadFile('requests', $id, 'image', $_FILES['file']);
+            $result = $objMainModel->uploadFile('requests', $id, 'document', $_FILES['file']);
 
 
             if ($result['error'] == 0) {
                 $response['error'] = 0;
             } else {
                 $response['error'] = 1;
-                $response['msg'] = 'Failed to upload image to server';
+                $response['msg'] = 'Failed to upload document to server';
             }
         }
 
@@ -235,7 +235,7 @@ class Home extends BaseController
             $data['emailVerified'] = 1;
             $data['token'] = '';
 
-            $this->objMainModel->objUpdate('requests', $data, $result[0]->id);
+           $this->objMainModel->objUpdate('requests', $data, $result[0]->id);
 
             return view('successVerify', $data = array('id' => $result[0]->id));
         } else
@@ -259,11 +259,11 @@ class Home extends BaseController
         $emailData['referralName'] = $result[0]->referralName;
         $emailData['referralPhone'] = $result[0]->referralPhone;
         $emailData['orderNotes'] = $result[0]->orderNotes;
-        $emailData['image'] = $result[0]->image;
+        $emailData['document'] = $result[0]->document;
 
 
         $objEmail = \Config\Services::email();
-        $objEmail->setFrom('info@axleyherrera.com', 'Making Memories Home Health');
+        $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
         $objEmail->setTo('alejandro23dev@gmail.com');
         $objEmail->setSubject('Patient Referral');
         $objEmail->setMessage(view('email/sendInfo', $emailData));

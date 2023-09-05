@@ -54,14 +54,14 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPUser = 'info@axleyherrera.com';
+    public $SMTPUser = 'dev@axleyherrera.com';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = '@nicole6062017Hostinger';
+    public $SMTPPass = '@Axley01herrera';
 
     /**
      * SMTP Port
@@ -75,7 +75,7 @@ class Email extends BaseConfig
      *
      * @var int
      */
-    public $SMTPTimeout = 10;
+    public $SMTPTimeout = 15;
 
     /**
      * Enable persistent SMTP connections
