@@ -62,7 +62,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <a class="btn" href="<?php echo $url; ?>">Verify My Email</a>
+                                <a class="btn" style="background-color: #005081; color: #fff;" href="<?php echo $url; ?>">Verify My Email</a>
                             </td>
                         </tr>
                     </tbody>

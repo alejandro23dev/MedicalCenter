@@ -37,7 +37,7 @@
 
         // Verificar si la URL contiene la palabra "msgSuccessVerify"
         if (currentUrl.includes('msgSuccessVerify')) {
-            var toast = showToast('success', 'Your email has been verified');
+            var toast = showToast('success', 'Patient Referral has been sent');
         }
         else if (currentUrl.includes('msgExpiredToken')) {
             var toast = showToast('success', 'Your token has expired');

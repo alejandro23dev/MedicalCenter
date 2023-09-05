@@ -31,9 +31,9 @@
           <td id="patientWeight"><?php echo $request['patientWeight']; ?></td>
           <td id="diagnosis"><?php echo $request['diagnosis']; ?></td>
           <td id="referralName"><?php echo $request['referralName']; ?></td>
-          <td id="referralPhone"><?php echo $request['referralPhone']; ?></td>
+          <td id="referralPhone"><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
           <td id="orderNotes"><?php echo $request['orderNotes']; ?></td>
-          <td id="image"><img id="image" src="data:image/png;base64, <?php echo base64_encode($request['image']); ?>" alt="Image" class="w-100"></td>
+          <td><img src="data:file/pdf;base64, <?php echo base64_encode($request['image']); ?>" alt="Image" class="w-100"></td>
         </tr>
       <?php endforeach; ?>
     </tbody>

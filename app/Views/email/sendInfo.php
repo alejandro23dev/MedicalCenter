@@ -41,7 +41,106 @@
                         <tr>
                             <td>
                                 <p>
-                                    <?php echo $name; ?>
+                                    Name: <?php echo $name; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Email: <?php echo $email; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                Phone: <a href="tel:<?php echo $phone; ?>"><?php echo $phone; ?></a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Patient DOB: <?php echo $patientDOB; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Patient Height: <?php echo $patientHeight; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Patient Weight: <?php echo $patientWeight; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                Diagnosis: <?php echo $diagnosis; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Referral Name: <?php echo $referralName; ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Referral Phone: <a href="tel:<?php echo $referralPhone; ?>"><?php echo $referralPhone; ?></a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    Order Notes: <?php echo $orderNotes; ?>
                                 </p>
                             </td>
                         </tr>

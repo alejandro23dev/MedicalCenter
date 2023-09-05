@@ -23,6 +23,14 @@ class MainModel extends Model
         return $query->get()->getResult();
     }
 
+    public function objDataChats()
+    {
+        $query = $this->db->table('chats')
+            ->select('*');
+
+        return $query->get()->getResult();
+    }
+
     public function objCreate($table, $data)
     {
        $this->db->table($table)
@@ -39,17 +47,30 @@ class MainModel extends Model
         return $result;
     }
 
-    public function objCreateByEmail($table, $data, $email)
+    public function objDelete($table, $currentDateTime)
+    {
+         $this->db->table($table)
+            ->where('dateClose <', $currentDateTime)
+            ->delete();
+
+        return $this->db->resultID;
+    }
+
+    public function objUpdateToken($table, $data, $email)
     {
        $this->db->table($table)
         ->where('email',$email)
         ->where('emailVerified', '0')
         ->update($data);
         
+        $id = $this->db->table($table)
+        ->where('email', $email)
+        ->get()->getResult()[0]->id;
+
         $result = array();
         if ($this->db->resultID !== null) {
             $result['error'] = 0; // Éxito en la inserción
-            $result['id'] = $this->db->id;
+            $result['id'] = $id; 
         } else {
             $result['error'] = 1; // Error en la inserción
         }
@@ -65,10 +86,10 @@ class MainModel extends Model
         return $query->get()->getResult();
     }
 
-    public function checkEmailExist($email, $id = '')
+    public function checkDuplicate($table,$field,$email, $id = '')
     {
-        $query = $this->db->table('requests')
-            ->where('email', $email);
+        $query = $this->db->table($table)
+            ->where($field, $email);
 
         if (!empty($id)) {
             $IDs = array();

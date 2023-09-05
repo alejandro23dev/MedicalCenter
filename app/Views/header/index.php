@@ -13,6 +13,7 @@
   <link href="<?php echo base_url('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo base_url('assets/css/app.min.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
   <link href="<?php echo base_url('assets/libs/sweetalert/sweetalert2.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <script src="<?php echo base_url('assets/libs/jquery/jquery.min.js'); ?>"></script>
   <script src="<?php echo base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
@@ -39,21 +40,25 @@
     </div>
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-collapse sticky-top" id="navbar" style="height: 100px; background-color: #005081;">
+  <nav class="navbar navbar-expand-lg" style="background-color: #005081;">
     <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <i class="navbar-toggler bi bi-list align-items-end text-white" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav w-100 d-flex justify-content-between m-3">
           <li class="nav-item">
-            <a id="Home" class="nav-link text-white fs-3 modern-title" href="<?php echo base_url('Home'); ?>">ABOUT US</a>
+            <a id="Home" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home'); ?>">ABOUT US</a>
+          <li class="nav-item">
+            <a id="missionAndPhilosophy" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home/missionAndPhilosophy'); ?>">Mission and Philosophy</a>
           </li>
           <li class="nav-item">
-            <a id="missionAndPhilosophy" class="nav-link text-white fs-3 modern-title" href="<?php echo base_url('Home/missionAndPhilosophy'); ?>">Mission and Philosophy</a>
+            <a id="chatOnline" class="nav-link text-white fs-3 modern-title " href="#"><i class="mdi mdi-chat"></i> Chat</a>
           </li>
           <li class="nav-item">
-            <a id="services" class="nav-link text-white fs-3 modern-title" href="<?php echo base_url('Home/services'); ?>">Services</a>
+            <a id="services" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home/services'); ?>">Services</a>
           </li>
           <li class="nav-item">
-            <a id="patientReferral" class="nav-link text-white  fs-3 modern-title" href="<?php echo base_url('Home/patientReferral'); ?>">Patient Referral</a>
+            <a id="patientReferral" class="nav-link text-white  fs-3 modern-title " href="<?php echo base_url('Home/patientReferral'); ?>">Patient Referral</a>
           </li>
         </ul>
       </div>
@@ -64,10 +69,10 @@
 
 </body>
 <style>
-
-.cursorPointer {
+  .cursorPointer {
     cursor: pointer;
   }
+
   .footer i {
     margin-right: 5px;
   }
@@ -99,5 +104,24 @@
     var mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodedAddress;
     window.open(mapUrl);
   }
+
+  $('#chatOnline').on('click', function() {
+    
+
+    $.ajax({
+
+      type: "post",
+      url: "<?php echo base_url('Home/showModalChatOnline'); ?>",
+      dataType: "html",
+      success: function(htmlResponse) {
+        $('#main-modal').html(htmlResponse);
+        $('#chatModal').modal('show');
+      },
+      error: function(error) {
+        showToast('error', 'Ha ocurrido un error');
+      }
+    });
+  });
 </script>
+
 </html>

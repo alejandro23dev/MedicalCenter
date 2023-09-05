@@ -1,5 +1,18 @@
-<script>   
-  var id = "<?php echo $result[0]->id ?>";
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/medical/favicon.png'); ?>">
+<link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url('assets/css/icons.min.css'); ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url('assets/css/app.min.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url('assets/libs/sweetalert/sweetalert2.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo base_url('assets/libs/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/libs/metismenujs/metismenujs.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/libs/simplebar/simplebar.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/libs/feather-icons/feather.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/libs/sweetalert/sweetalert2.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/customApp.js'); ?>"></script>
+<script>
+  var id = "<?php echo $id; ?>";
 
   $.ajax({
     type: "post",
@@ -9,11 +22,9 @@
     },
     dataType: "json",
     success: function(jsonResponse) {
-      if (jsonResponse.error == 0) {// SUCCESS
-        showToastCenter('success', 'Patient Referral has been sent');
-        window.location.href = "<?php echo base_url('Home') ?>?=msgSuccessVerify";
-      }
-      else if (jsonResponse.error == 1) // ERROR
+      if (jsonResponse.error == 0) { // ÉXITO
+          window.location.href = "<?php echo base_url('Home'); ?>?=msgSuccessVerify";
+      } else if (jsonResponse.error == 1) // ERROR
         showToast('error', 'Patient Referral could not be sent');
     }
   });
