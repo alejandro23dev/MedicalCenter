@@ -27,8 +27,45 @@
 
     <div id="layout-wrapper">
         <div id="main-modal"></div>
+        <?php echo view('navBars/navBarAdmin'); ?>
             <?php echo view($page); ?>
     </div>
+
+    <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloat">
+    <a id="chatOnline" class="nav-link fs-3p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
+  </div>
 </body>
 
 </html>
+
+<style>
+   .cursorPointer {
+    cursor: pointer;
+  }
+
+  .aFloat {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+</style>
+
+<script>
+  $('#chatOnline').on('click', function() {
+
+
+$.ajax({
+
+  type: "post",
+  url: "<?php echo base_url('AdminActions/showModalChatOnline'); ?>",
+  dataType: "html",
+  success: function(htmlResponse) {
+    $('#main-modal').html(htmlResponse);
+    $('#chatModal').modal('show');
+  },
+  error: function(error) {
+    showToast('error', 'Ha ocurrido un error');
+  }
+});
+});
+</script>

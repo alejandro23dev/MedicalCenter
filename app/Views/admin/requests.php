@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="<?php echo base_url('assets/libs/dataTable/datatables.min.css'); ?>">
-<div class="container text-end mt-3">
-      <a href="<?php echo base_url('Admin');?>"><i class="mdi mdi-logout fs-1"></i>Logout</a>
+<div class="text-end m-3">
+  <a href="<?php echo base_url('Admin'); ?>"><i class="mdi mdi-logout fs-1"></i>Logout</a>
 </div>
-<div class="container mt-5">
-  <h2 class="mb-4 text-center fw-bold">Patient Referrals</h2>
-  <table id="dtRequests" class="display striped table-responsive">
+<div class="m-5">
+  <h2 class="mb-4 text-center fw-bold text-uppercase" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Patient Referrals</h2>
+  <table id="dtRequests" class="display table-responsive">
     <thead>
       <tr>
         <th>Name</th>
@@ -23,19 +23,19 @@
     <tbody>
       <?php foreach ($requests as $request) : ?>
         <tr>
-          <td id="name"><?php echo $request['name']; ?></td>
-          <td id="email"><a href="mailto:<?php echo $request['email']; ?>" target="_blank" title="Enviar Correo"><?php echo $request['email']; ?></a></td>
-          <td id="phone"><a href="tel:<?php echo $request['phone']; ?>"><?php echo $request['phone']; ?></a></td>
-          <td id="patientDOB"><?php echo $request['patientDOB']; ?></td>
-          <td id="patientHeight"><?php echo $request['patientHeight']; ?></td>
-          <td id="patientWeight"><?php echo $request['patientWeight']; ?></td>
-          <td id="diagnosis"><?php echo $request['diagnosis']; ?></td>
-          <td id="referralName"><?php echo $request['referralName']; ?></td>
-          <td id="referralPhone"><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
-          <td id="orderNotes"><?php echo $request['orderNotes']; ?></td>
-          <td id="document"><img src="data:file/pdf;base64, <?php echo base64_encode($request['document']); ?>" alt="Document" class="w-100"></td>
+          <td><?php echo $request['name']; ?></td>
+          <td><a id="email" href="mailto:<?php echo $request['email']; ?>" target="_blank" title="Enviar Correo"><?php echo $request['email']; ?></a></td>
+          <td><a href="tel:<?php echo $request['phone']; ?>"><?php echo $request['phone']; ?></a></td>
+          <td><?php echo $request['patientDOB']; ?></td>
+          <td><?php echo $request['patientHeight']; ?></td>
+          <td><?php echo $request['patientWeight']; ?></td>
+          <td><?php echo $request['diagnosis']; ?></td>
+          <td><?php echo $request['referralName']; ?></td>
+          <td><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
+          <td><?php echo $request['orderNotes']; ?></td>
+          <td class="text-center"><i class="mdi mdi-file fs-2 file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>" ></i></td>
         </tr>
-      <?php endforeach; ?>
+      <?php endforeach ?>
     </tbody>
   </table>
 </div>
@@ -43,7 +43,6 @@
 <script src="<?php echo base_url('assets/libs/dataTable/DataTables-1.13.5/js/dataTables.bootstrap5.min.js'); ?>"></script>
 <script>
   $(document).ready(function() {
-
 
     let dtRequests = $('#dtRequests').DataTable({ // DATA TABLE REQUESTS
       destroy: true,
@@ -68,29 +67,18 @@
 
     });
 
-    dtRequests.on('click', '#document', function() {
-      var imageUrl = $(this).attr('src');
-
-      // Crear un elemento <img> para mostrar la imagen en grande
-      var largeImage = $('<img>').attr('src', imageUrl);
-
-      // Agregar estilos CSS para mostrar la documento en grande
-      largeImage.css({
-        'position': 'fixed',
-        'top': '50%',
-        'left': '50%',
-        'transform': 'translate(-50%, -50%)',
-        'max-width': '90%',
-        'max-height': '90%',
-        'z-index': '9999'
-      });
-
-      // Agregar el elemento <img> al body del documento
-      $('body').append(largeImage);
-
-      // Cerrar la imagen en grande al hacer clic en ella
-      largeImage.click(function() {
-        $(this).remove();
+    dtRequests.on('click', '.file', function() {
+      
+      $.ajax({
+        type: "post",
+        url: "<?php echo base_url('Home/getFile')?>",
+        data:{
+          id : $('.file').attr('data-id')
+        },
+        dataType: "html",
+        success: function (htmlResponse) {
+          
+        }
       });
     });
   });

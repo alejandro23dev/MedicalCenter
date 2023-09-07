@@ -31,6 +31,16 @@ class MainModel extends Model
         return $query->get()->getResult();
     }
 
+    public function objDataChatsByAdmin()
+    {
+        $query = $this->db->table('chats')
+            ->where('response', '')
+            ->where('role', '2')
+            ->select('*');
+
+        return $query->get()->getResult();
+    }
+
     public function objCreate($table, $data)
     {
        $this->db->table($table)
@@ -47,10 +57,19 @@ class MainModel extends Model
         return $result;
     }
 
-    public function objDelete($table, $currentDateTime)
+    public function objDeleteByTime($table, $currentDateTime)
     {
          $this->db->table($table)
             ->where('dateClose <', $currentDateTime)
+            ->delete();
+
+        return $this->db->resultID;
+    }
+
+    public function objDelete($table, $id)
+    {
+         $this->db->table($table)
+            ->where('id', $id)
             ->delete();
 
         return $this->db->resultID;
@@ -105,7 +124,7 @@ class MainModel extends Model
         $fileContent = file_get_contents($file['tmp_name']);
 
         $data = array(
-            $field => $fileContent
+            $field => base64_encode($fileContent)
         );
 
         $query = $this->db->table($table)

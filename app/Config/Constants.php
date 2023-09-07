@@ -78,26 +78,6 @@ defined('EXIT_DATABASE')       || define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
-define("EMAIL","info@axleyherrera.com");
-define("EMAIL_ADMIN","grupoahv@gmail.com");
-define("SIGN", '<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
-<tbody>
-    <tr align="center">
-        <td align="center">
-            <p>
-                AlcaponeTiendas, Calle Pérez Volcán 3, 38700 Santa Cruz de La Palma, Santa Cruz de Tenerife, España. 
-            </p>
-            <p>
-                Correo: davidmachado1112@gmail.com
-            </p>
-            <p>
-                Teléfono: +34 611 122 816
-            </p>
-        </td>
-    </tr>
-</tbody>
-</table>');
-
 define("ENVIRONMENT","development");
 //define("ENVIRONMENT","production");
 

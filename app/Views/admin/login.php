@@ -80,7 +80,7 @@
 
           success: function(jsonResponse) {
             if (jsonResponse.error == 0) 
-                window.location.href = "<?php echo base_url('AdminActions/requests'); ?>"  
+                window.location.href = "<?php echo base_url('AdminActions/patientsReferrals'); ?>"  
             if (jsonResponse.error == 1) {
               $('#password').addClass('is-invalid');
               if (jsonResponse.code == 1) {

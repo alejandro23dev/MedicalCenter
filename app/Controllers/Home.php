@@ -47,13 +47,16 @@ class Home extends BaseController
 
         $email = $this->request->getPost('email');
         $phone = $this->request->getPost('phone');
+        $patientWeight = $this->request->getPost('patientWeight');
+        $patientHeight = $this->request->getPost('patientHeight');
+
         $resultCheckEmailDuplicate = $objMainModel->checkDuplicate('requests', 'email', $email);
         $resultPhoneDuplicate = $objMainModel->checkDuplicate('requests', 'phone', $phone);
 
         if (
             empty($this->request->getPost('name')) || empty($email) || empty($phone) ||
-            empty($this->request->getPost('patientDOB')) || empty($this->request->getPost('patientHeight')) ||
-            empty($this->request->getPost('patientWeight')) || empty($this->request->getPost('diagnosis')) || empty($this->request->getPost('referralName')) ||
+            empty($this->request->getPost('patientDOB')) || empty($patientHeight) ||
+            empty($patientWeight) || empty($this->request->getPost('diagnosis')) || empty($this->request->getPost('referralName')) ||
             empty($this->request->getPost('referralPhone')) ||  empty($this->request->getPost('orderNotes'))
         ) {
             $response['error'] = 2;
@@ -235,7 +238,7 @@ class Home extends BaseController
             $data['emailVerified'] = 1;
             $data['token'] = '';
 
-           $this->objMainModel->objUpdate('requests', $data, $result[0]->id);
+           //$this->objMainModel->objUpdate('requests', $data, $result[0]->id);
 
             return view('successVerify', $data = array('id' => $result[0]->id));
         } else
@@ -280,6 +283,9 @@ class Home extends BaseController
 
     public function showModalChatOnline()
     {
+        $data = array();
+        $data['role'] = '2';
+        $data['user'] = 'Guest';
         $data['messages'] = $this->objMainModel->objDataChats();
 
         return view('modals/chat', $data);
@@ -291,7 +297,7 @@ class Home extends BaseController
 
         $currentDateTime = date('d-m-Y h:i A');
 
-        $result = $this->objMainModel->objDelete('chats', $currentDateTime);
+        $result = $this->objMainModel->objDeleteByTime('chats', $currentDateTime);
 
 
         return json_encode($data);
@@ -302,15 +308,18 @@ class Home extends BaseController
         $objMainModel = new MainModel();
 
         $message = $this->request->getPost('message');
+        $role = $this->request->getPost('role');
+        $user = $this->request->getPost('user');
 
         if (empty($message)) {
             $response['error'] = 2;
             $response['msg'] = 'empty msg';
         } else {
             $insertData = [
-                'user' => 'Guest',
+                'user' => $user,
                 'message' => $message,
-                'date' => date('d-m-Y h:i A'),
+                'role' => $role,
+                'date' => date('h:i A'),
                 'dateClose' => date('d-m-Y h:i A', strtotime('+24 Hours')),
 
             ];
@@ -327,5 +336,14 @@ class Home extends BaseController
         }
 
         return json_encode($response);
+    }
+
+    public function getFile()
+    {
+        $id = $this->request->getPost('id');
+
+        $data['document'] = $this->objMainModel->objDataByID('requests', $id);
+
+        return view('pdf', $data);
     }
 }

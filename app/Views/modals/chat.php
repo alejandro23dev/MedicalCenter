@@ -2,15 +2,15 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="chatModalLabel">Chat Online</h5>
+        <h5 class="modal-title" id="chatModalLabel">Chat of the Questions</h5>
         <button type="button" class="btn btn-close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          
         </button>
       </div>
       <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
-      <?php if(empty($messages)):?>
-        <p class="text-center text-muted">Not messages</p>
-        <?php endif;?>
+        <?php if (empty($messages)) : ?>
+          <p class="text-center text-muted">Not messages</p>
+        <?php endif; ?>
         <?php
         $messageGroups = array_chunk($messages, 3);
         // Ordenar los mensajes por el ID en orden descendente
@@ -21,15 +21,26 @@
           <div class="message-group">
             <?php foreach ($group as $message) : ?>
               <?php if ($message->role == 2) : ?>
-                <div class="bg-soft-secondary p-2 col-md-6 rounded mt-3">
-                  <h3><?php echo $message->user ?></h3>
+                <div class="bg-soft-secondary p-2 col-6 rounded mt-3" id="<?php echo $message->id ?>">
+                  <h3 class="fw-bold"><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
+                  <div class="bg-primary p-3 rounded">
+                    <?php if(empty($message->response)):?>
+                      <p class="text-white">El admin no ha respondido</p>
+                      <?php else:?>
+                  <p class="text-white">Admin ha respondido: <?php echo $message->response ?></p>
+                  <?php endif?>
+                  </div>
+                </div>
+                <div class="text-muted fs-6">
                   <p><?php echo $message->date ?></p>
                 </div>
               <?php elseif ($message->role == 1) : ?>
-                <div class="bg-soft-primary me-0 p-2 me-0 col-md-6 rounded mt-3 text-end">
+                <div class="bg-soft-primary me-0 p-2 rounded mt-3 col-6 text-end justify-content-end" style="margin-left: 50%;" id="<?php echo $message->id ?>">
                   <h3><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
+                </div>
+                <div class="text-muted fs-6 text-end">
                   <p><?php echo $message->date ?></p>
                 </div>
               <?php endif; ?>
@@ -41,7 +52,7 @@
         <div class=" col-10">
           <input type="text" id="message" class="form-control chatModal-required focus" placeholder="Type you message here...">
         </div>
-        <button type="button" id="btn-send" class="btn btn-primary col-1 fs-4"><i class="bi bi-send-fill"></i></button>
+        <button type="button" id="btn-send" class="btn btn-primary col-1 fs-6 p-2"><i class="bi bi-send-fill"></i></button>
 
       </div>
     </div>
@@ -63,23 +74,25 @@
     $('#btn-send').click(function() {
 
       let resultCheckRequiredValues = checkRequiredValues('chatModal-required');
+      let role = "<?php echo $role; ?>";
+      let user = "<?php echo $user; ?>";
 
       $.ajax({
         type: "post",
         url: "<?php echo base_url('Home/sendMessages') ?>",
         data: {
+          role: role,
+          user: user,
           message: $('#message').val()
         },
         dataType: "json",
         success: function(jsonResponse) {
           if (jsonResponse.error == 0) {
             showToast('success', 'Message sent')
-            $('#message').val('');
             $('#chatModal').modal('hide');
           } else if (jsonResponse.error == 1)
             showToast('error', 'Message not sent')
           else if (jsonResponse.error == 2) {
-            showToast('error', 'Empty Message')
             $('#message').addClass('is-invalid');
           }
         }

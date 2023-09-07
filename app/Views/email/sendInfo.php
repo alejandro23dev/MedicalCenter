@@ -146,6 +146,16 @@
                         </tr>
                     </tbody>
                 </table>
+                <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                <object src="data:application/pdf;base64,base64_encode(<?php echo $document; ?>)" type="application/pdf" width="100%" height="500"></embed>                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
                 <p>©MakingMemoriesHomeHealth</p>

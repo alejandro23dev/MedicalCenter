@@ -32,7 +32,7 @@
             </div>
             <div class="mb-3 text-start col-md-6">
                 <label for="patientDOB" class="form-label fw-bold">Patient DOB</label>
-                <input type="date" class="form-control modal-required focus" id="patientDOB">
+                <input type="date" class="form-control modal-required focus" id="patientDOB" minlength="2" maxlength="4">
             </div>
         </div>
         <div class="row">
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="row">
-        <div class="text-start col-md-6">
+            <div class="text-start col-md-6">
                 <label for="referralPhone" class="form-label fw-bold">Ordering Referral Phone</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text text-muted">+1</span>
@@ -59,10 +59,10 @@
             </div>
         </div>
         <div class="row">
-        <div class=" mb-3 text-start col-md-6">
+            <div class=" mb-3 text-start col-md-6">
                 <label for="diagnosis" class="form-label fw-bold">Diagnosis/ICD10</label>
                 <textarea cols="3" class="form-control modal-required focus text-capitalize" id="diagnosis" placeholder=""></textarea>
-            </div>  
+            </div>
             <div class="mb-3 text-start col-md-6">
                 <label for="orderNotes" class="form-label fw-bold">Order Notes</label>
                 <textarea class="form-control modal-required focus text-capitalize" id="orderNotes" placeholder=""></textarea>
@@ -71,7 +71,7 @@
         <div class="mb-3 text-start">
             <label for="file" class="form-label fw-bold">Upload Documents</label>
             <div class="input-group">
-                <input type="file" class="form-control modal-required focus" id="file">
+                <input type="file" class="form-control modal-required focus" id="file" accept=".pdf">
             </div>
         </div>
         <div id="resendEmail">
@@ -108,130 +108,134 @@
             $(this).val(formattedNumber);
         });
 
-        $('#diagnosis,#referralName, #name').on('keypress', function(event) {
-            var valor = $(this).val();
-            var letras = /^[A-Za-z]+$/;
-            var tecla = String.fromCharCode(event.which);
-            if (!tecla.match(letras)) {
-                event.preventDefault();
-            }
-        });
-
         $('#btn-send').click(function(e) {
 
             e.preventDefault();
 
             let resultCheckRequiredValues = checkRequiredValues('modal-required');
+            let phone = "+1" + $('#phone').val();
+            let referralPhone = "+1" + $('#referralPhone').val();
 
             if (resultCheckRequiredValues == 0) {
 
-                let url = "<?php echo base_url('Home/verifyEmail'); ?>";
+                if (phone != referralPhone) {
 
-                $.ajax({
-                    type: "post",
-                    url: url,
-                    data: {
-                        name: $('#name').val(),
-                        email: $('#email').val(),
-                        phone: "+1" + $('#phone').val(),
-                        patientDOB: $('#patientDOB').val(),
-                        patientHeight: $('#patientHeight').val(),
-                        patientWeight: $('#weight').val(),
-                        diagnosis: $('#diagnosis').val(),
-                        referralName: $('#referralName').val(),
-                        referralPhone: "+1" + $('#referralPhone').val(),
-                        orderNotes: $('#orderNotes').val()
-                    },
-                    dataType: "json",
-                    success: function(jsonResponse) {
-                        if (jsonResponse.error == 0) // SUCCESS
-                            showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
+                if ($('#file').val() != '') {
 
-                        else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
-                            showToast('error', 'Verification email could not be sent');
-                            $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
-                            $('#btn-resendEmail').click(function(e) {
-                                e.preventDefault();
-                                $.ajax({
-                                    type: "post",
-                                    url: "<?php echo base_url('Home/resendVerifyEmail'); ?>",
-                                    data: {
-                                        name: $('#name').val(),
-                                        email: $('#email').val(),
-                                        phone: "+1" + $('#phone').val(),
-                                        patientDOB: $('#patientDOB').val(),
-                                        patientHeight: $('#patientHeight').val(),
-                                        patientWeight: $('#weight').val(),
-                                        diagnosis: $('#diagnosis').val(),
-                                        referralName: $('#referralName').val(),
-                                        referralPhone: "+1" + $('#referralPhone').val(),
-                                        orderNotes: $('#orderNotes').val()
-                                    },
-                                    dataType: "json",
-                                    success: function(jsonResponse) {
-                                        if (jsonResponse.error == 0) // SUCCESS
-                                            showToast('info', 'We have resent a Reverification email to your email address');
+                    let url = "<?php echo base_url('Home/verifyEmail'); ?>";
 
-                                        else if (jsonResponse.error == 1) // ERROR
-                                            showToast('error', 'Reverification email could not be sent');
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        data: {
+                            name: $('#name').val(),
+                            email: $('#email').val(),
+                            phone: phone,
+                            patientDOB: $('#patientDOB').val(),
+                            patientHeight: $('#patientHeight').val(),
+                            patientWeight: $('#weight').val(),
+                            diagnosis: $('#diagnosis').val(),
+                            referralName: $('#referralName').val(),
+                            referralPhone: referralPhone,
+                            orderNotes: $('#orderNotes').val()
+                        },
+                        dataType: "json",
+                        success: function(jsonResponse) {
+                            if (jsonResponse.error == 0) // SUCCESS
+                                showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
 
-                                        else if (jsonResponse.error == 2) // ERROR
-                                            showToast('error', 'Please verify your information');
+                            else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
+                                showToast('error', 'Verification email could not be sent');
+                                $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
+                                $('#btn-resendEmail').click(function(e) {
+                                    e.preventDefault();
+                                    $.ajax({
+                                        type: "post",
+                                        url: "<?php echo base_url('Home/resendVerifyEmail'); ?>",
+                                        data: {
+                                            name: $('#name').val(),
+                                            email: $('#email').val(),
+                                            phone: "+1" + $('#phone').val(),
+                                            patientDOB: $('#patientDOB').val(),
+                                            patientHeight: $('#patientHeight').val(),
+                                            patientWeight: $('#weight').val(),
+                                            diagnosis: $('#diagnosis').val(),
+                                            referralName: $('#referralName').val(),
+                                            referralPhone: "+1" + $('#referralPhone').val(),
+                                            orderNotes: $('#orderNotes').val()
+                                        },
+                                        dataType: "json",
+                                        success: function(jsonResponse) {
+                                            if (jsonResponse.error == 0) // SUCCESS
+                                                showToast('info', 'We have resent a Reverification email to your email address');
 
-                                        else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
-                                            showToast('error', 'Invalid Email');
-                                            $('#email').addClass('is-invalid');
+                                            else if (jsonResponse.error == 1) // ERROR
+                                                showToast('error', 'Reverification email could not be sent');
+
+                                            else if (jsonResponse.error == 2) // ERROR
+                                                showToast('error', 'Please verify your information');
+
+                                            else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+                                                showToast('error', 'Invalid Email');
+                                                $('#email').addClass('is-invalid');
+                                            }
                                         }
-                                    }
+                                    });
                                 });
+                            } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
+                                showToast('error', 'Please enter the information correctly');
+
+                            else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+                                showToast('error', 'Invalid Email');
+                                $('#email').addClass('is-invalid');
+
+                            } else if (jsonResponse.error == 4) { // ERROR EMAIL REGISTER
+                                showToast('error', 'The email is already registered');
+                                $('#email').addClass('is-invalid');
+                            } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
+                                showToast('error', 'The number is already registered');
+                                $('#phone').addClass('is-invalid');
+                            }
+                            var formData = new FormData();
+
+                            formData.append('id', jsonResponse.id);
+                            formData.append('file', $("#file")[0].files[0]); // UPLOAD FILE
+
+                            $.ajax({
+                                type: "post",
+                                url: "<?php echo base_url('Home/uploadFile'); ?>",
+                                data: formData,
+                                dataType: "json",
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+
+                                success: function(jsonResponse) {
+                                    if (jsonResponse.error == 1) {
+                                        showToast('error', 'You must upload a file')
+                                        $('#file').addClass('is-invalid');
+                                    }
+                                },
+                                error: function(error) {
+                                    showToast('error', 'Ha ocurrido un error');
+                                },
                             });
-                        } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
-                            showToast('error', 'Please enter the information correctly');
+                        },
 
-                        else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
-                            showToast('error', 'Invalid Email');
-                            $('#email').addClass('is-invalid');
-
-                        } else if (jsonResponse.error == 4) { // ERROR EMAIL REGISTER
-                            showToast('error', 'The email is already registered');
-                            $('#email').addClass('is-invalid');
-                        } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
-                            showToast('error', 'The number is already registered');
-                            $('#phone').addClass('is-invalid');
+                        error: function(error) {
+                            showToast('error', 'Ha ocurrido un error')
                         }
-                        var formData = new FormData();
-
-                        formData.append('id', jsonResponse.id);
-                        formData.append('file', $("#file")[0].files[0]); // UPLOAD FILE
-
-                        $.ajax({
-                            type: "post",
-                            url: "<?php echo base_url('Home/uploadFile'); ?>",
-                            data: formData,
-                            dataType: "json",
-
-                            cache: false,
-                            contentType: false,
-                            processData: false,
-
-                            success: function(jsonResponse) {
-                                if (jsonResponse.error == 1) {
-                                    showToast('error', 'You must upload a file')
-                                    $('#file').addClass('is-invalid');
-                                }
-                            },
-                            error: function(error) {
-                                showToast('error', 'Ha ocurrido un error');
-                            },
-                        });
-                    },
-
-                    error: function(error) {
-                        showToast('error', 'Ha ocurrido un error')
-                    }
-                })
+                    })
+                } else {
+                    showToast('error', 'You must upload a file')
+                    $('#file').addClass('is-invalid');
+                }
+            } else{
+                showToast('error', 'Numeros iguales')
+                    $('#phone').addClass('is-invalid');
+                    $('#referralPhone').addClass('is-invalid');
             }
-
+            }
         });
     });
 </script>

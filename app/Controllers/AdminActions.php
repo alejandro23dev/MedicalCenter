@@ -14,7 +14,7 @@ class AdminActions extends BaseController
         $this->objSessionAdmin = session();
     }
 
-    public function requests()
+    public function patientsReferrals()
     {
         # VERIFY SESSION
         if (empty($this->objSessionAdmin->get('admin')['role']))
@@ -25,7 +25,6 @@ class AdminActions extends BaseController
         $data = array();
         $data['page'] = 'admin/requests';
         $requests = $objMainModel->objData('requests');
-
 
         $row = array();
         for ($i = 0; $i < count($requests); $i++) {
@@ -50,4 +49,102 @@ class AdminActions extends BaseController
 
         return view('header/admin', $data);
     }
+
+    public function messages()
+    {
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
+
+        $objMainModel = new MainModel;
+
+        $data = array();
+        $data['page'] = 'admin/messages';
+        $data['messages'] = $objMainModel->objDataChatsByAdmin();
+
+        return view('header/admin', $data);
+    }
+
+    public function showModalChatOnline()
+    {
+
+         # VERIFY SESSION
+         if (empty($this->objSessionAdmin->get('admin')['role']))
+         return view('logoutAdmin');
+
+         $objMainModel = new MainModel;
+
+        $data = array();
+        $data['role'] = '1';
+        $data['user'] = 'Admin';
+        $data['messages'] = $objMainModel->objDataChats();
+
+        return view('modals/chat', $data);
+    }
+
+    public function deleteMessage()
+    {
+
+         # VERIFY SESSION
+         if (empty($this->objSessionAdmin->get('admin')['role']))
+         return view('logoutAdmin');
+
+         $objMainModel = new MainModel;
+
+         $id = $this->request->getPost('id');
+      
+        $result = $objMainModel->objDelete('chats', $id);
+
+        if($result == true){
+            $response['error'] = '0';
+            $response['msg'] = 'success';
+        }else{
+            $response['error'] = '1';
+            $response['msg'] = 'error on delete';
+        }
+
+        return json_encode($response);
+    }
+
+    public function showModalRespondMessage()
+    {
+
+         # VERIFY SESSION
+         if (empty($this->objSessionAdmin->get('admin')['role']))
+         return view('logoutAdmin');
+
+         $objMainModel = new MainModel;
+         $id = $this->request->getPost('id');
+
+        $data = array();
+        $data['messages'] = $objMainModel->objDataByID('chats', $id);
+
+        return view('modals/responseMessage', $data);
+    }
+
+    public function respondMessage()
+    {
+
+         # VERIFY SESSION
+         if (empty($this->objSessionAdmin->get('admin')['role']))
+         return view('logoutAdmin');
+
+         $objMainModel = new MainModel;
+
+         $id = $this->request->getPost('id');
+         $data['response'] = $this->request->getPost('response');
+      
+        $result = $objMainModel->objUpdate('chats',$data, $id);
+
+        if($result == true){
+            $response['error'] = '0';
+            $response['msg'] = 'success';
+        }else{
+            $response['error'] = '1';
+            $response['msg'] = 'error on delete';
+        }
+
+        return json_encode($response);
+    }
+    
 }
