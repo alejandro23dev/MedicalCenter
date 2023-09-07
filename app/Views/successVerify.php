@@ -12,11 +12,23 @@
 <script src="<?php echo base_url('assets/libs/sweetalert/sweetalert2.js'); ?>"></script>
 <script src="<?php echo base_url('assets/js/customApp.js'); ?>"></script>
 
-<div class="row m-0 vh-100 justify-content-center">
-<div class="spinner-border text-primary" role="status">
-</div> 
-<span class="text-muted fst-italic">Sending Patient Referral</span>
+
+<div class="container">
+  <div class="d-flex flex-column min-vh-100 px-3 pt-4">
+    <div class="row justify-content-center my-auto">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+        <div class="text-center py-5">
+          <div class="">
+            <div class="spinner-border text-primary fs-3" role="status">
+            </div>
+            <p class="text-muted fst-italic fs-4">We are sending your information to the system</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 <script>
   var id = "<?php echo $id; ?>";
 
@@ -29,7 +41,7 @@
     dataType: "json",
     success: function(jsonResponse) {
       if (jsonResponse.error == 0) { // ÉXITO
-          window.location.href = "<?php echo base_url('Home'); ?>?=msgSuccessVerify";
+        window.location.href = "<?php echo base_url('Home'); ?>?=msgSuccessVerify";
       } else if (jsonResponse.error == 1) // ERROR
         showToast('error', 'Patient Referral could not be sent');
     }

@@ -40,6 +40,7 @@ class AdminActions extends BaseController
             $col['referralName'] = $requests[$i]->referralName;
             $col['referralPhone'] = $requests[$i]->referralPhone;
             $col['orderNotes'] = $requests[$i]->orderNotes;
+            $col['date'] = $requests[$i]->date;
             $col['document'] = $requests[$i]->document;
 
             $row[$i] = $col;

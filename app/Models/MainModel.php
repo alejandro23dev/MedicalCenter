@@ -26,6 +26,7 @@ class MainModel extends Model
     public function objDataChats()
     {
         $query = $this->db->table('chats')
+            ->where('response !=', '')
             ->select('*');
 
         return $query->get()->getResult();
@@ -43,9 +44,9 @@ class MainModel extends Model
 
     public function objCreate($table, $data)
     {
-       $this->db->table($table)
-        ->insert($data);
-        
+        $this->db->table($table)
+            ->insert($data);
+
         $result = array();
         if ($this->db->resultID !== null) {
             $result['error'] = 0; // Éxito en la inserción
@@ -53,13 +54,13 @@ class MainModel extends Model
         } else {
             $result['error'] = 1; // Error en la inserción
         }
-        
+
         return $result;
     }
 
     public function objDeleteByTime($table, $currentDateTime)
     {
-         $this->db->table($table)
+        $this->db->table($table)
             ->where('dateClose <', $currentDateTime)
             ->delete();
 
@@ -68,7 +69,7 @@ class MainModel extends Model
 
     public function objDelete($table, $id)
     {
-         $this->db->table($table)
+        $this->db->table($table)
             ->where('id', $id)
             ->delete();
 
@@ -77,23 +78,23 @@ class MainModel extends Model
 
     public function objUpdateToken($table, $data, $email)
     {
-       $this->db->table($table)
-        ->where('email',$email)
-        ->where('emailVerified', '0')
-        ->update($data);
-        
+        $this->db->table($table)
+            ->where('email', $email)
+            ->where('emailVerified', '0')
+            ->update($data);
+
         $id = $this->db->table($table)
-        ->where('email', $email)
-        ->get()->getResult()[0]->id;
+            ->where('email', $email)
+            ->get()->getResult()[0]->id;
 
         $result = array();
         if ($this->db->resultID !== null) {
             $result['error'] = 0; // Éxito en la inserción
-            $result['id'] = $id; 
+            $result['id'] = $id;
         } else {
             $result['error'] = 1; // Error en la inserción
         }
-        
+
         return $result;
     }
 
@@ -105,7 +106,7 @@ class MainModel extends Model
         return $query->get()->getResult();
     }
 
-    public function checkDuplicate($table,$field,$email, $id = '')
+    public function checkDuplicate($table, $field, $email, $id = '')
     {
         $query = $this->db->table($table)
             ->where($field, $email);

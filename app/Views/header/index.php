@@ -3,10 +3,10 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Medical Center</title>
+  <title>Making Memories Home Health</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="Medical Center" name="description" />
-  <meta content="Medical Center" name="author" />
+  <meta content="Making Memories Home Health" name="description" />
+  <meta content="Making Memories Home Health" name="author" />
 
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/medical/favicon.png'); ?>">
   <link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" id="bootstrap-style" rel="stylesheet" type="text/css" />

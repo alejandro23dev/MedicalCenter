@@ -3,10 +3,10 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Medical Center Admin</title>
+  <title>Making Memories Home Health Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="Medical Center" name="description" />
-  <meta content="Medical Center" name="author" />
+  <meta content="Making Memories Home Health" name="description" />
+  <meta content="Making Memories Home Health" name="author" />
 
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/medical/favicon.png'); ?>">
   <link href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -25,13 +25,15 @@
 
 <body>
 
-    <div id="layout-wrapper">
-        <div id="main-modal"></div>
-        <?php echo view('navBars/navBarAdmin'); ?>
-            <?php echo view($page); ?>
+  <div id="layout-wrapper">
+    <div id="main-modal"></div>
+    <div class="m-3">
+      <?php echo view('navBars/navBarAdmin'); ?>
     </div>
+    <?php echo view($page); ?>
+  </div>
 
-    <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloat">
+  <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloat">
     <a id="chatOnline" class="nav-link fs-3p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
   </div>
 </body>
@@ -39,7 +41,7 @@
 </html>
 
 <style>
-   .cursorPointer {
+  .cursorPointer {
     cursor: pointer;
   }
 
@@ -54,18 +56,18 @@
   $('#chatOnline').on('click', function() {
 
 
-$.ajax({
+    $.ajax({
 
-  type: "post",
-  url: "<?php echo base_url('AdminActions/showModalChatOnline'); ?>",
-  dataType: "html",
-  success: function(htmlResponse) {
-    $('#main-modal').html(htmlResponse);
-    $('#chatModal').modal('show');
-  },
-  error: function(error) {
-    showToast('error', 'Ha ocurrido un error');
-  }
-});
-});
+      type: "post",
+      url: "<?php echo base_url('AdminActions/showModalChatOnline'); ?>",
+      dataType: "html",
+      success: function(htmlResponse) {
+        $('#main-modal').html(htmlResponse);
+        $('#chatModal').modal('show');
+      },
+      error: function(error) {
+        showToast('error', 'Ha ocurrido un error');
+      }
+    });
+  });
 </script>

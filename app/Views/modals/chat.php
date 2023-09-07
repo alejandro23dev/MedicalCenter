@@ -25,11 +25,8 @@
                   <h3 class="fw-bold"><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
                   <div class="bg-primary p-3 rounded">
-                    <?php if(empty($message->response)):?>
-                      <p class="text-white">El admin no ha respondido</p>
-                      <?php else:?>
-                  <p class="text-white">Admin ha respondido: <?php echo $message->response ?></p>
-                  <?php endif?>
+                    <h5 class="text-white">Admin</h5>
+                    <p class="text-white"><?php echo $message->response ?></p>
                   </div>
                 </div>
                 <div class="text-muted fs-6">

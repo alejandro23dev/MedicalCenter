@@ -1,7 +1,4 @@
 <link rel="stylesheet" href="<?php echo base_url('assets/libs/dataTable/datatables.min.css'); ?>">
-<div class="text-end m-3">
-    <a href="<?php echo base_url('Admin'); ?>"><i class="mdi mdi-logout fs-1"></i>Logout</a>
-</div>
 <div class="m-5">
     <h2 class="mb-4 text-center fw-bold text-uppercase" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Questions</h2>
     <table id="dtQuestions" class="display table-responsive">
@@ -76,10 +73,12 @@
                 },
                 dataType: "json",
                 success: function(jsonResponse) {
-                    if (jsonResponse.error == 0)
+                    if (jsonResponse.error == 0) {
                         showToast('success', 'Delete question');
-
-                    else if (jsonResponse.error == 1)
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                    } else if (jsonResponse.error == 1)
                         showToast('error', 'Error on delete question');
                 }
             });

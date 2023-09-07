@@ -1,7 +1,4 @@
 <link rel="stylesheet" href="<?php echo base_url('assets/libs/dataTable/datatables.min.css'); ?>">
-<div class="text-end m-3">
-  <a href="<?php echo base_url('Admin'); ?>"><i class="mdi mdi-logout fs-1"></i>Logout</a>
-</div>
 <div class="m-5">
   <h2 class="mb-4 text-center fw-bold text-uppercase" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Patient Referrals</h2>
   <table id="dtRequests" class="display table-responsive">
@@ -17,6 +14,7 @@
         <th>Referral Name</th>
         <th>Referral Phone</th>
         <th>Order Notes</th>
+        <th>Date</th>
         <th>Document</th>
       </tr>
     </thead>
@@ -27,12 +25,13 @@
           <td><a id="email" href="mailto:<?php echo $request['email']; ?>" target="_blank" title="Enviar Correo"><?php echo $request['email']; ?></a></td>
           <td><a href="tel:<?php echo $request['phone']; ?>"><?php echo $request['phone']; ?></a></td>
           <td><?php echo $request['patientDOB']; ?></td>
-          <td><?php echo $request['patientHeight']; ?></td>
-          <td><?php echo $request['patientWeight']; ?></td>
+          <td class="text-center"><?php echo $request['patientHeight']; ?></td>
+          <td class="text-center"><?php echo $request['patientWeight']; ?></td>
           <td><?php echo $request['diagnosis']; ?></td>
           <td><?php echo $request['referralName']; ?></td>
           <td><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
           <td><?php echo $request['orderNotes']; ?></td>
+          <td><?php echo $request['date']; ?></td>
           <td class="text-center"><i class="mdi mdi-file fs-2 file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>" ></i></td>
         </tr>
       <?php endforeach ?>
@@ -60,7 +59,7 @@
       ],
       columnDefs: [{
           orderable: false,
-          targets: [10]
+          targets: [11]
         },
 
       ],

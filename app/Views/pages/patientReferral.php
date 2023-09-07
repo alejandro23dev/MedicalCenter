@@ -195,6 +195,10 @@
                             } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
                                 showToast('error', 'The number is already registered');
                                 $('#phone').addClass('is-invalid');
+                            } else if (jsonResponse.error == 8) { // ERROR NUMBER LENGTH
+                                $('#phone').addClass('is-invalid');
+                            } else if (jsonResponse.error == 9) { // ERROR NUMBER LENGTH
+                                $('#referralPhone').addClass('is-invalid');
                             }
                             var formData = new FormData();
 
