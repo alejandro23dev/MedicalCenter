@@ -1,7 +1,6 @@
 <div style="position: relative; display: inline-block;">
     <img src="<?php echo base_url('assets/images/medical/patientReferral1.png'); ?>" alt="Image" class="w-100">
-    <p style="position: absolute; bottom: 0; left: 10;" class="text-white fs-4 ms-2">Home / Patient Referral</p>
-    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png')?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
+    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png') ?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
 </div>
 <div class="container mt-5 text-center">
     <div>
@@ -12,16 +11,16 @@
             Medical Supplies Inc, please fill out the form below.</h2>
     </div>
     <div class="text-center mt-5 col-8 mx-auto">
-        <img src="<?php echo base_url('assets/images/medical/medical-5459631_1280.png')?>" alt="Image" class="w-25 rounded-circle">
+        <img src="<?php echo base_url('assets/images/medical/medical-5459631_1280.png') ?>" alt="Image" class="w-25 rounded-circle">
         <h1 class="modern-title">PERSONAL INFORMATION</h1>
         <div class="row">
             <div class="mb-3 text-start col-md-6">
-                <label for="name" class="form-label fw-bold">Name</label>
-                <input type="text" class="form-control modal-required focus text-capitalize" id="name" placeholder="Jorsh">
+                <label for="name" class="form-label fw-bold">Full Name</label>
+                <input type="text" class="form-control modal-required focus text-capitalize" id="name" placeholder="Alex Hernandez">
             </div>
             <div class="mb-3 text-start col-md-6">
                 <label for="email" class="form-label fw-bold">Email</label>
-                <input type="email" class="form-control modal-required focus" id="email" placeholder="jorsh@gmail.com">
+                <input type="email" class="form-control modal-required focus" id="email" placeholder="alex@gmail.com">
             </div>
         </div>
         <div class="row">
@@ -39,12 +38,12 @@
         </div>
         <div class="row">
             <div class="mb-3 text-start col-md-6">
-                <label for="patientHeight" class="form-label fw-bold">Height </label> (<span class="text-muted fst-italic">feet inches</span>)
-                <input type="text" class="form-control modal-required focus" id="patientHeight" minlength="1" maxlength="2">
+                <label for="patientHeight" class="form-label fw-bold">Height </label> (<span class="text-muted fst-italic">Feet Inches</span>)
+                <input type="text" class="form-control modal-required focus" id="patientHeight" minlength="2" maxlength="4" placeholder="6'8">
             </div>
             <div class=" mb-3 text-start col-md-6 ">
                 <label for="weight" class="form-label fw-bold">Weight</label> (<span class="text-muted fst-italic">Pounds</span>)
-                <input type="text" class="form-control modal-required focus" id="weight" minlength="2" maxlength="3">
+                <input type="text" class="form-control modal-required focus" id="weight" minlength="2" maxlength="3" placeholder="180">
             </div>
         </div>
         <div class="row">
@@ -98,14 +97,16 @@
 
         $('#patientReferral').addClass('active');
 
-        $("#patientHeight").on("keypress", function() {
-            var value = $(this).val();
-            var replacedValue = value.replace(/(\d+)'/g, "$1'").replace(/(\d+)"/g, "$1\"");
-
-            $(this).val(replacedValue);
+        $('#patientHeight').on('input', function() {
+            var value = $(this).val().replace(/\D/g, ''); // Elimina todo excepto los números
+            var feet = value.slice(0, -1); // Obtiene los pies (todo menos la última posición)
+            var inches = value.slice(-1); // Obtiene las pulgadas (la última posición)
+            if (feet.length > 0 && inches.length > 0) {
+                $(this).val(feet + "'" + inches + '"'); // Agrega las comillas al valor del input
+            }
         });
 
-        $('#weight, #patientHeight').on('input', function() {
+        $('#weight').on('input', function() {
             // Remueve cualquier caracter no numérico
             this.value = this.value.replace(/[^0-9]/g, '');
         });
@@ -130,127 +131,127 @@
 
                 if (phone != referralPhone) {
 
-                if ($('#file').val() != '') {
+                    if ($('#file').val() != '') {
 
-                    let url = "<?php echo base_url('Home/verifyEmail'); ?>";
+                        let url = "<?php echo base_url('Home/verifyEmail'); ?>";
 
-                    $.ajax({
-                        type: "post",
-                        url: url,
-                        data: {
-                            name: $('#name').val(),
-                            email: $('#email').val(),
-                            phone: phone,
-                            patientDOB: $('#patientDOB').val(),
-                            patientHeight: $('#patientHeight').val(),
-                            patientWeight: $('#weight').val(),
-                            diagnosis: $('#diagnosis').val(),
-                            referralName: $('#referralName').val(),
-                            referralPhone: referralPhone,
-                            orderNotes: $('#orderNotes').val()
-                        },
-                        dataType: "json",
-                        success: function(jsonResponse) {
-                            if (jsonResponse.error == 0) // SUCCESS
-                                showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
+                        $.ajax({
+                            type: "post",
+                            url: url,
+                            data: {
+                                name: $('#name').val(),
+                                email: $('#email').val(),
+                                phone: phone,
+                                patientDOB: $('#patientDOB').val(),
+                                patientHeight: $('#patientHeight').val(),
+                                patientWeight: $('#weight').val(),
+                                diagnosis: $('#diagnosis').val(),
+                                referralName: $('#referralName').val(),
+                                referralPhone: referralPhone,
+                                orderNotes: $('#orderNotes').val()
+                            },
+                            dataType: "json",
+                            success: function(jsonResponse) {
+                                if (jsonResponse.error == 0) // SUCCESS
+                                    showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
 
-                            else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
-                                showToast('error', 'Verification email could not be sent');
-                                $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
-                                $('#btn-resendEmail').click(function(e) {
-                                    e.preventDefault();
-                                    $.ajax({
-                                        type: "post",
-                                        url: "<?php echo base_url('Home/resendVerifyEmail'); ?>",
-                                        data: {
-                                            name: $('#name').val(),
-                                            email: $('#email').val(),
-                                            phone: "+1" + $('#phone').val(),
-                                            patientDOB: $('#patientDOB').val(),
-                                            patientHeight: $('#patientHeight').val(),
-                                            patientWeight: $('#weight').val(),
-                                            diagnosis: $('#diagnosis').val(),
-                                            referralName: $('#referralName').val(),
-                                            referralPhone: "+1" + $('#referralPhone').val(),
-                                            orderNotes: $('#orderNotes').val()
-                                        },
-                                        dataType: "json",
-                                        success: function(jsonResponse) {
-                                            if (jsonResponse.error == 0) // SUCCESS
-                                                showToast('info', 'We have resent a Reverification email to your email address');
+                                else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
+                                    showToast('error', 'Verification email could not be sent');
+                                    $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
+                                    $('#btn-resendEmail').click(function(e) {
+                                        e.preventDefault();
+                                        $.ajax({
+                                            type: "post",
+                                            url: "<?php echo base_url('Home/resendVerifyEmail'); ?>",
+                                            data: {
+                                                name: $('#name').val(),
+                                                email: $('#email').val(),
+                                                phone: "+1" + $('#phone').val(),
+                                                patientDOB: $('#patientDOB').val(),
+                                                patientHeight: $('#patientHeight').val(),
+                                                patientWeight: $('#weight').val(),
+                                                diagnosis: $('#diagnosis').val(),
+                                                referralName: $('#referralName').val(),
+                                                referralPhone: "+1" + $('#referralPhone').val(),
+                                                orderNotes: $('#orderNotes').val()
+                                            },
+                                            dataType: "json",
+                                            success: function(jsonResponse) {
+                                                if (jsonResponse.error == 0) // SUCCESS
+                                                    showToast('info', 'We have resent a Reverification email to your email address');
 
-                                            else if (jsonResponse.error == 1) // ERROR
-                                                showToast('error', 'Reverification email could not be sent');
+                                                else if (jsonResponse.error == 1) // ERROR
+                                                    showToast('error', 'Reverification email could not be sent');
 
-                                            else if (jsonResponse.error == 2) // ERROR
-                                                showToast('error', 'Please verify your information');
+                                                else if (jsonResponse.error == 2) // ERROR
+                                                    showToast('error', 'Please verify your information');
 
-                                            else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
-                                                showToast('error', 'Invalid Email');
-                                                $('#email').addClass('is-invalid');
+                                                else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+                                                    showToast('error', 'Invalid Email');
+                                                    $('#email').addClass('is-invalid');
+                                                }
                                             }
-                                        }
+                                        });
                                     });
+                                } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
+                                    showToast('error', 'Please enter the information correctly');
+
+                                else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+                                    showToast('error', 'Invalid Email');
+                                    $('#email').addClass('is-invalid');
+
+                                } else if (jsonResponse.error == 4) { // ERROR EMAIL REGISTER
+                                    showToast('error', 'The email is already registered');
+                                    $('#email').addClass('is-invalid');
+                                } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
+                                    showToast('error', 'The number is already registered');
+                                    $('#phone').addClass('is-invalid');
+                                } else if (jsonResponse.error == 8) { // ERROR NUMBER LENGTH
+                                    $('#phone').addClass('is-invalid');
+                                } else if (jsonResponse.error == 9) { // ERROR NUMBER LENGTH
+                                    $('#referralPhone').addClass('is-invalid');
+                                } else if (jsonResponse.error == 10) { // ERROR NUMBER LENGTH
+                                    $('#patientDOB').addClass('is-invalid');
+                                }
+                                var formData = new FormData();
+
+                                formData.append('id', jsonResponse.id);
+                                formData.append('file', $("#file")[0].files[0]); // UPLOAD FILE
+
+                                $.ajax({
+                                    type: "post",
+                                    url: "<?php echo base_url('Home/uploadFile'); ?>",
+                                    data: formData,
+                                    dataType: "json",
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+
+                                    success: function(jsonResponse) {
+                                        if (jsonResponse.error == 1) {
+                                            showToast('error', 'You must upload a file')
+                                            $('#file').addClass('is-invalid');
+                                        }
+                                    },
+                                    error: function(error) {
+                                        showToast('error', 'Ha ocurrido un error');
+                                    },
                                 });
-                            } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
-                                showToast('error', 'Please enter the information correctly');
+                            },
 
-                            else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
-                                showToast('error', 'Invalid Email');
-                                $('#email').addClass('is-invalid');
-
-                            } else if (jsonResponse.error == 4) { // ERROR EMAIL REGISTER
-                                showToast('error', 'The email is already registered');
-                                $('#email').addClass('is-invalid');
-                            } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
-                                showToast('error', 'The number is already registered');
-                                $('#phone').addClass('is-invalid');
-                            } else if (jsonResponse.error == 8) { // ERROR NUMBER LENGTH
-                                $('#phone').addClass('is-invalid');
-                            } else if (jsonResponse.error == 9) { // ERROR NUMBER LENGTH
-                                $('#referralPhone').addClass('is-invalid');
-                            } else if (jsonResponse.error == 10) { // ERROR NUMBER LENGTH
-                                $('#patientDOB').addClass('is-invalid');
+                            error: function(error) {
+                                showToast('error', 'Ha ocurrido un error')
                             }
-                            var formData = new FormData();
-
-                            formData.append('id', jsonResponse.id);
-                            formData.append('file', $("#file")[0].files[0]); // UPLOAD FILE
-
-                            $.ajax({
-                                type: "post",
-                                url: "<?php echo base_url('Home/uploadFile'); ?>",
-                                data: formData,
-                                dataType: "json",
-                                cache: false,
-                                contentType: false,
-                                processData: false,
-
-                                success: function(jsonResponse) {
-                                    if (jsonResponse.error == 1) {
-                                        showToast('error', 'You must upload a file')
-                                        $('#file').addClass('is-invalid');
-                                    }
-                                },
-                                error: function(error) {
-                                    showToast('error', 'Ha ocurrido un error');
-                                },
-                            });
-                        },
-
-                        error: function(error) {
-                            showToast('error', 'Ha ocurrido un error')
-                        }
-                    })
+                        })
+                    } else {
+                        showToast('error', 'You must upload a file')
+                        $('#file').addClass('is-invalid');
+                    }
                 } else {
-                    showToast('error', 'You must upload a file')
-                    $('#file').addClass('is-invalid');
-                }
-            } else{
-                showToast('error', 'Duplicated phone number')
+                    showToast('error', 'Duplicated phone number')
                     $('#phone').addClass('is-invalid');
                     $('#referralPhone').addClass('is-invalid');
-            }
+                }
             }
         });
     });

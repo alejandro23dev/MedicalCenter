@@ -70,62 +70,56 @@ class Home extends BaseController
                         if (empty($resultCheckEmailDuplicate)) {
                             if (empty($resultPhoneDuplicate)) {
                                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                    if (filter_var($this->request->getPost('name'), FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z]+$/")))) {
+                                    $name = $this->request->getPost('name');
+                                    $email = $email;
+                                    $phone = $this->request->getPost('phone');
+                                    $patientDOB = $this->request->getPost('patientDOB');
+                                    $patientHeight = $this->request->getPost('patientHeight');
+                                    $patientWeight = $this->request->getPost('patientWeight');
+                                    $diagnosis = $this->request->getPost('diagnosis');
+                                    $referralName = $this->request->getPost('referralName');
+                                    $referralPhone = $this->request->getPost('referralPhone');
+                                    $orderNotes = $this->request->getPost('orderNotes');
+                                    $token = md5(uniqid());
 
-                                        $name = $this->request->getPost('name');
-                                        $email = $email;
-                                        $phone = $this->request->getPost('phone');
-                                        $patientDOB = $this->request->getPost('patientDOB');
-                                        $patientHeight = $this->request->getPost('patientHeight');
-                                        $patientWeight = $this->request->getPost('patientWeight');
-                                        $diagnosis = $this->request->getPost('diagnosis');
-                                        $referralName = $this->request->getPost('referralName');
-                                        $referralPhone = $this->request->getPost('referralPhone');
-                                        $orderNotes = $this->request->getPost('orderNotes');
-                                        $token = md5(uniqid());
+                                    //INSERTAR EN LA TABLA (REQUESTS) LOS DATOS DE LA COMPRA PARA MOSTRARLOS EN LA TABLA PEDIDOS
+                                    $insertData = [
+                                        'name' => $name,
+                                        'email' => $email,
+                                        'phone' => $phone,
+                                        'patientDOB' => $patientDOB,
+                                        'patientHeight' => $patientHeight,
+                                        'patientWeight' => $patientWeight,
+                                        'diagnosis' => $diagnosis,
+                                        'referralName' => $referralName,
+                                        'referralPhone' => $referralPhone,
+                                        'orderNotes' => $orderNotes,
+                                        'token' => $token,
+                                        'date' => date('m-d-Y h:i A'),
+                                    ];
 
-                                        //INSERTAR EN LA TABLA (REQUESTS) LOS DATOS DE LA COMPRA PARA MOSTRARLOS EN LA TABLA PEDIDOS
-                                        $insertData = [
-                                            'name' => $name,
-                                            'email' => $email,
-                                            'phone' => $phone,
-                                            'patientDOB' => $patientDOB,
-                                            'patientHeight' => $patientHeight,
-                                            'patientWeight' => $patientWeight,
-                                            'diagnosis' => $diagnosis,
-                                            'referralName' => $referralName,
-                                            'referralPhone' => $referralPhone,
-                                            'orderNotes' => $orderNotes,
-                                            'token' => $token,
-                                            'date' => date('m-d-Y h:i A'),
-                                        ];
+                                    $result = $objMainModel->objCreate('requests', $insertData);
 
-                                        $result = $objMainModel->objCreate('requests', $insertData);
+                                    if ($result['error'] == 0) {
+                                        $response['id'] = $result['id'];
+                                        $emailData = array();
+                                        $emailData['title'] = 'Verify your Email';
+                                        $emailData['token'] = $token;
+                                        $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
-                                        if ($result['error'] == 0) {
-                                            $response['id'] = $result['id'];
-                                            $emailData = array();
-                                            $emailData['title'] = 'Verify your Email';
-                                            $emailData['token'] = $token;
-                                            $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
+                                        $objEmail = \Config\Services::email();
+                                        $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
+                                        $objEmail->setTo($email);
+                                        $objEmail->setSubject('Verify your Email');
+                                        $objEmail->setMessage(view('email/verifyEmail', $emailData));
 
-                                            $objEmail = \Config\Services::email();
-                                            $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
-                                            $objEmail->setTo($email);
-                                            $objEmail->setSubject('Verify your Email');
-                                            $objEmail->setMessage(view('email/verifyEmail', $emailData));
-
-                                            if ($objEmail->send(false)) {
-                                                $response['error'] = 0;
-                                                $response['msg'] = 'success send mail.';
-                                            } else {
-                                                $response['error'] = 1;
-                                                $response['msg'] = 'error send email';
-                                            }
+                                        if ($objEmail->send(false)) {
+                                            $response['error'] = 0;
+                                            $response['msg'] = 'success send mail.';
+                                        } else {
+                                            $response['error'] = 1;
+                                            $response['msg'] = 'error send email';
                                         }
-                                    } else {
-                                        $response['error'] = 5;
-                                        $response['msg'] = 'info only letras not valid in inputs.';
                                     }
                                 } else {
                                     $response['error'] = 3;
@@ -336,14 +330,27 @@ class Home extends BaseController
             $response['error'] = 2;
             $response['msg'] = 'empty msg';
         } else {
-            $insertData = [
-                'user' => $user,
-                'message' => $message,
-                'role' => $role,
-                'date' => date('h:i A'),
-                'dateClose' => date('d-m-Y h:i A', strtotime('+24 Hours')),
+            if ($role == 1) {
+                $insertData = [
+                    'user' => $user,
+                    'message' => $message,
+                    'role' => $role,
+                    'date' => date('h:i A'),
+                    'response' => 'admin',
+                    'dateClose' => date('d-m-Y h:i A', strtotime('+24 Hours')),
 
-            ];
+                ];
+            } else {
+                $insertData = [
+                    'user' => $user,
+                    'message' => $message,
+                    'role' => $role,
+                    'date' => date('h:i A'),
+                    'dateClose' => date('d-m-Y h:i A', strtotime('+24 Hours')),
+
+                ];
+            }
+
 
             $result = $objMainModel->objCreate('chats', $insertData);
 

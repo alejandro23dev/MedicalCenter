@@ -85,7 +85,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    Patient Height: <?php echo $patientHeight; ?>
+                                    Patient Height: <?php echo $patientHeight; ?> Feet
                                 </p>
                             </td>
                         </tr>
@@ -96,7 +96,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    Patient Weight: <?php echo $patientWeight; ?>
+                                    Patient Weight: <?php echo $patientWeight; ?> Pounds
                                 </p>
                             </td>
                         </tr>

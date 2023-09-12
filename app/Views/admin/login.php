@@ -60,7 +60,7 @@
 
     // Verificar si la URL contiene la palabra "msgErrorSession"
     if (currentUrl.includes('msgErrorSession')) {
-      var toast = showToast('warning', 'Su session ha expirado');
+      var toast = showToast('warning', 'Your session has expired');
     }
 
     $('#btn-submit').on('click', function() {
@@ -84,22 +84,22 @@
             if (jsonResponse.error == 1) {
               $('#password').addClass('is-invalid');
               if (jsonResponse.code == 1) {
-                showToast('error', 'Rectifique su contraseña');
+                showToast('error', 'Rectify your password');
               } else if (jsonResponse.code == 2) {
-                showToast('error', 'Debe introducir la contraseña')
+                showToast('error', 'You must enter the password')
               }
             } 
             
           },
 
           error: function(error) {
-            showToast('error', 'Ha ocurrido un error')
+            showToast('error', 'An error has occurred')
           }
         });
 
       } else {
         $('#password').addClass('is-invalid');
-        showToast('error', 'Debe introducir la contraseña')
+        showToast('error', 'You must enter the password')
       }
 
     });

@@ -25,7 +25,7 @@
                   <h3 class="fw-bold"><i class="mdi mdi-account"></i><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
                   <div class="bg-primary p-3 rounded">
-                    <h5 class="text-white"><i class="mdi mdi-account"></i>Admin</h5>
+                    <h5 class="text-white"><i class="mdi mdi-account-check"></i>Admin</h5>
                     <p class="text-white"><?php echo $message->response ?></p>
                   </div>
                 </div>
@@ -33,9 +33,9 @@
                   <p><?php echo $message->date ?></p>
                 </div>
               <?php elseif ($message->role == 1) : ?>
-                <div class="bg-soft-primary me-0 p-2 rounded mt-3 col-6 text-end justify-content-end" style="margin-left: 50%;" id="<?php echo $message->id ?>">
-                  <h3><?php echo $message->user ?></h3>
-                  <p><?php echo $message->message ?></p>
+                <div class="bg-primary me-0 p-2 rounded mt-3 col-6 text-end justify-content-end" style="margin-left: 50%;" id="<?php echo $message->id ?>">
+                  <h3 class="text-white"><?php echo $message->user ?> <i class="mdi mdi-account-check"></i></h3>
+                  <p class="text-white"><?php echo $message->message ?></p>
                 </div>
                 <div class="text-muted fs-6 text-end">
                   <p><?php echo $message->date ?></p>

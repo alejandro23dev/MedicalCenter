@@ -3,7 +3,7 @@
     <i class="navbar-toggler bi bi-list align-items-end text-white" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <img src="<?php echo base_url('assets/images/medical/cropped-Sin-titulo-1-1copia-300x78.png'); ?>" alt="Image" class="w-25">
+    <img src="<?php echo base_url('assets/mmhhlogo.png'); ?>" alt="Image" class="w-25">
       <ul class="navbar-nav w-100 d-flex justify-content-between m-3">
         <li class="nav-item">
           <a id="Home" class="nav-link text-white fs-3 modern-title " href="<?php echo base_url('Home'); ?>">ABOUT US</a>

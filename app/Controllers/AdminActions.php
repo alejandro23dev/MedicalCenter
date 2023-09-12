@@ -162,4 +162,27 @@ class AdminActions extends BaseController
 
         return view('modals/pdf', $data);
     }
+
+    public function deletePatient()
+    {
+
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
+
+        $objMainModel = new MainModel;
+        $id = $this->request->getPost('id');
+
+        $result = $objMainModel->objDelete('requests', $id);
+        if ($result == true) {
+            $response['error'] = '0';
+            $response['msg'] = 'success';
+        } else {
+            $response['error'] = '1';
+            $response['msg'] = 'error on delete';
+        }
+
+        return json_encode($response);
+    }
+    
 }

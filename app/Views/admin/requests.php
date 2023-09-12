@@ -16,6 +16,7 @@
         <th>Order Notes</th>
         <th>Date</th>
         <th>Document</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -32,7 +33,8 @@
           <td><?php echo $request['referralPhone']; ?></td>
           <td><?php echo $request['orderNotes']; ?></td>
           <td><?php echo $request['date']; ?></td>
-          <td class="text-center"><i class="mdi mdi-file fs-2" id="file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>" ></i></td>
+          <td class="text-center"><i class="mdi mdi-file fs-2 text-primary" id="file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>"></i></td>
+          <td><i id="delete" class="mdi mdi-delete fs-2 text-danger" data-id="<?php echo $request['id']; ?>" title="Delete Patient" style="cursor: pointer;"></i></td>
         </tr>
       <?php endforeach ?>
     </tbody>
@@ -59,7 +61,7 @@
       ],
       columnDefs: [{
           orderable: false,
-          targets: [11]
+          targets: [11, 12]
         },
 
       ],
@@ -67,17 +69,39 @@
     });
 
     dtRequests.on('click', '#file', function() {
-      
+
       $.ajax({
         type: "post",
-        url: "<?php echo base_url('AdminActions/getFile')?>",
-        data:{
-          id : $('#file').attr('data-id')
+        url: "<?php echo base_url('AdminActions/getFile') ?>",
+        data: {
+          id: $('#file').attr('data-id')
         },
         dataType: "html",
-        success: function (htmlResponse) {
+        success: function(htmlResponse) {
           $('#main-modal').html(htmlResponse);
           $('#pdfModal').modal('show');
+        }
+      });
+    });
+
+    dtRequests.on('click', '#delete', function() {
+
+      $.ajax({
+        type: "post",
+        url: "<?php echo base_url('AdminActions/deletePatient') ?>",
+        data: {
+          id: $('#delete').attr('data-id')
+        },
+        dataType: "json",
+        success: function(jsonResponse) {
+          if (jsonResponse.error == 0) { // SUCCESS
+            showToast('success', 'Delete Patient');
+            setTimeout(function() {
+              window.location.reload();
+            }, 2000);
+          } else if (jsonResponse.error == 1) // ERROR
+            showToast('error', 'Error on delete Patient');
+
         }
       });
     });

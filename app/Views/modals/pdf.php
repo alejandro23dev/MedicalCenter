@@ -8,7 +8,7 @@
             <div class="modal-body" style="overflow-y: auto;">
                 <div class="container">
                     <div class="container">
-                        <embed src="data:application/pdf;base64,<?php echo base64_encode($document); ?>" type="application/pdf" width="100%"  height="500">
+                        <embed src="data:application/pdf;<?php echo $document; ?>" type="application/pdf" width="100%"  height="500">
                     </div>
                 </div>
             </div>
