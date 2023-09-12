@@ -31,17 +31,17 @@
           <div class="text-center py-5">
             <div class="user-thumb mb-4 mb-md-5">
               <img src="<?php echo base_url('assets/images/users/avatarLoginAdmin.png'); ?>" alt="Avatar" class="w-50">
-              <h3 class=" mt-3">Bienvenido</h3>
+              <h3 class=" mt-3">Welcome</h3>
             </div>
             <div class="form-floating form-floating-custom mb-3">
               <input type="password" class="form-control" id="password" placeholder="Contraseña" required>
-              <label for="password">Contraseña</label>
+              <label for="password">Password</label>
               <div class="form-floating-icon">
                 <i class="uil uil-padlock"></i>
               </div>
             </div>
             <div class="mt-3">
-              <button type="button" class="btn btn-primary" id="btn-submit">Entrar</button>
+              <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
             </div>
           </div>
         </div>

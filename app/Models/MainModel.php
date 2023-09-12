@@ -125,7 +125,7 @@ class MainModel extends Model
         $fileContent = file_get_contents($file['tmp_name']);
 
         $data = array(
-            $field => base64_encode($fileContent)
+            $field => ($fileContent)
         );
 
         $query = $this->db->table($table)

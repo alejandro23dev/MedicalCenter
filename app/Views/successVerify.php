@@ -43,7 +43,7 @@
       if (jsonResponse.error == 0) { // ÉXITO
         window.location.href = "<?php echo base_url('Home'); ?>?=msgSuccessVerify";
       } else if (jsonResponse.error == 1) // ERROR
-        showToast('error', 'Patient Referral could not be sent');
+        window.location.href = "<?php echo base_url('Home/patientReferral'); ?>?=msgErrorVerify";
     }
   });
 </script>

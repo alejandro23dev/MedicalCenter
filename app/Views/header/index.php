@@ -28,23 +28,13 @@
 
   <div id="layout-wrapper">
     <div id="main-modal"></div>
-    <div class="d-inline-flex align-items-center text-center">
-      <img src="<?php echo base_url('assets/images/medical/Logo_BlueHeart (1).png'); ?>" alt="Image" class="w-25">
-      <p class="fs-5 ms-5 fst-italic">Contact Us: <a href="tel:877-233-233-233"><i class="mdi mdi-phone"></i> 877-233-233-233</a> <a href="mailto:'example@gmail.com'"><i class="mdi mdi-email"></i> makingMemories@gmail.com</a>
-      <p class="ms-4 text-muted fs-5 cursorPointer" onclick="openMaps()">
-        <i class="mdi mdi-map-marker"></i>
-        7827 N Dale Mabry Hwy suite 212,
-        Tampa, FL 33614
-      </p>
-      </p>
-    </div>
   </div>
 
   <?php echo view('navBars/navBarUser'); ?>
 
   <?php echo view($page); ?>
 
- <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloat">
+  <div class="d-block bg-primary text-center btn-rounded m-3 shadow-lg aFloat">
     <a id="chatOnline" class="nav-link fs-3 p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
   </div>
 

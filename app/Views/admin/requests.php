@@ -23,16 +23,16 @@
         <tr>
           <td><?php echo $request['name']; ?></td>
           <td><a id="email" href="mailto:<?php echo $request['email']; ?>" target="_blank" title="Enviar Correo"><?php echo $request['email']; ?></a></td>
-          <td><a href="tel:<?php echo $request['phone']; ?>"><?php echo $request['phone']; ?></a></td>
+          <td><?php echo $request['phone']; ?></td>
           <td><?php echo $request['patientDOB']; ?></td>
           <td class="text-center"><?php echo $request['patientHeight']; ?></td>
           <td class="text-center"><?php echo $request['patientWeight']; ?></td>
           <td><?php echo $request['diagnosis']; ?></td>
           <td><?php echo $request['referralName']; ?></td>
-          <td><a href="tel:<?php echo $request['referralPhone']; ?>"><?php echo $request['referralPhone']; ?></a></td>
+          <td><?php echo $request['referralPhone']; ?></td>
           <td><?php echo $request['orderNotes']; ?></td>
           <td><?php echo $request['date']; ?></td>
-          <td class="text-center"><i class="mdi mdi-file fs-2 file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>" ></i></td>
+          <td class="text-center"><i class="mdi mdi-file fs-2" id="file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>" ></i></td>
         </tr>
       <?php endforeach ?>
     </tbody>
@@ -66,17 +66,18 @@
 
     });
 
-    dtRequests.on('click', '.file', function() {
+    dtRequests.on('click', '#file', function() {
       
       $.ajax({
         type: "post",
-        url: "<?php echo base_url('Home/getFile')?>",
+        url: "<?php echo base_url('AdminActions/getFile')?>",
         data:{
-          id : $('.file').attr('data-id')
+          id : $('#file').attr('data-id')
         },
         dataType: "html",
         success: function (htmlResponse) {
-          
+          $('#main-modal').html(htmlResponse);
+          $('#pdfModal').modal('show');
         }
       });
     });

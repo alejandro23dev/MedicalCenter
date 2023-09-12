@@ -1,6 +1,7 @@
 <div style="position: relative; display: inline-block;">
     <img src="<?php echo base_url('assets/images/medical/AboutUS1.png'); ?>" alt="Image" class="w-100">
     <p style="position: absolute; bottom: 0; left: 10;" class="text-white fs-4 ms-2">Home / About US</p>
+    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png')?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
 </div>
 <div class="container mt-5 text-center">
     <div>

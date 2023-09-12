@@ -69,11 +69,11 @@ class AdminActions extends BaseController
     public function showModalChatOnline()
     {
 
-         # VERIFY SESSION
-         if (empty($this->objSessionAdmin->get('admin')['role']))
-         return view('logoutAdmin');
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
 
-         $objMainModel = new MainModel;
+        $objMainModel = new MainModel;
 
         $data = array();
         $data['role'] = '1';
@@ -86,20 +86,20 @@ class AdminActions extends BaseController
     public function deleteMessage()
     {
 
-         # VERIFY SESSION
-         if (empty($this->objSessionAdmin->get('admin')['role']))
-         return view('logoutAdmin');
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
 
-         $objMainModel = new MainModel;
+        $objMainModel = new MainModel;
 
-         $id = $this->request->getPost('id');
-      
+        $id = $this->request->getPost('id');
+
         $result = $objMainModel->objDelete('chats', $id);
 
-        if($result == true){
+        if ($result == true) {
             $response['error'] = '0';
             $response['msg'] = 'success';
-        }else{
+        } else {
             $response['error'] = '1';
             $response['msg'] = 'error on delete';
         }
@@ -110,12 +110,12 @@ class AdminActions extends BaseController
     public function showModalRespondMessage()
     {
 
-         # VERIFY SESSION
-         if (empty($this->objSessionAdmin->get('admin')['role']))
-         return view('logoutAdmin');
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
 
-         $objMainModel = new MainModel;
-         $id = $this->request->getPost('id');
+        $objMainModel = new MainModel;
+        $id = $this->request->getPost('id');
 
         $data = array();
         $data['messages'] = $objMainModel->objDataByID('chats', $id);
@@ -126,26 +126,40 @@ class AdminActions extends BaseController
     public function respondMessage()
     {
 
-         # VERIFY SESSION
-         if (empty($this->objSessionAdmin->get('admin')['role']))
-         return view('logoutAdmin');
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
 
-         $objMainModel = new MainModel;
+        $objMainModel = new MainModel;
 
-         $id = $this->request->getPost('id');
-         $data['response'] = $this->request->getPost('response');
-      
-        $result = $objMainModel->objUpdate('chats',$data, $id);
+        $id = $this->request->getPost('id');
+        $data['response'] = $this->request->getPost('response');
 
-        if($result == true){
+        $result = $objMainModel->objUpdate('chats', $data, $id);
+
+        if ($result == true) {
             $response['error'] = '0';
             $response['msg'] = 'success';
-        }else{
+        } else {
             $response['error'] = '1';
             $response['msg'] = 'error on delete';
         }
 
         return json_encode($response);
     }
-    
+
+    public function getFile()
+    {
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
+
+            $objMainModel = new MainModel;
+
+        $id = $this->request->getPost('id');
+
+        $data['document'] = $objMainModel->objDataByID('requests', $id)[0]->document;
+
+        return view('modals/pdf', $data);
+    }
 }

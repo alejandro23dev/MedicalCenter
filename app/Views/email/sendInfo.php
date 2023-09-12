@@ -63,7 +63,7 @@
                         <tr>
                             <td>
                                 <p>
-                                Phone: <a href="tel:<?php echo $phone; ?>"><?php echo $phone; ?></a>
+                                Phone: <?php echo $phone; ?>
                                 </p>
                             </td>
                         </tr>
@@ -129,7 +129,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    Referral Phone: <a href="tel:<?php echo $referralPhone; ?>"><?php echo $referralPhone; ?></a>
+                                    Referral Phone: <?php echo $referralPhone; ?>
                                 </p>
                             </td>
                         </tr>

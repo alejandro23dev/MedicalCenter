@@ -10,7 +10,7 @@
       <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
         <div class="message-group">
           <div class="bg-soft-secondary p-2 col-6 rounded mt-3" style="max-width: 50%;" id="<?php echo $messages[0]->id ?>">
-            <h3><?php echo $messages[0]->user ?></h3>
+            <h3><i class="mdi mdi-account"></i><?php echo $messages[0]->user ?></h3>
             <p><?php echo $messages[0]->message ?></p>
           </div>
           <div class="text-muted fs-6">

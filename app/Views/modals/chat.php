@@ -7,12 +7,12 @@
           
         </button>
       </div>
-      <div class="modal-body" style="max-height: 450px; overflow-y: auto;">
+      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
         <?php if (empty($messages)) : ?>
           <p class="text-center text-muted">Not messages</p>
         <?php endif; ?>
         <?php
-        $messageGroups = array_chunk($messages, 3);
+        $messageGroups = array_chunk($messages, 5);
         // Ordenar los mensajes por el ID en orden descendente
         usort($messages, function ($a, $b) {
           return $a->id - $b->id;
@@ -22,10 +22,10 @@
             <?php foreach ($group as $message) : ?>
               <?php if ($message->role == 2) : ?>
                 <div class="bg-soft-secondary p-2 col-6 rounded mt-3" id="<?php echo $message->id ?>">
-                  <h3 class="fw-bold"><?php echo $message->user ?></h3>
+                  <h3 class="fw-bold"><i class="mdi mdi-account"></i><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
                   <div class="bg-primary p-3 rounded">
-                    <h5 class="text-white">Admin</h5>
+                    <h5 class="text-white"><i class="mdi mdi-account"></i>Admin</h5>
                     <p class="text-white"><?php echo $message->response ?></p>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
         dataType: "json",
         success: function(jsonResponse) {
           if (jsonResponse.error == 0) {
-            showToast('success', 'Message sent')
+            showToast('success', 'Message sent for review')
             $('#chatModal').modal('hide');
           } else if (jsonResponse.error == 1)
             showToast('error', 'Message not sent')

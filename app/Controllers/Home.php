@@ -50,102 +50,109 @@ class Home extends BaseController
         $referralPhone = $this->request->getPost('referralPhone');
         $patientWeight = $this->request->getPost('patientWeight');
         $patientHeight = $this->request->getPost('patientHeight');
+        $patientDOB = $this->request->getPost('patientDOB');
 
         $resultCheckEmailDuplicate = $objMainModel->checkDuplicate('requests', 'email', $email);
         $resultPhoneDuplicate = $objMainModel->checkDuplicate('requests', 'phone', $phone);
 
-        if (strlen($referralPhone) == 16) {
-            if (strlen($phone) == 16) {
-                if (
-                    empty($this->request->getPost('name')) || empty($email) || empty($phone) ||
-                    empty($this->request->getPost('patientDOB')) || empty($patientHeight) ||
-                    empty($patientWeight) || empty($this->request->getPost('diagnosis')) || empty($this->request->getPost('referralName')) ||
-                    empty($referralPhone) ||  empty($this->request->getPost('orderNotes'))
-                ) {
-                    $response['error'] = 2;
-                    $response['msg'] = 'Por favor introduzca todos los datos correctamente';
-                } else {
-                    if (empty($resultCheckEmailDuplicate)) {
-                        if (empty($resultPhoneDuplicate)) {
-                            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                                if (filter_var($this->request->getPost('name'), FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z]+$/")))) {
+        if (strlen($patientDOB) == 10) {
+            if (strlen($referralPhone) == 16) {
+                if (strlen($phone) == 16) {
+                    if (
+                        empty($this->request->getPost('name')) || empty($email) || empty($phone) ||
+                        empty($patientDOB) || empty($patientHeight) ||
+                        empty($patientWeight) || empty($this->request->getPost('diagnosis')) || empty($this->request->getPost('referralName')) ||
+                        empty($referralPhone) ||  empty($this->request->getPost('orderNotes'))
+                    ) {
+                        $response['error'] = 2;
+                        $response['msg'] = 'Por favor introduzca todos los datos correctamente';
+                    } else {
+                        if (empty($resultCheckEmailDuplicate)) {
+                            if (empty($resultPhoneDuplicate)) {
+                                if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                                    if (filter_var($this->request->getPost('name'), FILTER_VALIDATE_REGEXP, array("options" => array("regexp" => "/^[a-zA-Z]+$/")))) {
 
-                                    $name = $this->request->getPost('name');
-                                    $email = $email;
-                                    $phone = $this->request->getPost('phone');
-                                    $patientDOB = $this->request->getPost('patientDOB');
-                                    $patientHeight = $this->request->getPost('patientHeight');
-                                    $patientWeight = $this->request->getPost('patientWeight');
-                                    $diagnosis = $this->request->getPost('diagnosis');
-                                    $referralName = $this->request->getPost('referralName');
-                                    $referralPhone = $this->request->getPost('referralPhone');
-                                    $orderNotes = $this->request->getPost('orderNotes');
-                                    $token = md5(uniqid());
+                                        $name = $this->request->getPost('name');
+                                        $email = $email;
+                                        $phone = $this->request->getPost('phone');
+                                        $patientDOB = $this->request->getPost('patientDOB');
+                                        $patientHeight = $this->request->getPost('patientHeight');
+                                        $patientWeight = $this->request->getPost('patientWeight');
+                                        $diagnosis = $this->request->getPost('diagnosis');
+                                        $referralName = $this->request->getPost('referralName');
+                                        $referralPhone = $this->request->getPost('referralPhone');
+                                        $orderNotes = $this->request->getPost('orderNotes');
+                                        $token = md5(uniqid());
 
-                                    //INSERTAR EN LA TABLA (REQUESTS) LOS DATOS DE LA COMPRA PARA MOSTRARLOS EN LA TABLA PEDIDOS
-                                    $insertData = [
-                                        'name' => $name,
-                                        'email' => $email,
-                                        'phone' => $phone,
-                                        'patientDOB' => $patientDOB,
-                                        'patientHeight' => $patientHeight,
-                                        'patientWeight' => $patientWeight,
-                                        'diagnosis' => $diagnosis,
-                                        'referralName' => $referralName,
-                                        'referralPhone' => $referralPhone,
-                                        'orderNotes' => $orderNotes,
-                                        'token' => $token,
-                                        'date' => date('m-d-Y h:i A'),
-                                    ];
+                                        //INSERTAR EN LA TABLA (REQUESTS) LOS DATOS DE LA COMPRA PARA MOSTRARLOS EN LA TABLA PEDIDOS
+                                        $insertData = [
+                                            'name' => $name,
+                                            'email' => $email,
+                                            'phone' => $phone,
+                                            'patientDOB' => $patientDOB,
+                                            'patientHeight' => $patientHeight,
+                                            'patientWeight' => $patientWeight,
+                                            'diagnosis' => $diagnosis,
+                                            'referralName' => $referralName,
+                                            'referralPhone' => $referralPhone,
+                                            'orderNotes' => $orderNotes,
+                                            'token' => $token,
+                                            'date' => date('m-d-Y h:i A'),
+                                        ];
 
-                                    $result = $objMainModel->objCreate('requests', $insertData);
+                                        $result = $objMainModel->objCreate('requests', $insertData);
 
-                                    if ($result['error'] == 0) {
-                                        $response['id'] = $result['id'];
-                                        $emailData = array();
-                                        $emailData['title'] = 'Verify your Email';
-                                        $emailData['token'] = $token;
-                                        $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
+                                        if ($result['error'] == 0) {
+                                            $response['id'] = $result['id'];
+                                            $emailData = array();
+                                            $emailData['title'] = 'Verify your Email';
+                                            $emailData['token'] = $token;
+                                            $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
-                                        $objEmail = \Config\Services::email();
-                                        $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
-                                        $objEmail->setTo($email);
-                                        $objEmail->setSubject('Verify your Email');
-                                        $objEmail->setMessage(view('email/verifyEmail', $emailData));
+                                            $objEmail = \Config\Services::email();
+                                            $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
+                                            $objEmail->setTo($email);
+                                            $objEmail->setSubject('Verify your Email');
+                                            $objEmail->setMessage(view('email/verifyEmail', $emailData));
 
-                                        if ($objEmail->send(false)) {
-                                            $response['error'] = 0;
-                                            $response['msg'] = 'success send mail.';
-                                        } else {
-                                            $response['error'] = 1;
-                                            $response['msg'] = 'error send email';
+                                            if ($objEmail->send(false)) {
+                                                $response['error'] = 0;
+                                                $response['msg'] = 'success send mail.';
+                                            } else {
+                                                $response['error'] = 1;
+                                                $response['msg'] = 'error send email';
+                                            }
                                         }
+                                    } else {
+                                        $response['error'] = 5;
+                                        $response['msg'] = 'info only letras not valid in inputs.';
                                     }
                                 } else {
-                                    $response['error'] = 5;
-                                    $response['msg'] = 'info only letras not valid in inputs.';
+                                    $response['error'] = 3;
+                                    $response['msg'] = 'email invalid format.';
                                 }
                             } else {
-                                $response['error'] = 3;
-                                $response['msg'] = 'email invalid format.';
+                                $response['error'] = 7;
+                                $response['msg'] = 'number exist.';
                             }
                         } else {
-                            $response['error'] = 7;
-                            $response['msg'] = 'number exist.';
+                            $response['error'] = 4;
+                            $response['msg'] = 'email exist.';
                         }
-                    } else {
-                        $response['error'] = 4;
-                        $response['msg'] = 'email exist.';
                     }
+                } else {
+                    $response['error'] = 8;
+                    $response['msg'] = 'number invalid.';
                 }
             } else {
-                $response['error'] = 8;
-                $response['msg'] = 'number invalid.';
+                $response['error'] = 9;
+                $response['msg'] = 'referral phone Number invalid.';
             }
         } else {
-            $response['error'] = 9;
-            $response['msg'] = 'referral phone Number invalid.';
+            $response['error'] = 10;
+            $response['msg'] = 'invalid patient dob';
         }
+
 
         return json_encode($response);
     }
@@ -261,7 +268,7 @@ class Home extends BaseController
     {
         $id = $this->request->getPost('id');
         $result = $this->objMainModel->objDataByID('requests', $id);
-        $decodedFile = base64_decode($result[0]->document);
+        $decodedFile = base64_encode($result[0]->document);
 
         $emailData = array();
         $emailData['title'] = 'Patient Referral';
@@ -350,14 +357,5 @@ class Home extends BaseController
         }
 
         return json_encode($response);
-    }
-
-    public function getFile()
-    {
-        $id = $this->request->getPost('id');
-
-        $data['document'] = $this->objMainModel->objDataByID('requests', $id);
-
-        return view('pdf', $data);
     }
 }

@@ -1,6 +1,7 @@
 <div style="position: relative; display: inline-block;">
     <img src="<?php echo base_url('assets/images/medical/patientReferral1.png'); ?>" alt="Image" class="w-100">
     <p style="position: absolute; bottom: 0; left: 10;" class="text-white fs-4 ms-2">Home / Patient Referral</p>
+    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png')?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
 </div>
 <div class="container mt-5 text-center">
     <div>
@@ -11,6 +12,7 @@
             Medical Supplies Inc, please fill out the form below.</h2>
     </div>
     <div class="text-center mt-5 col-8 mx-auto">
+        <img src="<?php echo base_url('assets/images/medical/medical-5459631_1280.png')?>" alt="Image" class="w-25 rounded-circle">
         <h1 class="modern-title">PERSONAL INFORMATION</h1>
         <div class="row">
             <div class="mb-3 text-start col-md-6">
@@ -85,6 +87,14 @@
 
 <script>
     $(document).ready(function() {
+
+        // Obtener la URL actual
+        var currentUrl = window.location.href;
+
+        // Verificar si la URL contiene la palabra "msgSuccessVerify"
+        if (currentUrl.includes('msgErrorVerify')) {
+            var toast = showToast('error', 'Patient Referral could not be sent');;
+        }
 
         $('#patientReferral').addClass('active');
 
@@ -199,6 +209,8 @@
                                 $('#phone').addClass('is-invalid');
                             } else if (jsonResponse.error == 9) { // ERROR NUMBER LENGTH
                                 $('#referralPhone').addClass('is-invalid');
+                            } else if (jsonResponse.error == 10) { // ERROR NUMBER LENGTH
+                                $('#patientDOB').addClass('is-invalid');
                             }
                             var formData = new FormData();
 
@@ -235,7 +247,7 @@
                     $('#file').addClass('is-invalid');
                 }
             } else{
-                showToast('error', 'Numeros iguales')
+                showToast('error', 'Duplicated phone number')
                     $('#phone').addClass('is-invalid');
                     $('#referralPhone').addClass('is-invalid');
             }

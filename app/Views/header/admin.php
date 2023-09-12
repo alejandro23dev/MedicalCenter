@@ -33,7 +33,15 @@
     <?php echo view($page); ?>
   </div>
 
-  <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloat">
+  <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloatCenter">
+    <a id="messages" class="nav-link fs-3p-3 ms-2 me-2 text-white" href="<?php echo base_url('AdminActions/messages'); ?>"><i class="mdi mdi-message-alert-outline fs-1"></i></a>
+  </div>
+
+  <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloatLeft">
+    <a id="patientReferral" class="nav-link fs-3p-3 ms-2 me-2 text-white" href="<?php echo base_url('AdminActions/patientsReferrals'); ?>"><i class="mdi mdi-home fs-1"></i></a>
+  </div>
+
+  <div class="d-block bg-primary text-center btn-rounded m-5 shadow-lg aFloatRight">
     <a id="chatOnline" class="nav-link fs-3p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
   </div>
 </body>
@@ -45,10 +53,21 @@
     cursor: pointer;
   }
 
-  .aFloat {
+  .aFloatRight {
     position: fixed;
     bottom: 0;
     right: 0;
+  }
+  .aFloatLeft {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  .aFloatCenter {
+    position: fixed;
+    bottom: 0;
+    left: 15%;
   }
 </style>
 
