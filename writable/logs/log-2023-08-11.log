@@ -1,0 +1,42 @@
+CRITICAL - 2023-08-11 11:26:04 --> Invalid file: email/recoveryPassword.php
+#0 C:\wamp64\www\e_comerce\system\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('email/recoveryP...')
+#1 C:\wamp64\www\e_comerce\system\Common.php(1119): CodeIgniter\View\View->render('email/recoveryP...', Array, true)
+#2 C:\wamp64\www\e_comerce\app\Controllers\Home.php(321): view('email/recoveryP...', Array)
+#3 C:\wamp64\www\e_comerce\system\CodeIgniter.php(918): App\Controllers\Home->sendRecoveryPasswordEmail()
+#4 C:\wamp64\www\e_comerce\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#5 C:\wamp64\www\e_comerce\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\wamp64\www\e_comerce\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2023-08-11 11:51:35 --> Undefined variable: id
+#0 C:\wamp64\www\e_comerce\app\Views\modals\recoveryPassword.php(64): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\e...', 64, Array)
+#1 C:\wamp64\www\e_comerce\app\Views\main.php(66): include('C:\\wamp64\\www\\e...')
+#2 C:\wamp64\www\e_comerce\system\View\View.php(246): include('C:\\wamp64\\www\\e...')
+#3 C:\wamp64\www\e_comerce\system\Common.php(1119): CodeIgniter\View\View->render('main', Array, true)
+#4 C:\wamp64\www\e_comerce\app\Controllers\Home.php(37): view('main', Array)
+#5 C:\wamp64\www\e_comerce\system\CodeIgniter.php(918): App\Controllers\Home->index()
+#6 C:\wamp64\www\e_comerce\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 C:\wamp64\www\e_comerce\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\e_comerce\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-08-11 11:51:40 --> Undefined variable: id
+#0 C:\wamp64\www\e_comerce\app\Views\modals\recoveryPassword.php(64): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\e...', 64, Array)
+#1 C:\wamp64\www\e_comerce\app\Views\main.php(66): include('C:\\wamp64\\www\\e...')
+#2 C:\wamp64\www\e_comerce\system\View\View.php(246): include('C:\\wamp64\\www\\e...')
+#3 C:\wamp64\www\e_comerce\system\Common.php(1119): CodeIgniter\View\View->render('main', Array, true)
+#4 C:\wamp64\www\e_comerce\app\Controllers\Home.php(37): view('main', Array)
+#5 C:\wamp64\www\e_comerce\system\CodeIgniter.php(918): App\Controllers\Home->index()
+#6 C:\wamp64\www\e_comerce\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 C:\wamp64\www\e_comerce\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\e_comerce\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-08-11 11:52:19 --> Undefined variable: id
+#0 C:\wamp64\www\e_comerce\app\Views\modals\recoveryPassword.php(64): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\e...', 64, Array)
+#1 C:\wamp64\www\e_comerce\app\Views\main.php(66): include('C:\\wamp64\\www\\e...')
+#2 C:\wamp64\www\e_comerce\system\View\View.php(246): include('C:\\wamp64\\www\\e...')
+#3 C:\wamp64\www\e_comerce\system\Common.php(1119): CodeIgniter\View\View->render('main', Array, true)
+#4 C:\wamp64\www\e_comerce\app\Controllers\Home.php(37): view('main', Array)
+#5 C:\wamp64\www\e_comerce\system\CodeIgniter.php(918): App\Controllers\Home->index()
+#6 C:\wamp64\www\e_comerce\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 C:\wamp64\www\e_comerce\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\e_comerce\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}

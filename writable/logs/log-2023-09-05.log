@@ -1,0 +1,800 @@
+CRITICAL - 2023-09-05 00:00:13 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:00:13 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:00:24 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:00:24 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:01:40 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:01:40 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:02:05 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:02:05 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:02:06 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:02:06 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:02:18 --> Unknown column 'emailVerified' in 'where clause'
+#0 C:\wamp64\www\medical_center\system\Database\MySQLi\Connection.php(331): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(741): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(669): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\medical_center\app\Models\MainModel.php(23): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\medical_center\app\Controllers\Home.php(285): App\Models\MainModel->objData('chats')
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-09-05 00:02:18 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(mysqli_sql_exception), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(mysqli_sql_exception))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 00:16:29 --> Undefined variable: messages
+#0 C:\wamp64\www\medical_center\app\Views\modals\chat.php(11): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 11, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('modals/chat', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(287): view('modals/chat')
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 00:16:29 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 01:16:13 --> Undefined index: dateClose
+#0 C:\wamp64\www\medical_center\app\Controllers\Home.php(293): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\m...', 293, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getMessages()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 01:16:13 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 01:36:03 --> Unable to connect to the database.
+#0 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\wamp64\www\medical_center\app\Models\MainModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(283): App\Models\MainModel->objDataChats()
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 01:36:03 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(CodeIgniter\Database\Exceptions\DatabaseException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(CodeIgniter\Database\Exceptions\DatabaseException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 01:36:07 --> Unable to connect to the database.
+#0 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\wamp64\www\medical_center\app\Models\MainModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(283): App\Models\MainModel->objDataChats()
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->showModalChatOnline()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 01:36:07 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(CodeIgniter\Database\Exceptions\DatabaseException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(CodeIgniter\Database\Exceptions\DatabaseException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:36:39 --> Undefined index: document
+#0 C:\wamp64\www\medical_center\app\Views\admin\requests.php(36): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\m...', 36, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('admin/requests', Array, true)
+#3 C:\wamp64\www\medical_center\app\Views\header\admin.php(30): view('admin/requests')
+#4 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#5 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('header/admin', Array, true)
+#6 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(51): view('header/admin', Array)
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#8 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#9 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-09-05 09:36:39 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:08 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:08 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:09 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 09:37:10 --> Undefined property: stdClass::$image
+#0 C:\wamp64\www\medical_center\app\Controllers\AdminActions.php(44): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined prope...', 'C:\\wamp64\\www\\m...', 44, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->requests()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 09:37:10 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 14:58:43 --> unlink(C:\wamp64\www\medical_center\writable\debugbar/debugbar_1693943654.json): No such file or directory
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'unlink(C:\\wamp6...', 'C:\\wamp64\\www\\m...', 106, Array)
+#1 C:\wamp64\www\medical_center\system\Debug\Toolbar\Collectors\History.php(106): unlink('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Debug\Toolbar.php(483): CodeIgniter\Debug\Toolbar\Collectors\History->setFiles(1693943922, 20)
+#3 C:\wamp64\www\medical_center\system\Debug\Toolbar.php(455): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#4 C:\wamp64\www\medical_center\app\Config\Events.php(50): CodeIgniter\Debug\Toolbar->respond()
+#5 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#6 C:\wamp64\www\medical_center\system\Events\Events.php(188): call_user_func(Object(Closure))
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(293): CodeIgniter\Events\Events::trigger('pre_system')
+#8 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-09-05 14:58:43 --> unlink(C:\wamp64\www\medical_center\writable\debugbar/debugbar_1693943677.json): No such file or directory
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'unlink(C:\\wamp6...', 'C:\\wamp64\\www\\m...', 106, Array)
+#1 C:\wamp64\www\medical_center\system\Debug\Toolbar\Collectors\History.php(106): unlink('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Debug\Toolbar.php(483): CodeIgniter\Debug\Toolbar\Collectors\History->setFiles(1693943923, 20)
+#3 C:\wamp64\www\medical_center\system\Debug\Toolbar.php(455): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#4 C:\wamp64\www\medical_center\app\Config\Events.php(50): CodeIgniter\Debug\Toolbar->respond()
+#5 [internal function]: CodeIgniter\Events\Events::Config\{closure}()
+#6 C:\wamp64\www\medical_center\system\Events\Events.php(188): call_user_func(Object(Closure))
+#7 C:\wamp64\www\medical_center\system\CodeIgniter.php(293): CodeIgniter\Events\Events::trigger('pre_system')
+#8 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-09-05 15:09:20 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:20 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:20 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:20 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:21 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:21 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:09:22 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:10:23 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:10:23 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:10:48 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:10:48 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:12:10 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:12:10 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:12:27 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:12:27 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:12:27 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:12:27 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:12:48 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:12:48 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:13:33 --> Undefined index: document
+#0 C:\wamp64\www\medical_center\app\Controllers\Home.php(341): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\m...', 341, Array)
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-09-05 15:13:33 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:13 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:13 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:33 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:33 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:34 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:14:35 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(343): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:14:35 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:18:10 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:18:10 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:18:19 --> Undefined variable: data
+#0 C:\wamp64\www\medical_center\app\Views\pdf.php(3): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\m...', 3, Array)
+#1 C:\wamp64\www\medical_center\system\View\View.php(246): include('C:\\wamp64\\www\\m...')
+#2 C:\wamp64\www\medical_center\system\Common.php(1119): CodeIgniter\View\View->render('pdf', Array, true)
+#3 C:\wamp64\www\medical_center\app\Controllers\Home.php(342): view('pdf', Array)
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Home->getFile()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-05 15:18:19 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(ErrorException), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(ErrorException))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:20:18 --> Call to a member function objDataByID() on null
+#0 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->getFile()
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2023-09-05 15:20:18 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(Error), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(Error))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2023-09-05 15:21:26 --> Call to a member function objDataByID() on null
+#0 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\AdminActions->getFile()
+#1 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AdminActions))
+#2 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2023-09-05 15:21:26 --> Uncaught Error: Call to undefined function clean_path() in C:\wamp64\www\medical_center\app\Views\errors\html\error_exception.php:38
+Stack trace:
+#0 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(309): include()
+#1 C:\wamp64\www\medical_center\system\Debug\Exceptions.php(175): CodeIgniter\Debug\Exceptions->render(Object(Error), 500)
+#2 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(Error))
+#3 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}

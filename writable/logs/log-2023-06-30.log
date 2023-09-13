@@ -1,0 +1,7 @@
+CRITICAL - 2023-06-30 20:49:51 --> Trying to access array offset on value of type null
+#0 C:\wamp64\www\e_comerce\app\Controllers\Product.php(19): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Trying to acces...', 'C:\\wamp64\\www\\e...', 19, Array)
+#1 C:\wamp64\www\e_comerce\system\CodeIgniter.php(918): App\Controllers\Product->index()
+#2 C:\wamp64\www\e_comerce\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Product))
+#3 C:\wamp64\www\e_comerce\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\e_comerce\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#5 {main}
