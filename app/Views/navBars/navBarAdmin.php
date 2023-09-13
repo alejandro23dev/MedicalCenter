@@ -6,7 +6,8 @@
       </a>
       <ul class="dropdown-menu">
         <li>
-          <a class="dropdown-item" href="<?php echo base_url('Admin'); ?>"><span><img class="w-25" src="<?php echo base_url('assets/images/logout.png')?>" alt="img"></span>Logout</a>
+        <a class="dropdown-item" href="#" id="btn-changeKey"><i class="mdi mdi-key-outline text-muted font-size-20 align-middle me-1"></i> <span class="align-middle">Change Password</span></a>  
+        <a class="dropdown-item" href="<?php echo base_url('Admin'); ?>"><span><i class="mdi mdi-logout font-size-20 align-middle me-1"></i></span>Logout</a>
         </li>
       </ul>
     </li>

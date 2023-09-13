@@ -58,6 +58,7 @@
     bottom: 0;
     right: 0;
   }
+
   .aFloatLeft {
     position: fixed;
     bottom: 0;
@@ -88,5 +89,23 @@
         showToast('error', 'Ha ocurrido un error');
       }
     });
+  });
+
+  $('#btn-changeKey').click(function(e) {
+
+    e.preventDefault();
+
+    $.ajax({
+      type: "post",
+      url: "<?php echo base_url('AdminActions/showModalChangeKey'); ?>",
+      dataType: "html",
+      success: function(htmlResponse) {
+        $('#main-modal').html(htmlResponse);
+      },
+      error: function(error) {
+        showToast('error', 'Ha ocurrido un error');
+      }
+    });
+
   });
 </script>

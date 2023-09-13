@@ -123,6 +123,49 @@ class AdminActions extends BaseController
         return view('modals/responseMessage', $data);
     }
 
+    public function showModalChangeKey()
+    {
+        # VERIFY SESSION
+        if (empty($this->objSessionAdmin->get('admin')['role']))
+            return view('logoutAdmin');
+
+        $data = array();
+        $data['title'] = 'Admin Password';
+
+        return view('modals/keyChange', $data);
+    }
+
+    public function updateKey()
+    {
+        $response = array();
+
+       # VERIFY SESSION
+       if (empty($this->objSessionAdmin->get('admin')['role']))
+       return view('logoutAdmin');
+       $objMainModel = new MainModel;
+
+        $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
+        $data = array();
+        $data['password'] = $password;
+
+        $result = $objMainModel->objUpdate('admin', $data, 1);
+
+        if ($result['error'] == 0) { // SUCCESS
+
+            $response['error'] = 0;
+            $response['id'] = 1;
+            $response['msg'] = 'Password Updated';
+        } else { // ERROR UPDATE RECORD
+
+            $response['error'] = 1;
+            $response['code'] = 100;
+            $response['msg'] = 'An error has ocurred';
+        }
+
+        return json_encode($response);
+    }
+
     public function respondMessage()
     {
 
