@@ -1,6 +1,6 @@
 <div style="position: relative; display: inline-block;">
     <img src="<?php echo base_url('assets/images/medical/patientReferral1.png'); ?>" alt="Image" class="w-100">
-    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png') ?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
+    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png') ?>" alt="image" style="position: absolute; top: 0; right: 0; width: 10%; opacity: 60%;">
 </div>
 <div class="container mt-5 text-center">
     <div>
@@ -206,11 +206,14 @@
                                 } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
                                     showToast('error', 'The number is already registered');
                                     $('#phone').addClass('is-invalid');
-                                } else if (jsonResponse.error == 8) { // ERROR NUMBER LENGTH
+                                } else if (jsonResponse.error == 8) { // ERROR INVALID NUMBER
+                                    showToast('error', 'Invalid Phone Number');
                                     $('#phone').addClass('is-invalid');
-                                } else if (jsonResponse.error == 9) { // ERROR NUMBER LENGTH
+                                } else if (jsonResponse.error == 9) { // ERROR INVALID REFERRAL NUMBER
+                                    showToast('error', 'Invalid Referral Phone Number');
                                     $('#referralPhone').addClass('is-invalid');
-                                } else if (jsonResponse.error == 10) { // ERROR NUMBER LENGTH
+                                } else if (jsonResponse.error == 10) { // ERROR INVALID DATE
+                                    showToast('error', 'Invalid Date');
                                     $('#patientDOB').addClass('is-invalid');
                                 }
                                 var formData = new FormData();

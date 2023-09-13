@@ -13,8 +13,9 @@
             Contact Us <i class="mdi mdi-arrow-down"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="contactDropdown">
-            <li><a class="dropdown-item" href="tel:+34627277258"><i class="mdi mdi-phone"></i> +1 (459) 456-4578</a></li>
-            <li><a class="dropdown-item" href="mailto:example@gmail.com"><i class="mdi mdi-email"></i> makingMemories@gmail.com</a></li>
+            <li><a class="dropdown-item" href="tel:+18139310015"><i class="mdi mdi-phone"></i> +1 (813) 931-0015</a></li>
+            <li><a class="dropdown-item" href="tel:+18139310017"><i class="mdi mdi-fax"></i> +1 (813) 931-0017</a></li>
+            <li><a class="dropdown-item" href="mailto:Makingmemorieshomehealth@gmail.com"><i class="mdi mdi-email"></i> Makingmemorieshomehealth@gmail.com</a></li>
             <li><a class="dropdown-item" href="#" onclick="openMaps()"><i class="mdi mdi-map-marker"></i> 7827 N Dale Mabry Hwy suite 212 <br> Tampa, FL 33614</a></li>
           </ul>
         </li>

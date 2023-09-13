@@ -52,7 +52,10 @@
             if (jsonResponse.error == 0) {
               showToast('success', 'Success');
               $('#responseModal').modal('hide');
-              
+              setTimeout(function() {
+                window.location.reload();
+              }, 2000);
+
             } else if (jsonResponse.error == 1)
               showToast('error', 'Error');
           }

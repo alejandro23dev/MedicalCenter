@@ -1,6 +1,6 @@
 <div style="position: relative; display: inline-block;">
     <img src="<?php echo base_url('assets/images/medical/doctorAboutUs.png'); ?>" alt="Image" class="w-100">
-    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png')?>" alt="image" style="position: absolute; top: 0; right: 0; width: 100px; opacity: 30%;">
+    <img src="<?php echo base_url('assets/images/medical/Sin-titu-1-150x150.png') ?>" alt="image" style="position: absolute; top: 0; right: 0; width: 10%; opacity: 60%;">
 </div>
 <div class="container mt-5 text-center">
     <div>

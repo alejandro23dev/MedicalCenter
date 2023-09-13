@@ -15,40 +15,40 @@
   <link href="<?php echo base_url('assets/libs/sweetalert/sweetalert2.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
-  .cursorPointer {
-    cursor: pointer;
-  }
+    .cursorPointer {
+      cursor: pointer;
+    }
 
-  .aFloat {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
+    .aFloat {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+    }
 
-  .footer i {
-    margin-right: 5px;
-  }
+    .footer i {
+      margin-right: 5px;
+    }
 
-  .active {
-    text-decoration: underline;
-    font-style: italic;
-  }
+    .active {
+      text-decoration: underline;
+      font-style: italic;
+    }
 
-  .modern-title {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 600;
-    color: #333;
-    text-transform: uppercase;
-  }
+    .modern-title {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-weight: 600;
+      color: #333;
+      text-transform: uppercase;
+    }
 
-  .modern-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    font-weight: normal;
-    color: #777;
-    letter-spacing: 1px;
-  }
-</style>
+    .modern-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      color: #777;
+      letter-spacing: 1px;
+    }
+  </style>
 
   <script src="<?php echo base_url('assets/libs/jquery/jquery.min.js'); ?>"></script>
   <script src="<?php echo base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
@@ -71,9 +71,20 @@
     <div class="d-block bg-primary text-center btn-rounded m-3 shadow-lg aFloat">
       <a id="chatOnline" class="nav-link fs-3 p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
     </div>
+
+    <div class="text-center mt-5">
+    <p class="text-muted"><i class="mdi mdi-medical-bag"></i>Medicare Certificate</p>
+    <p class="text-muted"><i class="mdi mdi-license"></i>License #299995513</p>
+    <p class="text-muted">©<span id="currentYear"></span></p>
+  </div>
   </div>
 </body>
 <script>
+
+var date = new Date();
+  var year = date.getFullYear();
+  document.getElementById("currentYear").innerHTML = year;
+
   function openMaps() {
     var address = "7827 N Dale Mabry Hwy suite 212, Tampa, FL 33614";
     var encodedAddress = encodeURIComponent(address);

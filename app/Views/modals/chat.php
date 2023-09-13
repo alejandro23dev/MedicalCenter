@@ -4,15 +4,15 @@
       <div class="modal-header">
         <h5 class="modal-title" id="chatModalLabel">Chat of the Questions</h5>
         <button type="button" class="btn btn-close" aria-label="Close">
-          
+
         </button>
       </div>
-      <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+      <div class="modal-body" style="max-height: 300px; overflow-y: auto;">
         <?php if (empty($messages)) : ?>
           <p class="text-center text-muted">Not messages</p>
         <?php endif; ?>
         <?php
-        $messageGroups = array_chunk($messages, 5);
+        $messageGroups = array_chunk($messages, 3);
         // Ordenar los mensajes por el ID en orden descendente
         usort($messages, function ($a, $b) {
           return $a->id - $b->id;
@@ -21,10 +21,10 @@
           <div class="message-group">
             <?php foreach ($group as $message) : ?>
               <?php if ($message->role == 2) : ?>
-                <div class="bg-soft-secondary p-2 col-6 rounded mt-3" id="<?php echo $message->id ?>">
+                <div class="bg-soft-secondary p-2 col-md-11 rounded mt-3 d-inline-block" id="<?php echo $message->id ?>">
                   <h3 class="fw-bold"><i class="mdi mdi-account"></i><?php echo $message->user ?></h3>
                   <p><?php echo $message->message ?></p>
-                  <div class="bg-primary p-3 rounded">
+                  <div class="bg-primary p-1 rounded">
                     <h5 class="text-white"><i class="mdi mdi-account-check"></i>Admin</h5>
                     <p class="text-white"><?php echo $message->response ?></p>
                   </div>
@@ -33,7 +33,7 @@
                   <p><?php echo $message->date ?></p>
                 </div>
               <?php elseif ($message->role == 1) : ?>
-                <div class="bg-primary me-0 p-2 rounded mt-3 col-6 text-end justify-content-end" style="margin-left: 50%;" id="<?php echo $message->id ?>">
+                <div class="bg-primary me-0 p-1 rounded mt-3 col-6 text-end justify-content-end" style="margin-left: 50%;" id="<?php echo $message->id ?>">
                   <h3 class="text-white"><?php echo $message->user ?> <i class="mdi mdi-account-check"></i></h3>
                   <p class="text-white"><?php echo $message->message ?></p>
                 </div>
