@@ -124,22 +124,23 @@ class MainModel extends Model
     {
         $fileContent = file_get_contents($file['tmp_name']);
 
-        $data = array(
-            $field => ($fileContent)
-        );
+            $data = array(
+                $field => ($fileContent)
+            );
 
-        $query = $this->db->table($table)
-            ->where('id', $id)
-            ->update($data);
+            $query = $this->db->table($table)
+                ->where('id', $id)
+                ->update($data);
 
-        $result = array();
+            $result = array();
 
-        if ($query == true) {
+            if ($query == true) {
 
-            $result['error'] = 0;
-            $result['id'] = $id;
-        } else
-            $result['error'] = 1;
+                $result['error'] = 0;
+                $result['id'] = $id;
+            } else
+                $result['error'] = 1;
+        
 
         return $result;
     }

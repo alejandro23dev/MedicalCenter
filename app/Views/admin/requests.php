@@ -33,8 +33,8 @@
           <td><?php echo $request['referralPhone']; ?></td>
           <td><?php echo $request['orderNotes']; ?></td>
           <td><?php echo $request['date']; ?></td>
-          <td class="text-center"><i class="mdi mdi-file fs-2 text-primary" id="file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>"></i></td>
-          <td><i id="delete" class="mdi mdi-delete fs-2 text-danger" data-id="<?php echo $request['id']; ?>" title="Delete Patient" style="cursor: pointer;"></i></td>
+          <td class="text-center"><i class="mdi mdi-file fs-2 text-primary file" style="cursor: pointer;" title="Open pdf file" data-id="<?php echo $request['id']; ?>"></i></td>
+          <td><i class="mdi mdi-delete delete fs-2 text-danger" data-id="<?php echo $request['id']; ?>" title="Delete Patient" style="cursor: pointer;"></i></td>
         </tr>
       <?php endforeach ?>
     </tbody>
@@ -68,13 +68,13 @@
 
     });
 
-    dtRequests.on('click', '#file', function() {
+    dtRequests.on('click', '.file', function() {
 
       $.ajax({
         type: "post",
         url: "<?php echo base_url('AdminActions/getFile') ?>",
         data: {
-          id: $('#file').attr('data-id')
+          id: $(this).attr('data-id')
         },
         dataType: "html",
         success: function(htmlResponse) {
@@ -84,13 +84,13 @@
       });
     });
 
-    dtRequests.on('click', '#delete', function() {
+    dtRequests.on('click', '.delete', function() {
 
       $.ajax({
         type: "post",
         url: "<?php echo base_url('AdminActions/deletePatient') ?>",
         data: {
-          id: $('#delete').attr('data-id')
+          id: $(this).attr('data-id')
         },
         dataType: "json",
         success: function(jsonResponse) {

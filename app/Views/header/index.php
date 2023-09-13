@@ -14,32 +14,7 @@
   <link href="<?php echo base_url('assets/css/app.min.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
   <link href="<?php echo base_url('assets/libs/sweetalert/sweetalert2.css'); ?>" id="app-style" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-  <script src="<?php echo base_url('assets/libs/jquery/jquery.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/libs/metismenujs/metismenujs.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/libs/simplebar/simplebar.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/libs/feather-icons/feather.min.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/libs/sweetalert/sweetalert2.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/js/customApp.js'); ?>"></script>
-</head>
-
-<body>
-
-  <div id="layout-wrapper">
-    <div id="main-modal"></div>
-  </div>
-
-  <?php echo view('navBars/navBarUser'); ?>
-
-  <?php echo view($page); ?>
-
-  <div class="d-block bg-primary text-center btn-rounded m-3 shadow-lg aFloat">
-    <a id="chatOnline" class="nav-link fs-3 p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
-  </div>
-
-</body>
-<style>
+  <style>
   .cursorPointer {
     cursor: pointer;
   }
@@ -74,6 +49,30 @@
     letter-spacing: 1px;
   }
 </style>
+
+  <script src="<?php echo base_url('assets/libs/jquery/jquery.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/libs/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/libs/metismenujs/metismenujs.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/libs/simplebar/simplebar.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/libs/feather-icons/feather.min.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/libs/sweetalert/sweetalert2.js'); ?>"></script>
+  <script src="<?php echo base_url('assets/js/customApp.js'); ?>"></script>
+</head>
+
+<body>
+
+  <div id="layout-wrapper">
+    <div id="main-modal"></div>
+
+    <?php echo view('navBars/navBarUser'); ?>
+
+    <?php echo view($page); ?>
+
+    <div class="d-block bg-primary text-center btn-rounded m-3 shadow-lg aFloat">
+      <a id="chatOnline" class="nav-link fs-3 p-3 ms-2 me-2 text-white" href="#"><i class="mdi mdi-chat fs-1"></i></a>
+    </div>
+  </div>
+</body>
 <script>
   function openMaps() {
     var address = "7827 N Dale Mabry Hwy suite 212, Tampa, FL 33614";

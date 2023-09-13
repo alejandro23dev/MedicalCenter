@@ -225,9 +225,14 @@ class Home extends BaseController
 
             if ($result['error'] == 0) {
                 $response['error'] = 0;
-            } else {
+
+            } if ($result['error'] == 1){
                 $response['error'] = 1;
                 $response['msg'] = 'Failed to upload document to server';
+
+            } if ($result['error'] == 2){
+                $response['error'] = 2;
+                $response['msg'] = 'corrupt file';
             }
         }
 
@@ -262,7 +267,7 @@ class Home extends BaseController
     {
         $id = $this->request->getPost('id');
         $result = $this->objMainModel->objDataByID('requests', $id);
-        $decodedFile = base64_encode($result[0]->document);
+        $decodedFile = $result[0]->document;
 
         $emailData = array();
         $emailData['title'] = 'Patient Referral';
@@ -284,7 +289,7 @@ class Home extends BaseController
         $objEmail->setTo('alejandro23dev@gmail.com');
         $objEmail->setSubject('Patient Referral');
         $objEmail->setMessage(view('email/sendInfo', $emailData));
-        $objEmail->attach($decodedFile, 'file.pdf', 'application/pdf');
+        $objEmail->attach($decodedFile, 'attachment', 'file.pdf', 'application/pdf');
 
         if ($objEmail->send(false)) {
             $response['error'] = 0;

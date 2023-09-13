@@ -70,7 +70,7 @@
             </div>
         </div>
         <div class="mb-3 text-start">
-            <label for="file" class="form-label fw-bold">Upload Documents</label>
+            <label for="file" class="form-label fw-bold">Upload Documents</label> <span class="text-muted fst-italic"><i class="mdi mdi-information"></i>Please do not attach file bigger than 3MB</span>
             <div class="input-group">
                 <input type="file" class="form-control modal-required focus" id="file" accept=".pdf">
             </div>
@@ -230,6 +230,10 @@
                                     success: function(jsonResponse) {
                                         if (jsonResponse.error == 1) {
                                             showToast('error', 'You must upload a file')
+                                            $('#file').addClass('is-invalid');
+                                        }
+                                        if (jsonResponse.error == 2) {
+                                            showToast('error', 'You file is corrupt')
                                             $('#file').addClass('is-invalid');
                                         }
                                     },

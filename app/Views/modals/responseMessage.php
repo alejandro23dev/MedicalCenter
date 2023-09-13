@@ -38,12 +38,13 @@
       if (event.type === 'click' || event.keyCode === 13) {
 
         let resultCheckRequiredValues = checkRequiredValues('chatModal-required');
+        let id = "<?php echo $messages[0]->id ?>";
 
         $.ajax({
           type: "post",
           url: "<?php echo base_url('AdminActions/respondMessage') ?>",
           data: {
-            id: $('#responseMsg').attr('data-id'),
+            id: id,
             response: $('#response').val(),
           },
           dataType: "json",
@@ -51,9 +52,7 @@
             if (jsonResponse.error == 0) {
               showToast('success', 'Success');
               $('#responseModal').modal('hide');
-              setTimeout(function() {
-                window.location.reload();
-              }, 2000);
+              
             } else if (jsonResponse.error == 1)
               showToast('error', 'Error');
           }

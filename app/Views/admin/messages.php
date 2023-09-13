@@ -13,8 +13,8 @@
             <?php foreach ($messages as $message) : ?>
                 <tr>
                     <td><?php echo $message->message; ?></td>
-                    <td class="text-center"><i class=" fs-3 mdi mdi-send" style="cursor: pointer;" title="Responder" id="responseMsg" data-id="<?php echo $message->id; ?>"></i></td>
-                    <td class="text-center"><i class=" fs-3 mdi mdi-delete" style="cursor: pointer;" title="Eliminar" id="delete" data-id="<?php echo $message->id; ?>"></i></td>
+                    <td class="text-center"><i class=" fs-3 mdi mdi-send text-primary responseMsg" style="cursor: pointer;" title="Respond" data-id="<?php echo $message->id; ?>"></i></td>
+                    <td class="text-center"><i class=" fs-3 mdi mdi-delete text-danger delete" style="cursor: pointer;" title="Delete" data-id="<?php echo $message->id; ?>"></i></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
@@ -47,13 +47,13 @@
 
         });
 
-        dtQuestions.on('click', '#responseMsg', function() {
+        dtQuestions.on('click', '.responseMsg', function() {
 
             $.ajax({
                 type: "post",
                 url: "<?php echo base_url('AdminActions/showModalRespondMessage') ?>",
                 data: {
-                    id: $('#responseMsg').attr('data-id')
+                    id: $(this).attr('data-id')
                 },
                 dataType: "html",
                 success: function(htmlResponse) {
@@ -63,13 +63,12 @@
             });
         });
 
-        dtQuestions.on('click', '#delete', function() {
-
+        dtQuestions.on('click', '.delete', function() {
             $.ajax({
                 type: "post",
                 url: "<?php echo base_url('AdminActions/deleteMessage') ?>",
                 data: {
-                    id: $('#delete').attr('data-id')
+                    id: $(this).attr('data-id')
                 },
                 dataType: "json",
                 success: function(jsonResponse) {
