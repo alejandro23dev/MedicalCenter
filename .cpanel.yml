@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/jz04wu32pmfn/public_html/
-    - cp -R /home/jz04wu32pmfn/repositories/MedicalCenter/ $DEPLOYPATH
+    - cp -R /home/jz04wu32pmfn/repositories/MedicalCenter/* $DEPLOYPATH
