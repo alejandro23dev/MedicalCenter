@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/example/public_html/
+    - cp -R /home/jz04wu32pmfn/repositories/MedicalCenter $DEPLOYPATH
