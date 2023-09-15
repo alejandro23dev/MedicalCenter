@@ -47,21 +47,21 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'ssl://smtp.hostinger.com';
+    public $SMTPHost = 'ssl://smtpout.secureserver.net';
 
     /**
      * SMTP Username
      *
      * @var string
      */
-    public $SMTPUser = 'info@grupoahvsolucionesinformaticas.es';
+    public $SMTPUser = 'info@makingmemorieshh.com';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = '@NICOLE6062017hOSTINGER';
+    public $SMTPPass = 'medicalcenter';
 
     /**
      * SMTP Port
