@@ -24,8 +24,8 @@ class App extends BaseConfig
      * @var string
      */
 
-    public $baseURL = 'http://medicalcenter'; //LOCAL
-    //public $baseURL = 'https://makingmemorieshh.com'; // PRODUCTION
+    public $baseURL = 'http://medicalcenter'; // LOCAL
+    // public $baseURL = 'https://'; // PRODUCTION
 
     /**
      * --------------------------------------------------------------------------
@@ -463,6 +463,4 @@ class App extends BaseConfig
      * @var bool
      */
     public $CSPEnabled = false;
-
-    
 }

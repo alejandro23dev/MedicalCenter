@@ -54,14 +54,14 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPUser = 'dev@axleyherrera.com';
+    public $SMTPUser = 'info@grupoahvsolucionesinformaticas.es';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = '@Axley01herrera';
+    public $SMTPPass = '@NICOLE6062017hOSTINGER';
 
     /**
      * SMTP Port
@@ -89,7 +89,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'SSL';
+    public $SMTPCrypto = 'TLS';
 
     /**
      * Enable word-wrap
