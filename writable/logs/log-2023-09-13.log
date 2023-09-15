@@ -178,3 +178,23 @@ Stack trace:
   thrown
 #0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
 #1 {main}
+CRITICAL - 2023-09-13 19:47:54 --> Unable to connect to the database.
+#0 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\wamp64\www\medical_center\app\Models\loginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\wamp64\www\medical_center\app\Controllers\Admin.php(38): App\Models\LoginModel->loginAdmin('123')
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Admin->login()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-09-13 19:47:58 --> Unable to connect to the database.
+#0 C:\wamp64\www\medical_center\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\wamp64\www\medical_center\system\Database\BaseBuilder.php(1860): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\wamp64\www\medical_center\app\Models\loginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\wamp64\www\medical_center\app\Controllers\Admin.php(38): App\Models\LoginModel->loginAdmin('123')
+#4 C:\wamp64\www\medical_center\system\CodeIgniter.php(918): App\Controllers\Admin->login()
+#5 C:\wamp64\www\medical_center\system\CodeIgniter.php(404): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+#6 C:\wamp64\www\medical_center\system\CodeIgniter.php(312): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\medical_center\public\index.php(44): CodeIgniter\CodeIgniter->run()
+#8 {main}
