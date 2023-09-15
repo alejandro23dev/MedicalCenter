@@ -29,7 +29,8 @@ class Database extends \CodeIgniter\Database\Config
 	 *
 	 * @var array
 	 */
-	public $default = [
+
+	/* public $default = [
 		'DSN'      => '',
 		'hostname' => 'localhost',
 		'username' => 'root',
@@ -49,16 +50,14 @@ class Database extends \CodeIgniter\Database\Config
 		'strictOn' => false,
 		'failover' => [],
 		'port'     => 3306,
-	];
-
-	/*
+	]; */
 
 	public $default = [
 		'DSN'      => '',
 		'hostname' => 'localhost',
-		'username' => 'root',
+		'username' => '',
 		'password' => '',
-		'database' => '',
+		'database' => 'medicalcenter',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
@@ -73,7 +72,7 @@ class Database extends \CodeIgniter\Database\Config
 		'strictOn' => false,
 		'failover' => [],
 		'port'     => 3306,
-	]; */
+	]; 
 
 	/**
 	 * This database connection is used when
