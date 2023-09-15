@@ -47,7 +47,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'ssl://smtpout.secureserver.net';
+    public $SMTPHost = 'smtpout.secureserver.net';
 
     /**
      * SMTP Username

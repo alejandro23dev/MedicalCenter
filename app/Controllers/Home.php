@@ -108,7 +108,7 @@ class Home extends BaseController
                                         $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
                                         $objEmail = \Config\Services::email();
-                                        $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
+                                        $objEmail->setFrom('info@makingmemorieshh.com', 'Making Memories Home Health');
                                         $objEmail->setTo($email);
                                         $objEmail->setSubject('Verify your Email');
                                         $objEmail->setMessage(view('email/verifyEmail', $emailData));
@@ -187,7 +187,7 @@ class Home extends BaseController
                     $emailData['url'] = base_url('Home/confirmEmail') . '/' . $token;
 
                     $objEmail = \Config\Services::email();
-                    $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
+                    $objEmail->setFrom('info@makingmemorieshh.com', 'Making Memories Home Health');
                     $objEmail->setTo($email);
                     $objEmail->setSubject('Verify your Email');
                     $objEmail->setMessage(view('email/verifyEmail', $emailData));
@@ -285,7 +285,7 @@ class Home extends BaseController
 
 
         $objEmail = \Config\Services::email();
-        $objEmail->setFrom('dev@axleyherrera.com', 'Making Memories Home Health');
+        $objEmail->setFrom('info@makingmemorieshh.com', 'Making Memories Home Health');
         $objEmail->setTo('alejandro23dev@gmail.com');
         $objEmail->setSubject('Patient Referral');
         $objEmail->setMessage(view('email/sendInfo', $emailData));
