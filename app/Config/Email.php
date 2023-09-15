@@ -47,7 +47,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'mail.makingmemorieshh.com';
+    public $SMTPHost = 'ssl://mail.makingmemorieshh.com';
 
     /**
      * SMTP Username
@@ -68,7 +68,7 @@ class Email extends BaseConfig
      *
      * @var int
      */
-    public $SMTPPort = 587;
+    public $SMTPPort = 465;
 
     /**
      * SMTP Timeout (in seconds)
@@ -89,7 +89,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'SSL';
+    public $SMTPCrypto = 'TLS';
 
     /**
      * Enable word-wrap
