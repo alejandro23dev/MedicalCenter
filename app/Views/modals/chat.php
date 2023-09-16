@@ -2,7 +2,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="chatModalLabel">Chat of the Questions</h5>
+        <h5 class="modal-title" id="chatModalLabel">Questions</h5>
         <button type="button" class="btn btn-close" aria-label="Close">
 
         </button>

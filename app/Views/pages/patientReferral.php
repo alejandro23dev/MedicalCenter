@@ -5,10 +5,7 @@
 <div class="container mt-5 text-center">
     <div>
         <h1 class="modern-title">FILL OUT OUR FORM</h1>
-        <h2 class="modern-subtitle">Making Memories Home Health carry a full line of wound care products,
-            incontinence supplies, urological, ostomy and diabetic testing supplies delivered directly to the patient's home. We'll help
-            determine the most appropriate and cost-effective supplies available. To refer a patient to Advanced Care Solutions and Complete
-            Medical Supplies Inc, please fill out the form below.</h2>
+        <h2 class="modern-subtitle">Making Memories Home Health carry a full line of home care Services. If you want to receive our home care Services, please fill out the form below.</h2>
     </div>
     <div class="text-center mt-5 col-8 mx-auto">
         <img src="<?php echo base_url('assets/images/medical/medical-5459631_1280.png') ?>" alt="Image" class="w-25 rounded-circle">
@@ -248,6 +245,7 @@
 
                             error: function(error) {
                                 showToast('error', 'Ha ocurrido un error')
+                                
                             }
                         })
                     } else {

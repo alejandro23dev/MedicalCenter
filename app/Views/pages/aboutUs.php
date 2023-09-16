@@ -12,7 +12,7 @@
             4. Medical Social Worker <br>
             Our Agency and its staff operate and furnish services in compliance with all applicable Federal, State and local laws and regulations.
             The Director of Nursing was involved in implementing the program. The Agency's Program is reviewed and approved annually by the Board of Directors. Additionally, an evaluation of the effectiveness of the program will be performed annually
-            Administrative and supervisory functions arenot delegated to another agency ororganization
+            Administrative and supervisory functions are not delegated to another agency or organization
             All home health services are furnish directly by the agency. Our Agency does not have any subunits</h2>
     </div>
     <div class="mt-5">
@@ -22,9 +22,9 @@
             2. To provide quality services <br>
             3. To provide criteria for standard of care, ensuring implementation of state guidelines <br>
             4. To provide in service education opportunities to update knowledge and skills to all agency staff <br>
-            5. To provide a methodology for on-going monitoring of apropriate utilization of agency services and quality of delivery
+            5. To provide a methodology for on-going monitoring of appropriate utilization of agency services and quality of delivery
             6 To provide skilled nursing, therapy personal care and assistance with activities of daily living and medical social service
-            to all patients without regard to race, color, religion, national ongin age, sex, physical or mental disability. Services will
+            to all patients without regard to race, color, religion, national origin, age, sex, physical or mental disability. Services will
             be provided directly Medicare, Medicaid, private paid or insurance with a reasonable expectation that the services can be provided
             adequately and safely in the patient's place of residence</h2>
     </div>
