@@ -16,11 +16,11 @@
         <div class="row">
             <div class="mb-3 text-start col-md-6">
                 <label for="name" class="form-label fw-bold">Full Name</label>
-                <input type="text" class="form-control modal-required focus text-capitalize" id="name" placeholder="Alex Hernandez">
+                <input type="text" class="form-control modal-required focus text-capitalize" id="name">
             </div>
             <div class="mb-3 text-start col-md-6">
                 <label for="email" class="form-label fw-bold">Email</label>
-                <input type="email" class="form-control modal-required focus" id="email" placeholder="alex@gmail.com">
+                <input type="email" class="form-control modal-required focus" id="email">
             </div>
         </div>
         <div class="row">
@@ -28,7 +28,7 @@
                 <label for="phone" class="form-label fw-bold">Phone</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text text-muted">+1</span>
-                    <input type="text" class="form-control modal-required focus" id="phone" placeholder="(123) 678-1234" minlength="10" maxlength="10">
+                    <input type="text" class="form-control modal-required focus" id="phone" minlength="10" maxlength="10">
                 </div>
             </div>
             <div class="mb-3 text-start col-md-6">
@@ -39,11 +39,11 @@
         <div class="row">
             <div class="mb-3 text-start col-md-6">
                 <label for="patientHeight" class="form-label fw-bold">Height </label> (<span class="text-muted fst-italic">Feet Inches</span>)
-                <input type="text" class="form-control modal-required focus" id="patientHeight" minlength="2" maxlength="4" placeholder="6'8">
+                <input type="text" class="form-control modal-required focus" id="patientHeight" minlength="2" maxlength="4">
             </div>
             <div class=" mb-3 text-start col-md-6 ">
                 <label for="weight" class="form-label fw-bold">Weight</label> (<span class="text-muted fst-italic">Pounds</span>)
-                <input type="text" class="form-control modal-required focus" id="weight" minlength="2" maxlength="3" placeholder="180">
+                <input type="text" class="form-control modal-required focus" id="weight" minlength="2" maxlength="3">
             </div>
         </div>
         <div class="row">
@@ -51,12 +51,12 @@
                 <label for="referralPhone" class="form-label fw-bold">Ordering Referral Phone</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text text-muted">+1</span>
-                    <input type="text" class="form-control modal-required focus" id="referralPhone" placeholder="(123) 678-1234" minlength="10" maxlength="10">
+                    <input type="text" class="form-control modal-required focus" id="referralPhone" minlength="10" maxlength="10">
                 </div>
             </div>
             <div class=" mb-3 text-start col-md-6">
                 <label for="referralName" class="form-label fw-bold">Ordering Referral Name</label>
-                <input type="text" class="form-control modal-required focus text-capitalize" id="referralName" placeholder="Alex Smith MD">
+                <input type="text" class="form-control modal-required focus text-capitalize" id="referralName">
             </div>
         </div>
         <div class="row">
