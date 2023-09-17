@@ -4,6 +4,7 @@
   <table id="dtRequests" class="display table-responsive">
     <thead>
       <tr>
+      <th>Status</th>
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
@@ -22,6 +23,11 @@
     <tbody>
       <?php foreach ($requests as $request) : ?>
         <tr>
+          <?php if($request['emailVerified'] == 0) :?>
+        <td class="text-center"><i class="mdi mdi-alert-circle-check-outline text-danger" title="Email not verified"></i></td>
+        <?php else :?>
+          <td class="text-center"><i class="mdi mdi-check-circle-outline text-success" title="Email verified"></i></td>
+        <?php endif;?>
           <td><?php echo $request['name']; ?></td>
           <td><a id="email" href="mailto:<?php echo $request['email']; ?>" target="_blank" title="Enviar Correo"><?php echo $request['email']; ?></a></td>
           <td><?php echo $request['phone']; ?></td>
@@ -61,7 +67,7 @@
       ],
       columnDefs: [{
           orderable: false,
-          targets: [11, 12]
+          targets: [12, 13]
         },
 
       ],

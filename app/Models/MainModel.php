@@ -17,7 +17,6 @@ class MainModel extends Model
     public function objData($table)
     {
         $query = $this->db->table($table)
-            ->where('emailVerified', '1')
             ->select('*');
 
         return $query->get()->getResult();
