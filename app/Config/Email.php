@@ -54,7 +54,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPUser = 'info@makingmemorieshh.com';
+    public $SMTPUser = 'admin@makingmemorieshh.com';
 
     /**
      * SMTP Password
@@ -75,7 +75,7 @@ class Email extends BaseConfig
      *
      * @var int
      */
-    public $SMTPTimeout = 5;
+    public $SMTPTimeout = 15;
 
     /**
      * Enable persistent SMTP connections
@@ -89,7 +89,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'TLS';
+    public $SMTPCrypto = 'SSL';
 
     /**
      * Enable word-wrap
