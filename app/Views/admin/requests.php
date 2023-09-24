@@ -101,12 +101,12 @@
         dataType: "json",
         success: function(jsonResponse) {
           if (jsonResponse.error == 0) { // SUCCESS
-            showToast('success', 'Delete Patient');
+            showToast('success', 'Eliminated patient');
             setTimeout(function() {
               window.location.reload();
             }, 2000);
           } else if (jsonResponse.error == 1) // ERROR
-            showToast('error', 'Error on delete Patient');
+            showToast('error', 'Error deleting patient');
 
         }
       });
