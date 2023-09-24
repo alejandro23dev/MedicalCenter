@@ -116,15 +116,14 @@
             $(this).val(formattedNumber);
         });
 
-        $('#btn-send').click(function(e) {
-
-            e.preventDefault();
+        $('#btn-send').click(function() {
 
             let resultCheckRequiredValues = checkRequiredValues('modal-required');
             let phone = "+1" + $('#phone').val();
             let referralPhone = "+1" + $('#referralPhone').val();
 
             if (resultCheckRequiredValues == 0) {
+                $(this).text("Sending Email").attr("disabled", true);
 
                 if (phone != referralPhone) {
 
@@ -149,11 +148,12 @@
                             },
                             dataType: "json",
                             success: function(jsonResponse) {
-                                if (jsonResponse.error == 0) // SUCCESS
+                                if (jsonResponse.error == 0) { // SUCCESS
                                     showToast('info', 'We have sent a verification email to your email address to make sure it belongs to you');
-
-                                else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
+                                    $("#btn-send").text("Submit").attr("disabled", false);
+                                } else if (jsonResponse.error == 1) { // ERROR SEND EMAIL
                                     showToast('error', 'Verification email could not be sent');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                     $("#resendEmail").html("<a href='' id='btn-resendEmail'>Resend verification email</a>");
                                     $('#btn-resendEmail').click(function(e) {
                                         e.preventDefault();
@@ -190,28 +190,33 @@
                                             }
                                         });
                                     });
-                                } else if (jsonResponse.error == 2) // ERROR EMPTY FIELDS
+                                } else if (jsonResponse.error == 2) { // ERROR EMPTY FIELDS
                                     showToast('error', 'Please enter the information correctly');
-
-                                else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
+                                    $("#btn-send").text("Submit").attr("disabled", false);
+                                } else if (jsonResponse.error == 3) { // ERROR INVALID EMAIL FORMAT
                                     showToast('error', 'Invalid Email');
                                     $('#email').addClass('is-invalid');
-
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 } else if (jsonResponse.error == 4) { // ERROR EMAIL REGISTER
                                     showToast('error', 'The email is already registered');
                                     $('#email').addClass('is-invalid');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 } else if (jsonResponse.error == 7) { // ERROR NUMBER REGISTER
                                     showToast('error', 'The number is already registered');
                                     $('#phone').addClass('is-invalid');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 } else if (jsonResponse.error == 8) { // ERROR INVALID NUMBER
                                     showToast('error', 'Invalid Phone Number');
                                     $('#phone').addClass('is-invalid');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 } else if (jsonResponse.error == 9) { // ERROR INVALID REFERRAL NUMBER
                                     showToast('error', 'Invalid Referral Phone Number');
                                     $('#referralPhone').addClass('is-invalid');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 } else if (jsonResponse.error == 10) { // ERROR INVALID DATE
                                     showToast('error', 'Invalid Date');
                                     $('#patientDOB').addClass('is-invalid');
+                                    $("#btn-send").text("Submit").attr("disabled", false);
                                 }
                                 var formData = new FormData();
 
@@ -245,7 +250,7 @@
 
                             error: function(error) {
                                 showToast('error', 'Ha ocurrido un error')
-                                
+
                             }
                         })
                     } else {
